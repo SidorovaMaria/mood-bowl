@@ -7,7 +7,7 @@
 //  and returns a consistent ActionResponse<T>
 //  object for both success and error cases.
 
-import { ActionResponse } from "@/types/global";
+import { ErrorResponse, SuccessResponse } from "@/types/global";
 
 interface FetchOptions extends RequestInit {
   timeout?: number;
@@ -20,26 +20,26 @@ function isError(error: unknown): error is Error {
 export async function fetchHandler<T>(
   url: string,
   options: FetchOptions = {}
-): Promise<ActionResponse<T>> {
+): Promise<SuccessResponse<T> | ErrorResponse> {
   const {
     timeout = 5000,
-    headers: customHeaaders = {},
+    headers: customHeaders = {},
     ...restOptions
   } = options;
-  const conroller = new AbortController();
-  const id = setTimeout(() => conroller.abort(), timeout);
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
   const defaultHeaders = {
     "Content-Type": "application/json",
     Accept: "application/json",
   };
   const headers: HeadersInit = {
     ...defaultHeaders,
-    ...customHeaaders,
+    ...customHeaders,
   };
   const config: RequestInit = {
     ...restOptions,
     headers,
-    signal: conroller.signal,
+    signal: controller.signal,
   };
   try {
     const response = await fetch(url, config);
