@@ -1,25 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --font-comfortaa: var(--font-comfortaa);
-  --font-comic-neue: var(--font-comic-neue);
-}
-:root {
-	--background: #eaf0ef;
-	--foreground: #01544e;
-}
+  	--font-comfortaa: 'Comfortaa', cursive;
+  	--font-comic-neue: 'Comic Neue', cursive;
+  	--color-background: #011515;
+	--color-background-light: #112B29;
+	--color-foreground: #eff1f1;
+	--color-primary: #ffe38d;
+	--color-secondary: #ffa875;
+	--color-accent: #81c5af;
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #011515;
-		--foreground: #eff1f1;
-	}
 }
-body {
-	background-color: var(--background);
-	color: var(--foreground);
-  font-family: 'Comfortaa', sans-serif;
-	line-height: 1.5;
-	margin: 0;
-	padding: 0;
+body{		
+	@apply font-comfortaa bg-background text-foreground;
+}
+@layer components{
+	.container-text{
+	@apply text-center text-sm max-w-xs mx-auto md:text-lg md:max-w-md lg:max-w-2xl lg:text-xl px-4 bg-background;
+	}
 }
