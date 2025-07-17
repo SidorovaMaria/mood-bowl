@@ -5,6 +5,8 @@ import React from "react";
 
 import { motion } from "motion/react";
 import { animate } from "motion";
+import { Button } from "../ui/button";
+import { ArrowRight, ArrowRightCircle } from "lucide-react";
 const LandingNavbar = () => {
   return (
     <header className="fixed top-0 w-full z-50 bg-[var(--color-background)]/90 backdrop-blur-sm border-b border-background-light">
@@ -120,12 +122,21 @@ const LandingNavbar = () => {
             </Link>
           </nav>
           <div className="flex items-center space-x-4 ">
-            <button className="text-foreground hover:text-primary transition-colors whitespace-nowrap cursor-pointer hover:font-bold">
-              Sign In
+            <button
+              type="button"
+              className="text-foreground! hover:text-primary transition-colors whitespace-nowrap hover:bg-background! cursor-pointer hover:font-bold"
+            >
+              <Link href="/sign-in">Sign In</Link>
             </button>
-            <button className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-full font-bold hover:from-accent hover:to-primary transition-colors whitespace-nowrap cursor-pointer  ease-in-out duration-300 hover:animate-pulse">
-              Get Started
-            </button>
+            <Button
+              variant="outline"
+              className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-2xl font-bold whitespace-nowrap cursor-pointer group hover:scale-105"
+            >
+              <Link href="/sign-up" className="flex items-center gap-2">
+                Get Started
+                <ArrowRightCircle className=" size-4 group-hover:animate-bounce-right" />
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

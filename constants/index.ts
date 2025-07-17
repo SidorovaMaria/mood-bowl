@@ -140,3 +140,48 @@ export const footerLinks = [
     ],
   },
 ];
+
+export const reviewQuotes = [
+  {
+    name: "Jenna M.",
+    role: "Yoga Instructor",
+    quote:
+      "Mood Bowl made it so easy to stay mindful about both my meals and my moods. It's like journaling and nutrition tracking had a baby — and I love it!",
+    rating: 5,
+  },
+  {
+    name: "Tom S.",
+    role: "Software Engineer",
+    quote:
+      "I never thought I'd actually enjoy logging how I feel, but Mood Bowl makes it feel effortless. The insights are surprisingly accurate!",
+    rating: 4,
+  },
+  {
+    name: "Alicia R.",
+    role: "Nutrition Student",
+    quote:
+      "This app is a game-changer for anyone looking to understand the link between food and feelings. Beautiful design, too!",
+    rating: 5,
+  },
+  {
+    name: "Marcus D.",
+    role: "Busy Dad",
+    quote:
+      "Finally, something that fits into my chaotic schedule! Mood Bowl helps me take 5 minutes for myself every day.",
+    rating: 4,
+  },
+  {
+    name: "Zara P.",
+    role: "Art Student",
+    quote:
+      "It’s like a mood diary and food tracker in one, but without the guilt. Mood Bowl gets me.",
+    rating: 5,
+  },
+  {
+    name: "Eli K.",
+    role: "Wellness Blogger",
+    quote:
+      "Mood Bowl made me realize how much my mood affects what I eat — and vice versa. Super insightful!",
+    rating: 4,
+  },
+];

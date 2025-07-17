@@ -14,6 +14,8 @@ import {
   Soup,
   UtensilsCrossed,
 } from "lucide-react";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 const CTASection = () => {
   return (
@@ -74,7 +76,7 @@ const CTASection = () => {
                     <div className="w-8 h-8 flex items-center justify-center p-2 border rounded-full group-hover:text-primary group-hover:translate-y-[-2px] transition-transform duration-150 group-hover:scale-110">
                       <Icon />
                     </div>
-                    <span className="hover:text-[var(--color-primary)] transition-colors">
+                    <span className="hover:text-primary transition-colors">
                       {item.text}
                     </span>
                   </motion.div>
@@ -85,16 +87,21 @@ const CTASection = () => {
           <div
             className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 `}
           >
-            <button className="bg-background-light pr-10 pl-4 py-4 rounded-full font-bold text-foreground transition-all transform hover:scale-105  whitespace-nowrap cursor-pointer relative overflow-hidden group">
-              <span className="relative z-10 group-hover:text-background-light transition-colors duration-300">
-                Create Free Account
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 "></div>
+            <Button
+              asChild
+              variant="ghost"
+              className="bg-background-light pl-5! pr-10! py-6! text-base rounded-full font-bold text-foreground transition-all transform hover:scale-105 whitespace-nowrap cursor-pointer relative overflow-hidden group"
+            >
+              <Link href="/sign-in">
+                <span className="relative z-10 group-hover:text-background-light transition-colors duration-300">
+                  Create Free Account
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 "></div>
 
-              <SmileIcon className=" size-5 absolute right-2 top-1/2 -translate-y-1/2 group-hover:-translate-y-[250%] transition-transform duration-300 origin-center" />
-              <ArrowRightCircle className=" size-5 absolute right-3 top-full group-hover:-translate-y-[200%] transition-transform duration-300 origin-center text-background group-hover:animate-bounce-right" />
-              {/* <ArrowRightCircle className=" inline ml-3 text-background-light relative size-6 group-hover:animate-bounce-right delay-300" /> */}
-            </button>
+                <SmileIcon className=" size-5 absolute right-4 top-1/2 -translate-y-1/2 group-hover:-translate-y-[250%] transition-transform duration-300 origin-center" />
+                <ArrowRightCircle className=" size-5 absolute right-4 top-full group-hover:-translate-y-[175%] transition-transform duration-300 origin-center text-background group-hover:animate-bounce-right" />
+              </Link>
+            </Button>
             {/* <button className="border border-primary text-primary px-8 py-2 rounded-full  font-bold hover:bg-primary hover:text-background transition-all hover:scale-105 whitespace-nowrap cursor-pointer">
               Learn More
             </button> */}

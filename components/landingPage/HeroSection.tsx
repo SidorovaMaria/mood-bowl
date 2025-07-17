@@ -2,6 +2,7 @@
 import { HeroFeatures } from "@/constants";
 import Lenis from "lenis";
 import {
+  ArrowRightCircle,
   CalendarClock,
   Clock1,
   LucideMoveRight,
@@ -11,14 +12,9 @@ import {
   SmilePlus,
   UtensilsCrossed,
 } from "lucide-react";
-import {
-  motion,
-  stagger,
-  useScroll,
-  useTransform,
-  Variants,
-} from "motion/react";
+import { motion, useScroll, useTransform, Variants } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 const HeroSection = () => {
@@ -27,17 +23,17 @@ const HeroSection = () => {
     target: document,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0.5, 1], ["0%", "100%"]);
+  const y = useTransform(scrollYProgress, [0.5, 0.9], ["0%", "100%"]);
   // Animate the image with a subtle parallax and bounce effect as you scroll
   const yBowl = useTransform(
     scrollYProgress,
     [0.5, 0.6, 0.7, 1],
-    ["200%", "50%", "-40%", "-180%"]
+    ["200%", "50%", "-80%", "-300%"]
   );
   const yBowlOut = useTransform(
     scrollYProgress,
     [0.5, 0.6, 0.7, 1],
-    ["20%", "-80%", "-150%", "-200%"]
+    ["20%", "-100%", "-150%", "-200%"]
   );
   useEffect(() => {
     const lenis = new Lenis();
@@ -102,10 +98,6 @@ const HeroSection = () => {
           animate="animate"
           variants={heroText}
           className="text-xl md:text-2xl text-foreground max-w-3xl mx-auto leading-relaxed py-4"
-          style={{
-            fontFamily: "var(--font-comic-neue)",
-            animationDelay: "0.3s",
-          }}
         >
           Track your moods, log meals, and capture your thoughts in a simple,
           intuitive diary built for self-awareness and growth.
@@ -118,8 +110,10 @@ const HeroSection = () => {
           className="bg-gradient-to-b from-primary to-accent opacity-80 hover:opacity-100 text-background font-bold px-6 py-3 rounded-full text-lg mb-6
         transition-all transform hover:scale-105 whitespace-nowrap cursor-pointer shadow-lg group"
         >
-          Start Your Journey{" "}
-          <LucideMoveRight className="inline text-background group-hover:animate-bounce-right" />
+          <Link href="/sign-in">
+            Start Your Journey{" "}
+            <ArrowRightCircle className="inline text-background group-hover:animate-bounce-right" />
+          </Link>
         </motion.button>
 
         <motion.div
@@ -135,7 +129,7 @@ const HeroSection = () => {
           }}
         >
           {HeroFeatures.map((feature, index) => (
-            <motion.div key={index}>
+            <motion.div key={index} variants={featureVariant}>
               <FeatureHightlight
                 coming={feature.coming}
                 icon={<feature.icon />}

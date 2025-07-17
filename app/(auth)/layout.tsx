@@ -1,32 +1,37 @@
+import SlidignReviews from "@/components/Authentication/SlidignReviews";
 import React, { ReactNode } from "react";
 
 const AuthenticationLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <main className="flex min-h-screen items-center justify-center lg:flex-row gap-10 flex-col md:gap-14 lg:gap-0 ">
-      <header className="flex flex-col items-center justify-center md:gap-6">
-        <h1 className="font-comforta text-3xl text-center font-bold mb-4 relative group cursor-pointer">
-          M<span className="text-primary font-bold">oo</span>DB
-          <span className="text-primary font-bold">ow</span>l
-          <span className="absolute top-[58%] text-primary left-12 font-bold text-2xl rotate-90 group-hover:animate-swing">
-            )
-          </span>
-          <span className="absolute bottom-[60%] text-primary right-7 font-bold text-2xl -rotate-90 group-hover:animate-swing">
-            )
-          </span>
-        </h1>
-        <p className="container-text font-bold font-comic-neue">
-          Welcome to Mood Bowl — a mindful space where your emotions,
-          reflections, and daily habits come together.{" "}
-          <span className="hidden md:inline">
-            Track your moods, log meals, and capture your thoughts in a simple,
-            intuitive diary built for self-awareness and growth.
-          </span>
-        </p>
-      </header>
-      <div className="w-full md:max-w-xl px-8 min-h-[50vh] md:px-16 flex">
-        <div className="w-full bg-background-light min-h-full rounded-4xl shadow-[5px_5px_1px] shadow-white/30 p-4 border border-white/30 ">
-          {children}
+    <main className="min-h-screen flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:w-1/2 bg-backgound justify-center items-center p-12 relative overflow-hidden">
+        {/* Decoration? */}
+        <div className="absolute top-20 left-20 w-32 h-32 bg-primary/60 rounded-full blur-xl"></div>
+        <div className="absolute bottom-52 right-16 w-24 h-24 bg-accent/60 rounded-full blur-xl"></div>
+        <div className="absolute top-3/4 left-1/4 w-16 h-16 bg-accent/50 rounded-full blur-md"></div>
+
+        <div className="max-w-md text-center relative z-10">
+          <h1 className="text-3xl font-bold text-foreground mb-8">MooDBowl</h1>
+          <h2
+            className="text-2xl font-bold text-foreground mb-2"
+            style={{ fontFamily: "var(--font-comfortaa)" }}
+          >
+            Welcome to Your Wellness Journey
+          </h2>
+
+          <p className="text-foreground/80 text-sm leading-relaxed">
+            Ready to feel good inside and out? Join Mood Bowl and start mixing
+            mindfulness with your meals — your future self will thank you!
+          </p>
         </div>
+        <SlidignReviews />
+        <h4 className="text-lg capitalize font-bold hidden lg:block">
+          {" "}
+          What our customers say
+        </h4>
+      </div>
+      <div className="min-w-md md:min-w-xl mx-auto lg:flex-1 rounded-4xl bg-gradient-to-b from-primary/80 to-accent/80 lg:w-1/2 text-background  p-6 lg:p-12">
+        {children}
       </div>
     </main>
   );
