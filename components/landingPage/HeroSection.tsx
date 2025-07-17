@@ -1,4 +1,5 @@
 "use client";
+import { HeroFeatures } from "@/constants";
 import Lenis from "lenis";
 import {
   CalendarClock,
@@ -122,7 +123,7 @@ const HeroSection = () => {
         </motion.button>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+          className="grid grid-cols-1  md:grid-cols-3 gap-8 max-w-4xl mx-auto"
           initial="initial"
           animate="animate"
           variants={{
@@ -133,35 +134,16 @@ const HeroSection = () => {
             },
           }}
         >
-          <motion.div variants={featureVariant}>
-            <FeatureHightlight
-              icon={<UtensilsCrossed />}
-              title="Nutrition Library"
-              text="Access thousands of foods with detailed nutrition information"
-            />
-          </motion.div>
-          <motion.div variants={featureVariant}>
-            <FeatureHightlight
-              icon={<NotebookPen />}
-              title="Mood Journal"
-              text="Track your thoughts and feelings daily with reflections."
-            />
-          </motion.div>
-          <motion.div variants={featureVariant}>
-            <FeatureHightlight
-              icon={<CalendarClock />}
-              title="Personal Planner"
-              text="Access thousands of foods with detailed nutrition information"
-            />
-          </motion.div>
-          <motion.div variants={featureVariant}>
-            <FeatureHightlight
-              coming
-              icon={<SmilePlus />}
-              title="Mood Analysis"
-              text="Understand how your emotions affect your eating habits"
-            />
-          </motion.div>
+          {HeroFeatures.map((feature, index) => (
+            <motion.div key={index}>
+              <FeatureHightlight
+                coming={feature.coming}
+                icon={<feature.icon />}
+                title={feature.title}
+                text={feature.text}
+              />
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </div>
@@ -209,12 +191,12 @@ const FeatureHightlight = ({
   coming?: boolean;
 }) => {
   return (
-    <div className="flex flex-col items-center hover:scale-105 transition-transform cursor-pointer  ">
-      <div className="w-12 h-12 flex items-center justify-center rounded-full mb-4  border-2 border-foreground/80 p-3">
+    <div className="flex flex-col items-center hover:scale-105 transition-transform cursor-pointer group ">
+      <div className="w-12 h-12 flex items-center justify-center rounded-full mb-4  border-2 border-foreground/80 p-3 ">
         {icon}
       </div>
-      <h3 className="text-lg font-semibold mb-2">{title}</h3>
-      <p className="text-foreground/80 text-sm px-4">{text}</p>
+      <h3 className="text-lg font-bold ">{title}</h3>
+      <p className="text-foreground text-xs leading-relaxed px-2">{text}</p>
       {coming && (
         <div className="mt-4 text-sm font-bold bg-secondary text-background fontbold px-3 py-1 rounded-xl opacity-80">
           Coming Soon <Rocket className="inline size-3" />
