@@ -30,7 +30,7 @@ const FeaturesSection = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           initial="hidden"
           whileInView="visible"
-          viewport={{ amount: 0.4 }}
+          viewport={{ once: true, amount: 0.4 }}
           variants={{
             visible: {
               transition: {

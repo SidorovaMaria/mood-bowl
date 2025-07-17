@@ -62,13 +62,13 @@ const HeroSection = () => {
         }}
       >
         <motion.div
-          className="absolute h-[300px] w-[300px] top-20 opacity-80 "
+          className="absolute h-[300px] w-[300px] top-20 opacity-80 max-sm:hidden "
           style={{ y: yBowlOut }}
         >
           <Image src="/images/bowl-two.png" alt="Background" fill />
         </motion.div>
         <motion.div
-          className="absolute h-[300px] w-[300px] opacity-80  left-20 top-80 "
+          className="absolute h-[300px] w-[300px] opacity-80  left-20 top-80 max-sm:hidden"
           style={{ y: yBowl }}
         >
           <Image src="/images/bowl-two.png" alt="Background" fill />
@@ -85,7 +85,7 @@ const HeroSection = () => {
           initial="initial"
           animate="animate"
           variants={heroTitle}
-          className="text-3xl md:text-6xl font-bold  leading-tight "
+          className="text-5xl md:text-6xl font-bold  leading-tight "
         >
           Track Your <br />
           <span className="text-transparent bg-gradient-to-t from-accent to-primary bg-clip-text hover:bg-gradient-to-b duration-300 transition-colors alternate">
@@ -209,7 +209,7 @@ const FeatureHightlight = ({
   coming?: boolean;
 }) => {
   return (
-    <div className="flex flex-col items-center hover:scale-105 transition-transform cursor-pointer ">
+    <div className="flex flex-col items-center hover:scale-105 transition-transform cursor-pointer  ">
       <div className="w-12 h-12 flex items-center justify-center rounded-full mb-4  border-2 border-foreground/80 p-3">
         {icon}
       </div>

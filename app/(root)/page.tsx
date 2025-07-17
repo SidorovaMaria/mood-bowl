@@ -1,4 +1,5 @@
 import { auth, signOut } from "@/auth";
+import CTASection from "@/components/landingPage/CTASection";
 import FeaturesSection from "@/components/landingPage/FeaturesSection";
 import HeroSection from "@/components/landingPage/HeroSection";
 import Image from "next/image";
@@ -13,6 +14,7 @@ export default async function Home() {
     <>
       <HeroSection />
       <FeaturesSection />
+      <CTASection />
 
       {userId && (
         <form

@@ -1,3 +1,11 @@
+import {
+  UtensilsCrossed,
+  NotebookPen,
+  BarChart,
+  CalendarCheck,
+  BookMarked,
+  ChartNoAxesCombined,
+} from "lucide-react";
 export const features = [
   {
     icon: "ri-restaurant-2-line",
@@ -53,4 +61,21 @@ export const features = [
     image:
       "https://readdy.ai/api/search-image?query=Health%20analytics%20dashboard%20with%20colorful%20charts%20showing%20wellness%20progress%2C%20vibrant%20data%20visualization%20with%20fresh%20healthy%20foods%20in%20background%2C%20modern%20interface%20displaying%20nutrition%20and%20mood%20tracking%20statistics%20with%20bright%20cheerful%20colors&width=400&height=300&seq=health-analytics&orientation=landscape",
   },
+];
+export const CTAitems = [
+  {
+    text: "Complete nutrition database",
+    icon: UtensilsCrossed,
+  },
+  {
+    text: "Personalized meal planning",
+    icon: NotebookPen,
+  },
+  { text: "Mood tracking & analysis", icon: BarChart },
+  {
+    text: "Daily reflection calendar",
+    icon: CalendarCheck,
+  },
+  { text: "Expert lifestyle tips", icon: BookMarked },
+  { text: "Progress analytics", icon: ChartNoAxesCombined },
 ];
