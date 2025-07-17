@@ -102,9 +102,6 @@ const CTASection = () => {
                 <ArrowRightCircle className=" size-5 absolute right-4 top-full group-hover:-translate-y-[175%] transition-transform duration-300 origin-center text-background group-hover:animate-bounce-right" />
               </Link>
             </Button>
-            {/* <button className="border border-primary text-primary px-8 py-2 rounded-full  font-bold hover:bg-primary hover:text-background transition-all hover:scale-105 whitespace-nowrap cursor-pointer">
-              Learn More
-            </button> */}
           </div>
         </div>
       </div>
