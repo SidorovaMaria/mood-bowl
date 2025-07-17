@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { signIn } from "next-auth/react";
 import React from "react";
 
@@ -11,7 +10,7 @@ const SocialAuthForm = () => {
   const handleSignIn = async (provider: "github" | "google") => {
     try {
       await signIn(provider, {
-        callbackUrl: "/",
+        callbackUrl: "/onboarding",
         redirect: true,
       });
     } catch (error) {
@@ -22,13 +21,6 @@ const SocialAuthForm = () => {
   return (
     <div className="mt-10 flex flex-wrap gap-2.5">
       <button className={buttonClass} onClick={() => handleSignIn("google")}>
-        <Image
-          src="/icons/google.svg"
-          alt="Google Logo"
-          width={20}
-          height={20}
-          className="mr-2.5 object-contain"
-        />
         <span>Log in with Google</span>
       </button>
     </div>

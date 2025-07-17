@@ -1,7 +1,32 @@
+import { auth, signOut } from "@/auth";
+import FeaturesSection from "@/components/landingPage/FeaturesSection";
+import HeroSection from "@/components/landingPage/HeroSection";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  console.log("Session:", session);
+  const userId = session?.user?.id;
+  console.log("User ID:", userId);
   return (
-   <main> A starter commit for Mood Bowl Application</main>
+    <>
+      <HeroSection />
+      <FeaturesSection />
+
+      {userId && (
+        <form
+          action={async () => {
+            "use server";
+
+            await signOut();
+          }}
+        >
+          <button type="submit" className="bg-red-400 text-white">
+            <span className="">Logout</span>
+          </button>
+        </form>
+      )}
+    </>
   );
 }

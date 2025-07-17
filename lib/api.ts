@@ -50,7 +50,7 @@ export const api = {
       provider,
       providerAccountId,
     }: SignInWithOAuthParams) =>
-      fetchHandler(`${API_BASE_URL}/auth/sign-in-with`, {
+      fetchHandler(`${API_BASE_URL}/auth/signin-with-oauth`, {
         method: "POST",
         body: JSON.stringify({ user, provider, providerAccountId }),
       }),

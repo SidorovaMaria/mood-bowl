@@ -5,3 +5,14 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+nextConfig.images = {
+  ...nextConfig.images,
+  remotePatterns: [
+    ...(nextConfig.images?.remotePatterns || []),
+    {
+      protocol: "https",
+      hostname: "lh3.googleusercontent.com",
+    },
+    { protocol: "https", hostname: "readdy.ai" },
+  ],
+};

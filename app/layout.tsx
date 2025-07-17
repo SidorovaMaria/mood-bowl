@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
-import { Comfortaa,Comic_Neue} from "next/font/google";
+import { Comfortaa, Comic_Neue, Pacifico } from "next/font/google";
 import "./globals.css";
+import LandingNavbar from "@/components/landingPage/LandingNavbar";
 
 const comfortaa = Comfortaa({
   variable: "--font-comfortaa",
   subsets: ["latin"],
   display: "swap",
-  weight:['300', '400', '500', '600', '700'],
+  weight: ["300", "400", "500", "600", "700"],
+});
+const pacifico = Pacifico({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-pacifico",
 });
 
 const comic_neue = Comic_Neue({
   variable: "--font-comic-neue",
   subsets: ["latin"],
   display: "swap",
-  weight:['400', '700'],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${comfortaa.variable} ${comic_neue.variable} antialiased`}
+        className={`${comfortaa.variable} ${comic_neue.variable} ${pacifico.variable} antialiased`}
       >
         {children}
       </body>

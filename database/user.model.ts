@@ -5,12 +5,14 @@ export interface IUser {
   username: string;
   email: string;
   avatarURL?: string;
-  sex: "female" | "male";
+  sex: "female" | "male" |'unknown';
   birthDate: Date;
+  isProfileComplete?: boolean;
   preferences: {
     trackMood: boolean;
     trackMeals: boolean;
   };
+
   fitnessGoals?: {
     dietType: "vegan" | "vegetarian" | "paleo" | "keto" | "balanced";
     heightCm: number; // in cm
@@ -40,8 +42,9 @@ const UserSchema = new Schema<IUser>(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     avatarURL: { type: String },
-    sex: { type: String, enum: ["female", "male"], required: true },
+    sex: { type: String, enum: ["female", "male",'unkown'], default: "unknown", },
     birthDate: { type: Date, required: true },
+    isProfileComplete: { type: Boolean, default: false },
     preferences: {
       trackMood: { type: Boolean, default: true },
       trackMeals: { type: Boolean, default: true },

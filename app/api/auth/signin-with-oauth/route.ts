@@ -29,7 +29,7 @@ export async function POST(request: Request) {
 
     const { name, username, email, image } = user;
 
-    const slugifiedUsername = slugify(username, {
+    const slugifiedUsername = slugify(username || name, {
       lower: true,
       strict: true,
       trim: true,
@@ -39,7 +39,18 @@ export async function POST(request: Request) {
 
     if (!existingUser) {
       [existingUser] = await User.create(
-        [{ name, username: slugifiedUsername, email, image }],
+        [
+          {
+            name,
+            username: slugifiedUsername,
+            email,
+            avatarUrl: image || "",
+            sex: "unknown",
+            birthDate: new Date(),
+            preferences: { trackMood: false, trackMeals: false },
+            isProfileComplete: false,
+          },
+        ],
         { session }
       );
     } else {

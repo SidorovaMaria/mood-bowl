@@ -1,21 +1,54 @@
 @import "tailwindcss";
 
 @theme {
-  	--font-comfortaa: 'Comfortaa', cursive;
-  	--font-comic-neue: 'Comic Neue', cursive;
-  	--color-background: #011515;
-	--color-background-light: #112B29;
-	--color-foreground: #eff1f1;
-	--color-primary: #ffe38d;
-	--color-secondary: #ffa875;
-	--color-accent: #81c5af;
+  --font-comfortaa: "Comfortaa", cursive;
+  --font-comic-neue: "Comic Neue", cursive;
+  --font-pacifico: "Pacifico", cursive;
+  --color-background: #011515;
+  --color-background-light: #112b29;
+  --color-foreground: #eff1f1;
+  --color-primary: #ffe38d;
+  --color-secondary: #ffa87e;
+  --color-accent: #81c5af;
+  --animate-swing: swin-left-to-right 1s ease-in-out infinite alternate;
+  --animate-bounce-right: boune-to-right 0.5s ease-in-out infinite alternate;
+}
 
+body {
+  @apply font-comfortaa bg-background text-foreground selection:bg-secondary/50 selection:text-primary;
 }
-body{		
-	@apply font-comfortaa bg-background text-foreground;
+@layer components {
+  .container-text {
+    @apply text-center text-sm max-w-xs mx-auto md:text-lg md:max-w-md lg:max-w-2xl lg:text-xl px-4 bg-background;
+  }
+  .link {
+    @apply text-foreground hover:text-primary  font-bold transition-colors duration-300 relative;
+  }
+  .slider::before {
+    @apply absolute bottom-0 left-0 h-0.5 w-full bg-primary transition-transform duration-500 ease-in-out;
+
+    transform: scaleX(0);
+    content: "";
+    transform-origin: left;
+  }
+  .link:hover .slider::before {
+    transform: scaleX(1);
+  }
 }
-@layer components{
-	.container-text{
-	@apply text-center text-sm max-w-xs mx-auto md:text-lg md:max-w-md lg:max-w-2xl lg:text-xl px-4 bg-background;
-	}
+@keyframes swin-left-to-right {
+  0% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(5px) rotate(5deg);
+  }
+}
+
+@keyframes boune-to-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(10px);
+  }
 }
