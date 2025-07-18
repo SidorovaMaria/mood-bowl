@@ -30,6 +30,8 @@ export interface IUser {
   mentalHealthGoals?: {
     meditationMinutesPerDay?: number;
     journalingFrequency?: "daily" | "weekly" | "monthly";
+    journalingDayOfTheWeek?: string[]; // Required if journalingFrequency is "weekly", values: "Monday"..."Sunday"
+    journalingDayOfTheMonth?: number; // Required if journalingFrequency is "monthly", value: 1-28
     gratitudeEntriesPerDay?: number;
   };
 }
@@ -77,6 +79,19 @@ const UserSchema = new Schema<IUser>(
         type: String,
         enum: ["daily", "weekly", "monthly"],
       },
+      journalingDayOfTheWeek: {
+        type: [String],
+        enum: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+      },
+      journalingDayOfTheMonth: { type: Number, min: 1, max: 28 }, // Required if journalingFrequency is "monthly"
       gratitudeEntriesPerDay: { type: Number },
     },
   },
@@ -130,6 +145,31 @@ UserSchema.pre("validate", function (next) {
           new Error(`Field ${field} is required when trackMood is true`)
         );
       }
+    }
+  }
+  if (this.preferences.trackMood) {
+    if (
+      this.mentalHealthGoals?.journalingFrequency === "weekly" &&
+      (!this.mentalHealthGoals.journalingDayOfTheWeek ||
+        this.mentalHealthGoals.journalingDayOfTheWeek.length === 0)
+    ) {
+      return next(
+        new Error(
+          "journalingDayOfTheWeek is required when journalingFrequency is 'weekly'"
+        )
+      );
+    }
+    if (
+      this.mentalHealthGoals?.journalingFrequency === "monthly" &&
+      (this.mentalHealthGoals.journalingDayOfTheMonth === undefined ||
+        this.mentalHealthGoals.journalingDayOfTheMonth < 1 ||
+        this.mentalHealthGoals.journalingDayOfTheMonth > 28)
+    ) {
+      return next(
+        new Error(
+          "journalingDayOfTheMonth must be between 1 and 28 when journalingFrequency is 'monthly'"
+        )
+      );
     }
   }
   next();

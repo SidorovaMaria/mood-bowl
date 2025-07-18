@@ -37,6 +37,18 @@ body {
   .link:hover .slider::before {
     transform: scaleX(1);
   }
+  .radio-group-label {
+    @apply cursor-pointer font-bold w-full peer-data-[state=checked]:bg-gradient-to-r from-primary to-accent peer-data-[state=checked]:text-background py-3 px-4 border rounded-xl peer-data-[state=checked]:border-0 hover:not-peer-data-[state=checked]:shadow-[2px_3px_0px] hover:not-peer-data-[state=checked]:shadow-white hover:not-peer-data-[state=checked]:-translate-y-0.5 transition-colors duration-300;
+  }
+  .form-submit-button {
+    @apply cursor-pointer! bg-transparent! border hover:border-transparent  px-4! py-5! text-base! font-bold! rounded-2xl! mt-4  overflow-hidden;
+  }
+  .form-submit-btn-icon {
+    @apply inline-flex size-5 relative z-10 group-hover:text-background transition-colors duration-300;
+  }
+  .form-submit-btn-bg {
+    @apply absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300;
+  }
 }
 @keyframes swin-left-to-right {
   0% {
@@ -94,7 +106,7 @@ body {
   --popover-foreground: oklch(0.129 0.042 264.695);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: #ffa87e;
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);

@@ -91,6 +91,25 @@ export const UserSchema = z.object({
     .object({
       meditationMinutesPerDay: z.number().optional(),
       journalingFrequency: z.enum(["daily", "weekly", "monthly"]),
+      journalingDayOfTheWeek: z
+        .array(
+          z.enum([
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ])
+        )
+        .optional(),
+      journalingDayOfTheMonth: z
+        .number()
+        .int()
+        .min(1, "Day of the month must be between 1 and 28")
+        .max(28, "Day of the month must be between 1 and 28")
+        .optional(),
       gratitudeEntriesPerDay: z.number().optional(),
     })
     .optional(),

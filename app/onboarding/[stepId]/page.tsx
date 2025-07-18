@@ -1,9 +1,15 @@
 import { auth } from "@/auth";
+import CompletedReview from "@/components/onboarding/CompletedReview";
+import FormStepOne from "@/components/onboarding/FormStepOne";
+import FormStepThree from "@/components/onboarding/FormStepThree";
+import FormStepTwo from "@/components/onboarding/FormStepTwo";
 import { IUserDoc } from "@/database/user.model";
 import { getUser } from "@/lib/actions/user.actions";
-import { get } from "http";
+
+import { AnimatePresence, motion } from "motion/react";
 import { redirect } from "next/navigation";
 import React from "react";
+import StepForms from "./StepForms";
 
 const StepForm = async ({ params }: RouteParams) => {
   const { stepId } = await params;
@@ -24,11 +30,7 @@ const StepForm = async ({ params }: RouteParams) => {
     redirect(`/${user._id}/dashboard`);
   }
 
-  return (
-    <div>
-      StepForm Number {stepId} for {user.username}
-    </div>
-  );
+  return <StepForms stepId={stepId} />;
 };
 
 export default StepForm;

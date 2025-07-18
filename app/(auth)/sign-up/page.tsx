@@ -158,13 +158,10 @@ const SignUpPage = () => {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="cursor-pointer! bg-transparent! border hover:border-transparent  px-4! py-5! text-base! font-bold! rounded-2xl! mt-4 relative group z-10 overflow-hidden"
-          >
+          <Button type="submit" className="submit-button group relative z-10">
             <UserRoundPlus className="inline-flex size-5 relative z-10" />
             <p className="relative z-10">Create an Account</p>
-            <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 "></div>
+            <div className="submit-btn-bg"></div>
           </Button>
         </form>
       </Form>
