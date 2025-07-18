@@ -1,10 +1,13 @@
-import SlidignReviews from "@/components/Authentication/SlidignReviews";
+import { auth, signIn } from "@/auth";
+import GoogleSignIn from "@/components/authentication/GoogleSignIn";
+import SlidignReviews from "@/components/authentication/SlidignReviews";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 import React, { ReactNode } from "react";
+import { toast } from "sonner";
 
-const AuthenticationLayout = ({ children }: { children: ReactNode }) => {
+const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row">
       <div className="flex flex-col lg:w-1/2 bg-backgound justify-center items-center p-12 relative overflow-hidden">
@@ -34,25 +37,7 @@ const AuthenticationLayout = ({ children }: { children: ReactNode }) => {
       </div>
       <div className="min-w-md md:min-w-xl mx-auto lg:flex-1 rounded-4xl flex flex-col items-center justify-center bg-gradient-to-b from-primary/80 to-accent/80 lg:w-1/2 text-background  p-6 lg:p-12 gap-6 ">
         {children}
-        <div className="flex flex-col w-full gap-1 max-w-md mx-auto ">
-          <hr className="w-full  border-background-light/20 " />
-          <div className="flex flex-col items-center w-full">
-            <p className="lowercase text-sm">Or Continue with</p>
-            <Button
-              type="button"
-              className="cursor-pointer! bg-transparent! hover:bg-foreground/20!  px-4! py-5! text-base! font-bold! rounded-2xl! mt-1 "
-            >
-              <Image
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
-                alt="Google icon"
-                width={16}
-                height={16}
-                className="inline-flex size-5 "
-              />
-              <p className="">Google</p>
-            </Button>
-          </div>
-        </div>
+        <GoogleSignIn />
       </div>
     </main>
   );

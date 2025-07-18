@@ -1,22 +1,20 @@
-export interface SuccessResponse<T> {
-  success: true;
-  data: T;
-  message?: string;
-  status?: number;
-}
-
-export interface ErrorResponse {
-  success: false;
-  message: string;
-  status?: number;
-}
-interface SignInWithOAuthParams {
-  provider: "google";
-  providerAccountId: string;
-  user: {
-    name: string;
-    username: string;
-    email: string;
-    avatarURL: string;
+type ActionResponse<T = null> = {
+  success: boolean;
+  data?: T;
+  error?: {
+    message: string;
+    details?: Record<string, string[]>;
   };
+  status?: number;
+};
+
+type SuccessResponse<T = null> = ActionResponse<T> & { success: true };
+type ErrorResponse = ActionResponse<undefined> & { success: false };
+
+type APIErrorResponse = NextResponse<ErrorResponse>;
+type APIResponse<T = null> = NextResponse<SuccessResponse<T> | ErrorResponse>;
+
+interface RouteParams {
+  params: Promise<Record<string, string>>;
+  searchParams: Promise<Record<string, string>>;
 }

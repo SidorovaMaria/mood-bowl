@@ -1,5 +1,7 @@
 import Account from "@/database/account.model";
 import User from "@/database/user.model";
+import handleError from "@/lib/errors";
+import { ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
 import { SignInWithOAuthSchema } from "@/lib/validation";
 import mongoose from "mongoose";
@@ -22,9 +24,8 @@ export async function POST(request: Request) {
     });
 
     if (!validatedData.success)
-      return NextResponse.json(
-        { success: false, message: validatedData.error.message },
-        { status: 400 }
+      return new ValidationError(
+        validatedData.error.flatten().fieldErrors as Record<string, string[]>
       );
 
     const { name, username, email, image } = user;
@@ -93,13 +94,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     await session.abortTransaction();
-    return NextResponse.json(
-      {
-        success: false,
-        message: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 500 }
-    );
+    return handleError(error, "api") as APIErrorResponse;
   } finally {
     session.endSession();
   }

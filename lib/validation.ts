@@ -135,3 +135,7 @@ export const SignUpSchema = z
     path: ["confirmPassword"],
     message: "Passwords do not match",
   });
+
+export const getUserSchema = z.object({
+  userId: z.string().min(1, "User ID is required"),
+});

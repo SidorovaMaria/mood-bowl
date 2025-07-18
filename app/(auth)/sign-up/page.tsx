@@ -19,8 +19,14 @@ import { Input } from "@/components/ui/input";
 import { UserRoundPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { sign } from "crypto";
+import { SignUpWithCredentials } from "@/lib/actions/auth.actions";
+import { Action, toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { IUserDoc } from "@/database/user.model";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -31,10 +37,20 @@ const SignUpPage = () => {
       confirmPassword: "",
     },
   });
-  function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignUpSchema>) {
+    const result = (await SignUpWithCredentials(
+      values
+    )) as ActionResponse<IUserDoc>;
+    if (result?.success) {
+      toast.success("Account created successfully!");
+      if (result.data) {
+        router.push(`/onboarding/1`);
+      }
+    } else {
+      toast.error(
+        result?.error?.message || "Something went wrong, please try again."
+      );
+    }
   }
   return (
     <div className="flex flex-col gap-6 items-center justify-center w-full ">
@@ -144,14 +160,6 @@ const SignUpPage = () => {
           />
           <Button
             type="submit"
-            disabled={
-              !form.getValues("name") ||
-              !form.getValues("email") ||
-              !form.getValues("username") ||
-              !form.getValues("password") ||
-              !form.getValues("confirmPassword") ||
-              form.formState.isSubmitting
-            }
             className="cursor-pointer! bg-transparent! border hover:border-transparent  px-4! py-5! text-base! font-bold! rounded-2xl! mt-4 relative group z-10 overflow-hidden"
           >
             <UserRoundPlus className="inline-flex size-5 relative z-10" />

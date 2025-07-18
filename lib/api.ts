@@ -1,7 +1,6 @@
 import { IAccount } from "@/database/account.model";
 import { fetchHandler } from "./fetch";
 import { IUser } from "@/database/user.model";
-import { SignInWithOAuthParams } from "@/types/global";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";

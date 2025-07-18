@@ -10,6 +10,8 @@
  */
 import { ZodSchema } from "zod";
 import dbConnect from "./mongoose";
+import { Session } from "next-auth";
+import { auth } from "@/auth";
 
 type ActionOptions<T> = {
   params?: T;
@@ -29,9 +31,23 @@ async function action<T>({ params, schema, authorize }: ActionOptions<T>) {
       }
     }
   }
+  let session: Session | null = null;
+  if (authorize) {
+    session = await auth();
+
+    if (!session) {
+      return {
+        success: false,
+        message: "Unauthorized",
+        status: 401,
+      };
+    }
+  }
+
   await dbConnect();
   return {
     params,
+    session,
   };
 }
 export default action;

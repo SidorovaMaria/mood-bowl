@@ -1,7 +1,7 @@
 import Account from "@/database/account.model";
+import handleError from "@/lib/errors";
 import dbConnect from "@/lib/mongoose";
 import { AccountSchema } from "@/lib/validation";
-import { ErrorResponse } from "@/types/global";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -12,35 +12,15 @@ export async function POST(request: Request) {
       providerAccountId,
     });
     if (!validatedDate.success) {
-      const responseBody: ErrorResponse = {
-        success: false,
-        message: validatedDate.error.message,
-      };
-      return NextResponse.json(responseBody, { status: 400 });
+      throw new Error(`Validation failed: ${validatedDate.error.message}`);
     }
     const account = await Account.findOne({
-      providerAccountId: validatedDate.data.providerAccountId,
+      providerAccountId: providerAccountId,
     });
-    if (!account) {
-      const responseBody: ErrorResponse = {
-        success: false,
-        message: "Account not found",
-      };
-      return NextResponse.json(responseBody, { status: 404 });
-    }
-    return NextResponse.json(
-      {
-        success: true,
-        data: account,
-        message: "Account fetched successfully",
-      },
-      { status: 200 }
-    );
+
+    if (!account) throw new Error("Account not found");
+    return NextResponse.json({ success: true, data: account }, { status: 200 });
   } catch (error) {
-    const responseBody: ErrorResponse = {
-      success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
-    };
-    return NextResponse.json(responseBody, { status: 500 });
+    return handleError(error, "api") as APIErrorResponse;
   }
 }

@@ -5,7 +5,7 @@ export interface IUser {
   username: string;
   email: string;
   avatarURL?: string;
-  sex: "female" | "male" |'unknown';
+  sex: "female" | "male" | "unknown";
   birthDate: Date;
   isProfileComplete?: boolean;
   preferences: {
@@ -42,7 +42,11 @@ const UserSchema = new Schema<IUser>(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     avatarURL: { type: String },
-    sex: { type: String, enum: ["female", "male",'unkown'], default: "unknown", },
+    sex: {
+      type: String,
+      enum: ["female", "male", "unknown"],
+      default: "unknown",
+    },
     birthDate: { type: Date, required: true },
     isProfileComplete: { type: Boolean, default: false },
     preferences: {

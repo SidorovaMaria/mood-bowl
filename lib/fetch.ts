@@ -7,8 +7,6 @@
 //  and returns a consistent ActionResponse<T>
 //  object for both success and error cases.
 
-import { ErrorResponse, SuccessResponse } from "@/types/global";
-
 interface FetchOptions extends RequestInit {
   timeout?: number;
 }
@@ -20,12 +18,13 @@ function isError(error: unknown): error is Error {
 export async function fetchHandler<T>(
   url: string,
   options: FetchOptions = {}
-): Promise<SuccessResponse<T> | ErrorResponse> {
+): Promise<ActionResponse<T>> {
   const {
-    timeout = 5000,
+    timeout = 100000,
     headers: customHeaders = {},
     ...restOptions
   } = options;
+
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
   const defaultHeaders = {
@@ -47,17 +46,11 @@ export async function fetchHandler<T>(
     if (!response.ok) {
       return {
         success: false,
-        message: `HTTP error! status: ${response.status}`,
+
         status: response.status,
       };
     }
-    // return (await response.json()) as Promise<ActionResponse<T>>;
-    return {
-      success: true,
-      data: (await response.json()) as T,
-      message: "Request successful",
-      status: response.status,
-    };
+    return (await response.json()) as Promise<ActionResponse<T>>;
   } catch (err) {
     const error = isError(err) ? err : new Error("Unknown error occurred");
     if (error.name === "AbortError") {
@@ -67,7 +60,9 @@ export async function fetchHandler<T>(
     }
     return {
       success: false,
-      message: error.message,
+      error: {
+        message: error.message,
+      },
       status: 500,
     };
   }

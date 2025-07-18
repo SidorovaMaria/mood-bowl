@@ -1,4 +1,6 @@
 import User from "@/database/user.model";
+import handleError from "@/lib/errors";
+import { ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
 import { UserSchema } from "@/lib/validation";
 import { NextResponse } from "next/server";
@@ -15,11 +17,7 @@ export async function GET() {
     };
     return NextResponse.json(responseBody, { status: 200 });
   } catch (error) {
-    const responseBody = {
-      success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
-    };
-    return NextResponse.json(responseBody, { status: 500 });
+    return handleError(error, "api") as APIErrorResponse;
   }
 }
 
@@ -30,38 +28,26 @@ export async function POST(request: Request) {
     const body = await request.json();
     const validatedData = UserSchema.safeParse(body);
     if (!validatedData.success) {
-      const responseBody = {
-        success: false,
-        message: "Validation failed",
-        errors: validatedData.error.issues,
-      };
-      return NextResponse.json(responseBody, { status: 400 });
-    }
-    if (validatedData.success) {
-      console.log("User Scema is valid");
+      return new ValidationError(
+        validatedData.error.flatten().fieldErrors as Record<string, string[]>
+      );
     }
     const { email, username } = validatedData.data;
     const existingUserViaEmail = await User.findOne({ email });
     const existingUserViaUsername = await User.findOne({ username });
     if (existingUserViaEmail || existingUserViaUsername) {
-      const responseBody = {
-        success: false,
-        message: "User already exists with this email or username",
-      };
-      return NextResponse.json(responseBody, { status: 409 });
+      return new Error("User with this email or username already exists");
     }
     const newUser = await User.create(validatedData.data);
-    const responseBody = {
-      success: true,
-      data: newUser,
-      message: "User created successfully",
-    };
-    return NextResponse.json(responseBody, { status: 201 });
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: newUser,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    const responseBody = {
-      success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
-    };
-    return NextResponse.json(responseBody, { status: 500 });
+    return handleError(error, "api") as APIErrorResponse;
   }
 }
