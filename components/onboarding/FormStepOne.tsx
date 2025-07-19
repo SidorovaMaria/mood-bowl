@@ -21,6 +21,7 @@ import { useOnboarding } from "@/context/OnboardingContext";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import {
+  ArrowLeft,
   ArrowRight,
   CalendarIcon,
   SmileIcon,
@@ -29,6 +30,7 @@ import {
 import { Calendar } from "../ui/calendar";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
+import Link from "next/link";
 
 const StepOneSchema = z.object({
   preference: z

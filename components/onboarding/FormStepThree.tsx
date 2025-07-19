@@ -16,9 +16,10 @@ import { Input } from "../ui/input";
 import { RadioGroup } from "../ui/radio-group";
 import { RadioGroupItem } from "@radix-ui/react-radio-group";
 import { Button } from "../ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/context/OnboardingContext";
+import Link from "next/link";
 
 const stepThreeSchema = z.object({
   fitnessGoals: z.object({
@@ -82,7 +83,7 @@ const FormStepThree = () => {
   const onSubmit = (values: z.infer<typeof stepThreeSchema>) => {
     console.log("Form Step Two Values:", values);
     setData((prev) => ({ ...prev, ...values }));
-    router.push("/onboarding/4");
+    router.push("/onboarding/completed");
   };
   return (
     <Form {...form}>
@@ -286,14 +287,32 @@ const FormStepThree = () => {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className="form-submit-button group relative z-10 "
-        >
-          <p className="relative z-10 group-hover:text-background">Next</p>
-          <ArrowRight className="form-submit-btn-icon" />
-          <div className="form-submit-btn-bg"></div>
-        </Button>
+        <div className="flex items-center gap-10 justify-center">
+          <Button
+            asChild
+            type="button"
+            className="form-submit-button group relative z-10 "
+          >
+            <Link
+              href={
+                data.preference?.trackMood ? "/onboarding/2" : "/onboarding/1"
+              }
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="form-submit-btn-icon" />
+              <p className="relative z-10 group-hover:text-background">Back</p>
+              <div className="form-back-btn-bg"></div>
+            </Link>
+          </Button>
+          <Button
+            type="submit"
+            className="form-submit-button group relative z-10 "
+          >
+            <p className="relative z-10 group-hover:text-background">Next</p>
+            <ArrowRight className="form-submit-btn-icon" />
+            <div className="form-submit-btn-bg"></div>
+          </Button>
+        </div>
       </form>
     </Form>
   );

@@ -30,7 +30,7 @@ const StepForm = async ({ params }: RouteParams) => {
     redirect(`/${user._id}/dashboard`);
   }
 
-  return <StepForms stepId={stepId} />;
+  return <StepForms stepId={stepId} user={user} />;
 };
 
 export default StepForm;

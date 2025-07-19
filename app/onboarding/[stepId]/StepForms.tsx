@@ -3,10 +3,11 @@ import CompletedReview from "@/components/onboarding/CompletedReview";
 import FormStepOne from "@/components/onboarding/FormStepOne";
 import FormStepThree from "@/components/onboarding/FormStepThree";
 import FormStepTwo from "@/components/onboarding/FormStepTwo";
+import { IUserDoc } from "@/database/user.model";
 import { AnimatePresence, motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 
-const StepForms = ({ stepId }: { stepId: string }) => {
+const StepForms = ({ stepId, user }: { stepId: string; user: IUserDoc }) => {
   return (
     <AnimatePresence mode="sync">
       <motion.div
@@ -20,7 +21,7 @@ const StepForms = ({ stepId }: { stepId: string }) => {
         {stepId === "1" && <FormStepOne />}
         {stepId === "2" && <FormStepTwo />}
         {stepId === "3" && <FormStepThree />}
-        {stepId === "complete" && <CompletedReview />}
+        {stepId === "completed" && <CompletedReview user={user} />}
       </motion.div>
     </AnimatePresence>
   );

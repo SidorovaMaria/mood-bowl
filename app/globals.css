@@ -49,6 +49,9 @@ body {
   .form-submit-btn-bg {
     @apply absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300;
   }
+  .form-back-btn-bg {
+    @apply absolute inset-0 bg-gradient-to-r from-primary to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300;
+  }
 }
 @keyframes swin-left-to-right {
   0% {
@@ -106,7 +109,7 @@ body {
   --popover-foreground: oklch(0.129 0.042 264.695);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
-  --destructive: #ffa87e;
+  --destructive: oklab(69.34700000000001% 0.15343 0.05879);
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
@@ -132,7 +135,7 @@ body {
   --popover-foreground: oklch(0.984 0.003 247.858);
   --muted: oklch(0.279 0.041 260.031);
   --muted-foreground: oklch(0.704 0.04 256.788);
-  --destructive: oklch(0.704 0.191 22.216);
+  --destructive: #ff6467;
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.551 0.027 264.364);
