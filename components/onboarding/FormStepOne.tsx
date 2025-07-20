@@ -68,7 +68,7 @@ const FormStepOne = () => {
     defaultValues: {
       preference: {
         trackMood: data.preference?.trackMood || false,
-        trackMeals: data.preference?.trackMood || false,
+        trackMeals: data.preference?.trackMeals || false,
       },
       sex: data.sex || "",
       birthDate: data.birthDate || new Date("2009-01-01"),
@@ -85,7 +85,11 @@ const FormStepOne = () => {
   const onSubmit = (values: z.infer<typeof StepOneSchema>) => {
     console.log("FormStepOne submitted with values:", values);
     setData((prev) => ({ ...prev, ...values }));
-    router.push("/onboarding/2"); // Go to the next step
+    if (values.preference.trackMood) {
+      router.push("/onboarding/2"); // Go to the next step
+    } else {
+      router.push("/onboarding/3"); // Go to the Meals Tracking
+    }
   };
 
   return (

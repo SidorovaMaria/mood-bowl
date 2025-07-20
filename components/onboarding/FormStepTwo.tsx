@@ -58,9 +58,6 @@ const FormStepTwo = () => {
   const router = useRouter();
   const { data, setData } = useOnboarding();
 
-  if (data.preference?.trackMood === false) {
-    router.push(`/onboarding/3`);
-  }
   const form = useForm<z.infer<typeof StepTwoSchema>>({
     resolver: zodResolver(StepTwoSchema),
     defaultValues: {
@@ -91,7 +88,11 @@ const FormStepTwo = () => {
       values.mentalHealthGoals.journalingDayOfTheMonth = 1;
     }
     setData((prev) => ({ ...prev, ...values }));
-    router.push("/onboarding/3");
+    if (data.preference?.trackMeals) {
+      router.push("/onboarding/3");
+    } else {
+      router.push("/onboarding/completed"); // Go to the next step
+    }
   };
 
   return (

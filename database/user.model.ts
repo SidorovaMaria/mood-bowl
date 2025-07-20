@@ -80,7 +80,7 @@ const UserSchema = new Schema<IUser>(
         enum: ["daily", "weekly", "monthly"],
       },
       journalingDayOfTheWeek: {
-        type: [String],
+        type: String,
         enum: [
           "Monday",
           "Tuesday",

@@ -10,12 +10,17 @@ type OnboardingData = {
   sex?: string;
   birthDate?: Date;
   fitnessGoals?: {
-    dietType?: string;
+    dietType?: "vegan" | "vegetarian" | "paleo" | "keto" | "balanced";
     heightCm?: number;
-    goal?: string;
+    goal?: "maintain" | "lose" | "gain";
     currentWeightKg?: number;
     targetWeightKg?: number;
-    activityLevel?: string;
+    activityLevel?:
+      | "sedentary"
+      | "light"
+      | "moderate"
+      | "active"
+      | "very_active";
     calorieOverride?: number;
   };
   mentalHealthGoals?: {

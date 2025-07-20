@@ -1,3 +1,4 @@
+import { User } from "lucide-react";
 import { z } from "zod";
 export const SignInSchema = z.object({
   email: z
@@ -39,6 +40,7 @@ export const UserSchema = z.object({
   username: z.string().min(1, "Username is required"),
   email: z.string().email("Invalid email format").min(1, "Email is required"),
   avatarURL: z.string().optional(),
+  isProfileComplete: z.boolean().default(false),
   sex: z.enum(["female", "male"], {
     message: "Invalid sex identification",
   }),
@@ -92,17 +94,15 @@ export const UserSchema = z.object({
       meditationMinutesPerDay: z.number().optional(),
       journalingFrequency: z.enum(["daily", "weekly", "monthly"]),
       journalingDayOfTheWeek: z
-        .array(
-          z.enum([
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-          ])
-        )
+        .enum([
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ])
         .optional(),
       journalingDayOfTheMonth: z
         .number()
@@ -157,4 +157,11 @@ export const SignUpSchema = z
 
 export const getUserSchema = z.object({
   userId: z.string().min(1, "User ID is required"),
+});
+
+export const updateUserSchema = UserSchema.pick({
+  sex: true,
+  birthDate: true,
+  isProfileComplete: true,
+  preferences: true,
 });

@@ -7,11 +7,35 @@ import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Arrow } from "@radix-ui/react-popover";
+import { updateUser } from "@/lib/actions/user.actions";
 
 const CompletedReview = ({ user }: { user: IUserDoc }) => {
   const { data, setData } = useOnboarding();
   console.log("Onboarding Data:", data);
   console.log("User Data:", user);
+  const handleUpdate = async () => {
+    const updateData: updateUserParams = {
+      birthDate: data.birthDate,
+      sex: data.sex,
+      preferences: {
+        trackMood: data.preference?.trackMood,
+        trackMeals: data.preference?.trackMeals,
+      },
+      isProfileComplete: true,
+    };
+
+    if (data.preference?.trackMood) {
+      updateData.mentalHealthGoals = { ...data.mentalHealthGoals };
+    }
+    if (data.preference?.trackMeals) {
+      updateData.fitnessGoals = { ...data.fitnessGoals };
+    }
+    console.log("Update Data:", updateData);
+    const updatedUser = await updateUser({
+      ...updateData,
+    });
+    console.log("Updated User:", updatedUser);
+  };
   return (
     <aside className="space-y-4 w-full text-center max-w-md mx-auto max-sm:px-10  md:min-w-2xl ">
       <div className="">
@@ -205,6 +229,7 @@ const CompletedReview = ({ user }: { user: IUserDoc }) => {
       <div className="flex flex-col items-center justify-center gap-1 text-center">
         <h4 className="text-xl font-semibold">Ready to jump in?</h4>
         <Button
+          onClick={handleUpdate}
           type="button"
           className="form-submit-button group relative z-10 mt-2"
         >
