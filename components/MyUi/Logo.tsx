@@ -1,0 +1,109 @@
+import React from "react";
+import { motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+const Logo = ({ imageLogo }: { imageLogo?: boolean }) => {
+  return (
+    <Link href="/" className="flex items-center">
+      <motion.div
+        whileHover="animate"
+        initial="initial"
+        variants={{
+          initial: {
+            y: 0,
+          },
+          animate: {
+            y: [0, -10, 0],
+
+            transition: { duration: 0.7, ease: "easeInOut" },
+          },
+        }}
+        animate="initial"
+        className="flex items-center cursor-pointer space-x-2"
+      >
+        <div className="w-8 h-8 flex items-center justify-center">
+          {imageLogo && (
+            <Image
+              src="/images/icons/happyLogo.png"
+              alt="Logo"
+              width={120}
+              height={120}
+              className=""
+            />
+          )}
+        </div>
+        <span className="text-2xl lg:text-2xl font-bold font-comfortaa cursor-pointer">
+          Moo
+          <motion.span
+            variants={{
+              initial: {
+                rotate: 0,
+                y: 0,
+
+                transition: { duration: 0.7, ease: "easeInOut" },
+              },
+              animate: {
+                rotate: [0, 180],
+                y: [0, -10, -3],
+                color: "#ffe38d",
+                transition: { duration: 0.7, ease: "easeInOut" },
+              },
+            }}
+            className="inline-block"
+          >
+            D
+          </motion.span>
+          <motion.span
+            variants={{
+              initial: {
+                y: 0,
+                transition: { duration: 0.7, ease: "easeInOut" },
+              },
+              animate: {
+                y: [0, -10, 0],
+                color: "#81c5af",
+                transition: { duration: 0.7, ease: "easeInOut" },
+              },
+            }}
+            className="inline-block relative z-30"
+          >
+            B
+            <motion.span
+              variants={{
+                initial: {
+                  opacity: 0,
+                  transition: { duration: 0.7, ease: "easeInOut" },
+                },
+                animate: {
+                  opacity: 1,
+                  transition: { duration: 0.7, ease: "easeInOut" },
+                },
+              }}
+              className="absolute -top-[3%] left-[15%] text-base  -z-10 text-primary"
+            >
+              •
+            </motion.span>
+            <motion.span
+              variants={{
+                initial: {
+                  opacity: 0,
+                  transition: { duration: 0.7, ease: "easeInOut" },
+                },
+                animate: {
+                  opacity: 1,
+                  transition: { duration: 0.7, ease: "easeInOut" },
+                },
+              }}
+              className="absolute top-[22%] left-[15%] text-base  -z-10 text-primary"
+            >
+              •
+            </motion.span>
+          </motion.span>
+          owL
+        </span>
+      </motion.div>
+    </Link>
+  );
+};
+
+export default Logo;

@@ -1,112 +1,21 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import React from "react";
 
-import { motion } from "motion/react";
-import { animate } from "motion";
 import { Button } from "../ui/button";
-import { ArrowRight, ArrowRightCircle } from "lucide-react";
+import { ArrowRightCircle, LogIn } from "lucide-react";
+import Logo from "../MyUi/Logo";
+import { signOut, useSession } from "next-auth/react";
 const LandingNavbar = () => {
+  const { data } = useSession();
+  console.log("Session Data:", data);
+
   return (
     <header className="fixed top-0 w-full z-50 bg-[var(--color-background)]/90 backdrop-blur-sm border-b border-background-light">
       <div className="container  mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <motion.div
-            whileHover="animate"
-            initial="initial"
-            variants={{
-              initial: {
-                y: 0,
-              },
-              animate: {
-                y: [0, -10, 0],
-
-                transition: { duration: 0.7, ease: "easeInOut" },
-              },
-            }}
-            animate="initial"
-            className="flex items-center cursor-pointer space-x-2"
-          >
-            <div className="w-8 h-8 flex items-center justify-center">
-              <Image
-                src="/images/icons/happyLogo.png"
-                alt="Logo"
-                width={120}
-                height={120}
-                className=""
-              />
-            </div>
-            <span className="text-2xl lg:text-2xl font-bold font-comfortaa cursor-pointer">
-              Moo
-              <motion.span
-                variants={{
-                  initial: {
-                    rotate: 0,
-                    y: 0,
-
-                    transition: { duration: 0.7, ease: "easeInOut" },
-                  },
-                  animate: {
-                    rotate: [0, 180],
-                    y: [0, -10, -3],
-                    color: "#ffe38d",
-                    transition: { duration: 0.7, ease: "easeInOut" },
-                  },
-                }}
-                className="inline-block"
-              >
-                D
-              </motion.span>
-              <motion.span
-                variants={{
-                  initial: {
-                    y: 0,
-                    transition: { duration: 0.7, ease: "easeInOut" },
-                  },
-                  animate: {
-                    y: [0, -10, 0],
-                    color: "#ffa875",
-                    transition: { duration: 0.7, ease: "easeInOut" },
-                  },
-                }}
-                className="inline-block relative z-30"
-              >
-                B
-                <motion.span
-                  variants={{
-                    initial: {
-                      opacity: 0,
-                      transition: { duration: 0.7, ease: "easeInOut" },
-                    },
-                    animate: {
-                      opacity: 1,
-                      transition: { duration: 0.7, ease: "easeInOut" },
-                    },
-                  }}
-                  className="absolute -top-[3%] left-[15%] text-base  -z-10 text-primary"
-                >
-                  •
-                </motion.span>
-                <motion.span
-                  variants={{
-                    initial: {
-                      opacity: 0,
-                      transition: { duration: 0.7, ease: "easeInOut" },
-                    },
-                    animate: {
-                      opacity: 1,
-                      transition: { duration: 0.7, ease: "easeInOut" },
-                    },
-                  }}
-                  className="absolute top-[22%] left-[15%] text-base  -z-10 text-primary"
-                >
-                  •
-                </motion.span>
-              </motion.span>
-              owL
-            </span>
-          </motion.div>
+          <Logo imageLogo />
           <nav className="hidden md:flex items-center space-x-8 ">
             <Link href="#features" className="link">
               Features
@@ -121,23 +30,48 @@ const LandingNavbar = () => {
               <span className="slider" />
             </Link>
           </nav>
-          <div className="flex items-center space-x-4 ">
-            <button
-              type="button"
-              className="text-foreground! hover:text-primary transition-colors whitespace-nowrap hover:bg-background! cursor-pointer hover:font-bold"
-            >
-              <Link href="/sign-in">Sign In</Link>
-            </button>
-            <Button
-              variant="outline"
-              className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-2xl font-bold whitespace-nowrap cursor-pointer group hover:scale-105"
-            >
-              <Link href="/sign-up" className="flex items-center gap-2">
-                Get Started
-                <ArrowRightCircle className=" size-4 group-hover:animate-bounce-right" />
-              </Link>
-            </Button>
-          </div>
+          {data?.user?.id ? (
+            <div className="flex items-center space-x-4 ">
+              <Button
+                variant="outline"
+                className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-2xl font-bold whitespace-nowrap cursor-pointer group hover:scale-105"
+              >
+                <Link
+                  href={`${data.user.id}/dashboard`}
+                  className="flex items-center gap-2"
+                >
+                  Back to Profile
+                  <LogIn className=" size-4 group-hover:animate-bounce-right" />
+                </Link>
+              </Button>
+              <button
+                type="button"
+                onClick={() => signOut()}
+                className="text-foreground! hover:text-primary transition-colors whitespace-nowrap hover:bg-background! cursor-pointer hover:font-bold"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-4 ">
+              <button
+                type="button"
+                className="text-foreground! hover:text-primary transition-colors whitespace-nowrap hover:bg-background! cursor-pointer hover:font-bold"
+              >
+                <Link href="/sign-in">Sign In</Link>
+              </button>
+
+              <Button
+                variant="outline"
+                className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-2xl font-bold whitespace-nowrap cursor-pointer group hover:scale-105"
+              >
+                <Link href="/sign-up" className="flex items-center gap-2">
+                  Get Started
+                  <ArrowRightCircle className=" size-4 group-hover:animate-bounce-right" />
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </header>

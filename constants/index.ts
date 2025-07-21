@@ -8,6 +8,8 @@ import {
   CalendarClock,
   ToggleLeft,
   Wand2,
+  LayoutDashboard,
+  User2,
 } from "lucide-react";
 
 export const HeroFeatures = [
@@ -186,65 +188,13 @@ export const reviewQuotes = [
   },
 ];
 
-export const ONBOARDING_STEPS = [
-  {
-    id: "1",
-    title: "Basics",
-    description: "Your profile and preferences",
-  },
-  {
-    id: "step-2",
-    title: "Mind Goals",
-    description: "Set your mental health intentions",
-    consition: {
-      preference: {
-        trackMood: true,
-      },
-    },
-  },
-  {
-    id: "step-3",
-    title: "Body Metrics",
-    description: "Track your current physical stats",
-    consition: {
-      preference: {
-        trackMeals: true,
-      },
-    },
-  },
-  {
-    id: "step-4",
-    title: "Fitness Goals",
-    description: "Customize your fitness objectives",
-    consition: {
-      preference: {
-        trackMeals: true,
-      },
-    },
-  },
-  {
-    id: "step-5",
-    title: "Review",
-    description: "Confirm your data and get started",
-    condition: {
-      isProfileComplete: true,
-    },
-    fields: [], // Final summary step
-  },
-  {
-    id: "error",
-    title: "No Preferences",
-    description: "Looks like you haven’t selected any tracking options.",
-    condition: {
-      preference: {
-        trackMood: false,
-        trackMeals: false,
-      },
-    },
-    fields: [],
-  },
+export const AppNavigationItems = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/meals", label: "Meals", icon: UtensilsCrossed },
+  { href: "/mood", label: "Mood", icon: CalendarClock },
+  { href: "/blog", label: "Blog", icon: NotebookPen },
+  { href: "/profile", label: "Profile", icon: User2 },
 ];
-
 export const onboardingSteps = [
   { id: "1", name: "Basic Info" },
   { id: "2", name: "Mental Wellness" },
