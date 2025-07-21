@@ -15,8 +15,6 @@ const GoogleSignIn = () => {
         redirect: true,
       });
     } catch (error) {
-      console.log(error);
-
       toast.error("Failed to sign in with Google. Please try again.");
     }
   };

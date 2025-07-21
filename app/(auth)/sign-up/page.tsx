@@ -24,6 +24,7 @@ import { SignUpWithCredentials } from "@/lib/actions/auth.actions";
 import { Action, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { IUserDoc } from "@/database/user.model";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -158,11 +159,16 @@ const SignUpPage = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="submit-button group relative z-10">
+          <ButtonSlide
+            type="submit"
+            text="Create an Account"
+            icon={UserRoundPlus}
+          />
+          {/* <Button type="submit" className="submit-button group relative z-10">
             <UserRoundPlus className="inline-flex size-5 relative z-10" />
             <p className="relative z-10">Create an Account</p>
             <div className="submit-btn-bg"></div>
-          </Button>
+          </Button> */}
         </form>
       </Form>
       <p className="text-sm font-medium">

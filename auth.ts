@@ -25,7 +25,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!existingAccount) {
             return null;
           }
-          console.log(existingAccount);
 
           const { data: existingUser } = (await api.users.getById(
             existingAccount.userId.toString()

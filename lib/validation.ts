@@ -1,16 +1,5 @@
 import { User } from "lucide-react";
 import { z } from "zod";
-export const SignInSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Email is required." })
-    .email({ message: "Please provide a valid email address." }),
-
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters long." })
-    .max(100, { message: "Password cannot exceed 100 characters." }),
-});
 
 export const AccountSchema = z.object({
   userId: z.string(),
@@ -125,7 +114,16 @@ export const SignInWithOAuthSchema = z.object({
     avatarURL: z.string().url("Invalid image URL").optional(),
   }),
 });
-
+export const SignInSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required." })
+    .email({ message: "Please provide a valid email address." }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters long." })
+    .max(100, { message: "Password cannot exceed 100 characters." }),
+});
 export const SignUpSchema = z
   .object({
     name: z.string().min(1, "Name is required"),

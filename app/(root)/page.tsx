@@ -7,10 +7,7 @@ import Image from "next/image";
 
 export default async function Home() {
   const session = await auth();
-
-  console.log("Session:", session);
   const userId = session?.user?.id;
-  console.log("User ID:", userId);
   return (
     <>
       <HeroSection />

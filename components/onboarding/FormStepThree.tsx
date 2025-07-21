@@ -46,7 +46,6 @@ const stepThreeSchema = z.object({
 
 const FormStepThree = () => {
   const { data, setData } = useOnboarding();
-  console.log("Form Step Three Data:", data);
   const router = useRouter();
   const form = useForm<z.infer<typeof stepThreeSchema>>({
     resolver: zodResolver(stepThreeSchema),
@@ -81,7 +80,6 @@ const FormStepThree = () => {
     },
   });
   const onSubmit = (values: z.infer<typeof stepThreeSchema>) => {
-    console.log("Form Step Two Values:", values);
     setData((prev) => ({ ...prev, ...values }));
     router.push("/onboarding/completed");
   };

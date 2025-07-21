@@ -31,6 +31,7 @@ import { Calendar } from "../ui/calendar";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const StepOneSchema = z.object({
   preference: z
@@ -74,16 +75,7 @@ const FormStepOne = () => {
       birthDate: data.birthDate || new Date("2009-01-01"),
     },
   });
-  React.useEffect(() => {
-    if (
-      form.formState.errors &&
-      Object.keys(form.formState.errors).length > 0
-    ) {
-      console.log("FormStepOne errors:", form.formState.errors);
-    }
-  }, [form.formState.errors]);
   const onSubmit = (values: z.infer<typeof StepOneSchema>) => {
-    console.log("FormStepOne submitted with values:", values);
     setData((prev) => ({ ...prev, ...values }));
     if (values.preference.trackMood) {
       router.push("/onboarding/2"); // Go to the next step

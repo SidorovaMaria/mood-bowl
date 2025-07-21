@@ -4,6 +4,7 @@ import action from "../action";
 import { getUserSchema, updateUserSchema } from "../validation";
 import handleError from "../errors";
 import { Update } from "next/dist/build/swc/types";
+import { revalidatePath } from "next/cache";
 export async function getUser(params: { userId: string }): Promise<
   ActionResponse<{
     user: IUserDoc;
@@ -60,6 +61,7 @@ export async function updateUser(
     const updatedUser = await User.findByIdAndUpdate(user?.id, params, {
       new: true,
     });
+    revalidatePath("/onboarding/completed");
     return {
       success: true,
       data: {

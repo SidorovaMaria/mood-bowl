@@ -9,7 +9,6 @@ import Logo from "../MyUi/Logo";
 import { signOut, useSession } from "next-auth/react";
 const LandingNavbar = () => {
   const { data } = useSession();
-  console.log("Session Data:", data);
 
   return (
     <header className="fixed top-0 w-full z-50 bg-[var(--color-background)]/90 backdrop-blur-sm border-b border-background-light">

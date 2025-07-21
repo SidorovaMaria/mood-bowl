@@ -9,7 +9,6 @@ import Logo from "@/components/MyUi/Logo";
 
 const NavBar = () => {
   const pathname = usePathname();
-  console.log("Current Pathname:", pathname);
   const { data } = useSession();
   if (!data?.user?.id) {
     return null; // or return a placeholder if user is not authenticated

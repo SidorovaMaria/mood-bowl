@@ -109,7 +109,7 @@ body {
   --popover-foreground: oklch(0.129 0.042 264.695);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
-  --destructive: oklab(69.34700000000001% 0.15343 0.05879);
+  --destructive: oklab(53.854% 0.18708 0.10114);
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);

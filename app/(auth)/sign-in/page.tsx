@@ -1,30 +1,107 @@
 "use client";
-
-import { signIn } from "next-auth/react";
+import { SignInSchema } from "@/lib/validation";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { signInWithCredentials } from "@/lib/actions/auth.actions";
+import { toast } from "sonner";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import Link from "next/link";
+const SignIn = () => {
+  const router = useRouter();
+  const form = useForm<z.infer<typeof SignInSchema>>({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  async function handleSignIn(values: z.infer<typeof SignInSchema>) {
+    const result = (await signInWithCredentials(values)) as ActionResponse;
 
-const SocialAuthForm = () => {
-  const buttonClass =
-    "background-dark400_light900 body-medium text-dark200_light800 min-h-12 flex-1 rounded-2 px-4 py-3.5";
-
-  const handleSignIn = async (provider: "github" | "google") => {
-    try {
-      await signIn(provider, {
-        callbackUrl: "/onboarding",
-        redirect: true,
-      });
-    } catch (error) {
-      console.log(error);
+    if (result?.success) {
+      router.push(`/onboarding/1`);
+      toast.success("Welcome back!");
+    } else {
+      toast.error(
+        result?.error?.message || "Something went wrong, please try again."
+      );
     }
-  };
+  }
 
   return (
-    <div className="mt-10 flex flex-wrap gap-2.5">
-      <button className={buttonClass} onClick={() => handleSignIn("google")}>
-        <span>Log in with Google</span>
-      </button>
+    <div className="flex flex-col gap-6 items-center justify-center w-full ">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold mb-1">Welcome Back</h1>
+        <p className="font-semibold text-sm">Let’s get you back on track</p>
+      </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSignIn)}
+          className="flex flex-col items-center gap-4 w-full max-w-md"
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Email Address</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Welcome back! Type your email"
+                    {...field}
+                    className="no-focus font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0 placeholder:text-xs placeholder:font-bold placeholder:text-background/50"
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="font-bold">Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Enter your password to get cozy again"
+                    {...field}
+                    className="no-focus font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0 placeholder:text-xs placeholder:text-background/50"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <ButtonSlide type="submit" text="Sign In" />
+        </form>
+      </Form>
+      <p className="text-sm font-medium">
+        Not a member yet?{" "}
+        <Link
+          href="/sign-up"
+          className="link text-background  ml-1 font-bold hover:text-primary"
+        >
+          Sign Up
+          <span className="slider" />
+        </Link>
+      </p>
     </div>
   );
 };
 
-export default SocialAuthForm;
+export default SignIn;

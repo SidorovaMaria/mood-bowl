@@ -11,8 +11,6 @@ import { updateUser } from "@/lib/actions/user.actions";
 
 const CompletedReview = ({ user }: { user: IUserDoc }) => {
   const { data, setData } = useOnboarding();
-  console.log("Onboarding Data:", data);
-  console.log("User Data:", user);
   const handleUpdate = async () => {
     const updateData: updateUserParams = {
       birthDate: data.birthDate,
@@ -30,11 +28,9 @@ const CompletedReview = ({ user }: { user: IUserDoc }) => {
     if (data.preference?.trackMeals) {
       updateData.fitnessGoals = { ...data.fitnessGoals };
     }
-    console.log("Update Data:", updateData);
     const updatedUser = await updateUser({
       ...updateData,
     });
-    console.log("Updated User:", updatedUser);
   };
   return (
     <aside className="space-y-4 w-full text-center max-w-md mx-auto max-sm:px-10  md:min-w-2xl ">
