@@ -12,24 +12,58 @@ const ProfileInfoEdit = ({
   user,
   label,
   type,
+  title,
+  preferences,
 }: {
   user: IUserDoc;
-  label: keyof IUserDoc;
+  title?: string;
+  label:
+    | keyof IUserDoc
+    | keyof IUserDoc["fitnessGoals"]
+    | keyof IUserDoc["mentalHealthGoals"]
+    | keyof IUserDoc["preferences"];
   type?: string;
+  preferences?: "mentalHealthGoals" | "fitnessGoals" | "preferences";
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState(user[label]);
+
+  // Helper type guard
+  function isUserDocKey(
+    key: keyof IUserDoc | keyof IUserDoc["preferences"]
+  ): key is keyof IUserDoc {
+    return !preferences && typeof key === "string" && key in user;
+  }
+
+  const [value, setValue] = useState(
+    preferences
+      ? (user[preferences] as Record<string, unknown>)?.[
+          label as keyof (typeof user)[typeof preferences]
+        ]
+      : isUserDocKey(label)
+      ? user[label]
+      : ""
+  );
   const onEdit = () => {
     if (!isEditing) {
-      setValue(user[label]);
+      if (isUserDocKey(label)) {
+        setValue(user[label]);
+      } else if (preferences) {
+        setValue((user[preferences] as Record<string, unknown>)?.[label]);
+      } else {
+        setValue("");
+      }
     }
     setIsEditing(!isEditing);
   };
   const onSave = async () => {
-    console.log("Saving changes for:", label, "with value:", value);
-    const { success, error } = await EditUserInfo({ user, label, value });
+    const { success, error } = await EditUserInfo({
+      user,
+      label: preferences
+        ? (`${preferences}.${String(label)}` as keyof IUserDoc)
+        : (label as keyof IUserDoc),
+      value,
+    });
     if (!success) {
-      console.log(error);
       toast.error("Failed to update", {
         description: error?.message || "An error occurred while updating.",
       });
@@ -42,7 +76,7 @@ const ProfileInfoEdit = ({
   return (
     <div className="w-full">
       <label className="pl-2 block text-sm font-semibold text-foreground/80 capitalize ">
-        {label}
+        {title ? title : label}
       </label>
       <div
         className={`flex items-center rounded-xl pl-4 pr-1 py-1 border border-accent/10 ${
@@ -62,14 +96,26 @@ const ProfileInfoEdit = ({
         ) : (
           <p className="text-foreground bg-background/50 flex-1 w-full">
             {label === "birthDate"
-              ? new Date(user[label]).toLocaleDateString()
+              ? new Date(
+                  preferences
+                    ? (user[preferences] as Record<string, unknown>)?.[label]
+                    : user[label as keyof IUserDoc]
+                ).toLocaleDateString()
               : label === "email"
-              ? user[label]
+              ? preferences
+                ? (user[preferences] as Record<string, unknown>)?.[label]
+                : user[label as keyof IUserDoc]
               : label === "username"
-              ? `@${user[label]}`
+              ? preferences
+                ? `@${(user[preferences] as Record<string, unknown>)?.[label]}`
+                : `@${user[label as keyof IUserDoc]}`
               : label === "name"
-              ? user[label]
-              : user[label]}
+              ? preferences
+                ? (user[preferences] as Record<string, unknown>)?.[label]
+                : user[label as keyof IUserDoc]
+              : preferences
+              ? (user[preferences] as Record<string, unknown>)?.[label]
+              : user[label as keyof IUserDoc]}
           </p>
         )}
         <Button
@@ -80,16 +126,20 @@ const ProfileInfoEdit = ({
           {isEditing ? <Undo2 /> : <EditIcon />}
         </Button>
 
-        {isEditing && value !== user[label] && (
-          <Button
-            onClick={onSave}
-            title="Save changes"
-            className="ml-2 font-bold bg-transparent text-foreground cursor-pointer rounded-lg relative group hover:bg-transparent z-10 border overflow-hidden hover:text-background transition-colors"
-          >
-            <SaveIcon />
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary to-secondary scale-x-0 transition-transform group-hover:scale-x-100 origin-left duration-300 -z-10" />
-          </Button>
-        )}
+        {isEditing &&
+          value !==
+            (preferences
+              ? (user[preferences] as Record<string, unknown>)?.[label]
+              : user[label as keyof IUserDoc]) && (
+            <Button
+              onClick={onSave}
+              title="Save changes"
+              className="ml-2 font-bold bg-transparent text-foreground cursor-pointer rounded-lg relative group hover:bg-transparent z-10 border overflow-hidden hover:text-background transition-colors"
+            >
+              <SaveIcon />
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary to-secondary scale-x-0 transition-transform group-hover:scale-x-100 origin-left duration-300 -z-10" />
+            </Button>
+          )}
       </div>
     </div>
   );

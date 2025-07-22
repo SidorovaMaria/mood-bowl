@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import ProfileInfoDropdown from "@/components/main-application/settings/ProfileInfoDropdown";
 import ProfileInfoEdit from "@/components/main-application/settings/ProfileInfoEdit";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { IUserDoc } from "@/database/user.model";
 import { getUser, updateUser } from "@/lib/actions/user.actions";
 import { getAgeFromBirthDate } from "@/lib/utils";
 
@@ -19,7 +20,6 @@ const SettingsUser = async () => {
     return <div>Error loading user settings.</div>;
   }
   const user = data.user;
-  console.log("User data fetched successfully:", user);
 
   return (
     <main className="">
@@ -62,16 +62,25 @@ const SettingsUser = async () => {
           <ProfileInfoEdit user={user} label="username" type="string" />
           <ProfileInfoEdit user={user} label="email" type="email" />
           <div className="flex items-end gap-3">
-            <ProfileInfoEdit user={user} label="birthDate" type="date" />
+            <ProfileInfoEdit
+              user={user}
+              label="birthDate"
+              type="date"
+              title="Date of Birth"
+            />
             <p className="text-foreground bg-background/50 rounded-xl px-4 py-2.5 w-1/3 ">
               Age: {getAgeFromBirthDate(user.birthDate)}yrs
             </p>
           </div>
           <ProfileInfoDropdown
             user={user}
+            title="Sex"
             optionsLabel="Sex at Birth"
             label="sex"
-            options={["female", "male"]}
+            options={[
+              { value: "female", label: "Female" },
+              { value: "male", label: "Male" },
+            ]}
           />
           <ButtonSlide
             text="Change Password"
@@ -82,6 +91,75 @@ const SettingsUser = async () => {
           />
         </div>
       </div>
+      {user.preferences.trackMeals && (
+        <div className="border p-5 border-accent/20 backgrop-blur-sm">
+          <div className="flex items-center space-x-3 mb-5">
+            <h2 className="text-xl font-bold text-foreground font-comfortaa">
+              Nutrition & Activity
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <ProfileInfoEdit
+              user={user}
+              title="Current Weight"
+              label={"currentWeightKg" as keyof IUserDoc["fitnessGoals"]}
+              preferences="fitnessGoals"
+              type="number"
+            />
+            <ProfileInfoEdit
+              user={user}
+              title="Target Weight"
+              label={"targetWeightKg" as keyof IUserDoc["fitnessGoals"]}
+              preferences="fitnessGoals"
+              type="number"
+            />
+            <ProfileInfoEdit
+              user={user}
+              title="Height (cm)"
+              label={"heightCm" as keyof IUserDoc["fitnessGoals"]}
+              preferences="fitnessGoals"
+              type="number"
+            />
+            <ProfileInfoDropdown
+              user={user}
+              title="Diet Type"
+              label={"dietType" as keyof IUserDoc["fitnessGoals"]}
+              preferences="fitnessGoals"
+              options={[
+                { value: "vegan", label: "Vegan" },
+                { value: "vegetarian", label: "Vegetarian" },
+                { value: "paleo", label: "Paleo" },
+                { value: "keto", label: "Keto" },
+                { value: "balanced", label: "Balanced" },
+              ]}
+            />
+            <ProfileInfoDropdown
+              user={user}
+              title="Activity Level"
+              label={"activityLevel" as keyof IUserDoc["fitnessGoals"]}
+              preferences="fitnessGoals"
+              options={[
+                { value: "sedentary", label: "Sedentary" },
+                { value: "light", label: "Light" },
+                { value: "moderate", label: "Moderate" },
+                { value: "active", label: "Active" },
+                { value: "very_active", label: "Very Active" },
+              ]}
+            />
+            <ProfileInfoDropdown
+              user={user}
+              title="Goal"
+              label={"goal" as keyof IUserDoc["fitnessGoals"]}
+              preferences="fitnessGoals"
+              options={[
+                { value: "maintain", label: "Maintain" },
+                { value: "lose", label: "Lose" },
+                { value: "gain", label: "Gain" },
+              ]}
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 };
