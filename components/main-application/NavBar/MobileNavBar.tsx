@@ -16,7 +16,7 @@ const MobileNavBar = () => {
             const Icon = icon;
             const isActive = pathname === `/${data?.user?.id}${href}`;
             return (
-              <motion.li key={label} layoutId="nav-item-mobile">
+              <motion.li key={label}>
                 <Link
                   href={`/${data?.user?.id}/${href}`}
                   className={`group flex flex-col items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 relative ${

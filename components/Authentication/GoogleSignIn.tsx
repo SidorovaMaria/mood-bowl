@@ -5,7 +5,6 @@ import Image from "next/image";
 
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
-import { api } from "@/lib/api";
 
 const GoogleSignIn = () => {
   const handleSignIn = async (provider: "github" | "google") => {
@@ -15,7 +14,7 @@ const GoogleSignIn = () => {
         redirect: true,
       });
     } catch (error) {
-      toast.error("Failed to sign in with Google. Please try again.");
+      toast.error(error + "Failed to sign in with Google. Please try again.");
     }
   };
   return (

@@ -20,6 +20,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/context/OnboardingContext";
 import Link from "next/link";
+import ButtonSlide from "../MyUi/ButtonSlide";
 
 const stepThreeSchema = z.object({
   fitnessGoals: z.object({
@@ -286,30 +287,16 @@ const FormStepThree = () => {
           )}
         />
         <div className="flex items-center gap-10 justify-center">
-          <Button
-            asChild
+          <ButtonSlide
             type="button"
-            className="form-submit-button group relative z-10 "
-          >
-            <Link
-              href={
-                data.preference?.trackMood ? "/onboarding/2" : "/onboarding/1"
-              }
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="form-submit-btn-icon" />
-              <p className="relative z-10 group-hover:text-background">Back</p>
-              <div className="form-back-btn-bg"></div>
-            </Link>
-          </Button>
-          <Button
-            type="submit"
-            className="form-submit-button group relative z-10 "
-          >
-            <p className="relative z-10 group-hover:text-background">Next</p>
-            <ArrowRight className="form-submit-btn-icon" />
-            <div className="form-submit-btn-bg"></div>
-          </Button>
+            icon={ArrowLeft}
+            link={
+              data.preference?.trackMood ? "/onboarding/2" : "/onboarding/1"
+            }
+            text="Back"
+            slideLeft
+          />
+          <ButtonSlide type="submit" text="Next" />
         </div>
       </form>
     </Form>

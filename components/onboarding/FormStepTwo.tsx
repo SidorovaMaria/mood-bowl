@@ -21,6 +21,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import ButtonSlide from "../MyUi/ButtonSlide";
 const StepTwoSchema = z.object({
   mentalHealthGoals: z.object({
     meditationMinutesPerDay: z
@@ -316,25 +317,14 @@ const FormStepTwo = () => {
           )}
         />
         <div className="flex items-center gap-10 justify-center">
-          <Button
-            asChild
+          <ButtonSlide
             type="button"
-            className="form-submit-button group relative z-10 "
-          >
-            <Link href="/onboarding/1" className="flex items-center gap-2">
-              <ArrowLeft className="form-submit-btn-icon" />
-              <p className="relative z-10 group-hover:text-background">Back</p>
-              <div className="form-back-btn-bg"></div>
-            </Link>
-          </Button>
-          <Button
-            type="submit"
-            className="form-submit-button group relative z-10 "
-          >
-            <p className="relative z-10 group-hover:text-background">Next</p>
-            <ArrowRight className="form-submit-btn-icon" />
-            <div className="form-submit-btn-bg"></div>
-          </Button>
+            icon={ArrowLeft}
+            link="/onboarding/1"
+            text="Back"
+            slideLeft
+          />
+          <ButtonSlide type="submit" text="Next" />
         </div>
       </form>
     </Form>

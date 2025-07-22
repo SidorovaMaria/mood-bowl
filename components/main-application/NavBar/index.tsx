@@ -11,11 +11,12 @@ const NavBar = () => {
   const pathname = usePathname();
   const { data } = useSession();
   if (!data?.user?.id) {
-    return null; // or return a placeholder if user is not authenticated
+    return null;
   }
+
   return (
-    <nav className="hidden lg:block fixed top-0 w-full z-50 bg-gradient-to-t from-background to-background-light backdrop-blur-sm ">
-      <div className="container  mx-auto px-6 py-4">
+    <nav className="hidden lg:block fixed top-0 w-full z-50 bg-gradient-to-t from-background/50 to-background-light/50 backdrop-blur-xs ">
+      <div className=" mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Logo />
           <ul className="flex items-center gap-4">
@@ -24,7 +25,7 @@ const NavBar = () => {
               const isActive = pathname === `/${data?.user?.id}${href}`;
 
               return (
-                <motion.li key={label} layoutId="nav-item">
+                <motion.li initial={false} key={label}>
                   <Link
                     href={`/${data?.user?.id}/${href}`}
                     className={`group flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 relative ${
@@ -42,6 +43,7 @@ const NavBar = () => {
 
                     {isActive && (
                       <motion.div
+                        initial={false}
                         layoutId="active-pill"
                         className="absolute inset-0 bg-gradient-to-b w-full h-full from-primary to-accent blur-[8px] -z-10 rounded-xl"
                         transition={{

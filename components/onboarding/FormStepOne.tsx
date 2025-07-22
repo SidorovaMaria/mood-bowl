@@ -32,6 +32,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
 import Link from "next/link";
 import { toast } from "sonner";
+import ButtonSlide from "../MyUi/ButtonSlide";
 
 const StepOneSchema = z.object({
   preference: z
@@ -285,14 +286,7 @@ const FormStepOne = () => {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className="form-submit-button group relative z-10 "
-        >
-          <p className="relative z-10 group-hover:text-background">Next</p>
-          <ArrowRight className="form-submit-btn-icon" />
-          <div className="form-submit-btn-bg"></div>
-        </Button>
+        <ButtonSlide type="submit" text="Next" />
       </form>
     </Form>
   );

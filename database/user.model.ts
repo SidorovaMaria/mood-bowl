@@ -42,14 +42,40 @@ const UserSchema = new Schema<IUser>(
   {
     name: { type: String, required: true },
     username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: function (value: string) {
+          // Simple email regex
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        },
+        message: "Please enter a valid email address.",
+      },
+    },
     avatarURL: { type: String },
     sex: {
       type: String,
       enum: ["female", "male", "unknown"],
       default: "unknown",
     },
-    birthDate: { type: Date, required: true },
+    birthDate: {
+      type: Date,
+      required: true,
+      validate: {
+        validator: function (value: Date) {
+          const today = new Date();
+          const minDate = new Date(
+            today.getFullYear() - 16,
+            today.getMonth(),
+            today.getDate()
+          );
+          return value <= minDate;
+        },
+        message: "You must be at least 16 years old to use this application.",
+      },
+    },
     isProfileComplete: { type: Boolean, default: false },
     preferences: {
       trackMood: { type: Boolean, default: true },

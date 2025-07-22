@@ -50,7 +50,7 @@ export default async function RootLayout({
         <body
           className={`${comfortaa.variable} ${comic_neue.variable} ${pacifico.variable} antialiased`}
         >
-          <Toaster />
+          <Toaster richColors />
           {children}
         </body>
       </SessionProvider>

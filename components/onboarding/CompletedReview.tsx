@@ -1,16 +1,14 @@
 "use client";
 import { useOnboarding } from "@/context/OnboardingContext";
 import { IUserDoc } from "@/database/user.model";
-import { ArrowRight, NotebookPen, User2 } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, NotebookPen } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Arrow } from "@radix-ui/react-popover";
 import { updateUser } from "@/lib/actions/user.actions";
 
 const CompletedReview = ({ user }: { user: IUserDoc }) => {
-  const { data, setData } = useOnboarding();
+  const { data } = useOnboarding();
   const handleUpdate = async () => {
     const updateData: updateUserParams = {
       birthDate: data.birthDate,
@@ -28,7 +26,7 @@ const CompletedReview = ({ user }: { user: IUserDoc }) => {
     if (data.preference?.trackMeals) {
       updateData.fitnessGoals = { ...data.fitnessGoals };
     }
-    const updatedUser = await updateUser({
+    await updateUser({
       ...updateData,
     });
   };
