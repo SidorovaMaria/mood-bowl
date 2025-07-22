@@ -27,7 +27,7 @@ const ButtonSlide = ({
       asChild={!!link}
       type={type}
       onClick={onClick}
-      className={`form-submit-button group relative z-10 ${className}`}
+      className={`form-submit-button px-4 py-5 rounded-2xl font-bold text-base group relative z-10 ${className}`}
     >
       {link ? (
         <Link href={link} className="flex items-center gap-2">

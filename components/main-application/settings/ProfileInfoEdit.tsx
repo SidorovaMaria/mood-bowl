@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { IUserDoc } from "@/database/user.model";
 import { EditUserInfo } from "@/lib/actions/user.actions";
+import { getFormattedDate } from "@/lib/utils";
 
 import { EditIcon, SaveIcon, Undo2 } from "lucide-react";
 
@@ -81,7 +82,7 @@ const ProfileInfoEdit = ({
       <div
         className={`flex items-center rounded-xl pl-4 pr-1 py-1 border border-accent/10 ${
           isEditing
-            ? "bg-gradient-to-r from-accent/50 to-accent/10"
+            ? "bg-gradient-to-r from-accent/50 to-accent/10 border-primary"
             : "bg-background/50"
         } transition-all`}
       >
@@ -90,17 +91,13 @@ const ProfileInfoEdit = ({
             type={type || "text"}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="flex-1 outline-none "
-            placeholder={`Enter your ${label}`}
+            className="flex-1 outline-none placeholder:text-xs  "
+            placeholder={`${title ? title : label}...`}
           />
         ) : (
           <p className="text-foreground bg-background/50 flex-1 w-full">
             {label === "birthDate"
-              ? new Date(
-                  preferences
-                    ? (user[preferences] as Record<string, unknown>)?.[label]
-                    : user[label as keyof IUserDoc]
-                ).toLocaleDateString()
+              ? getFormattedDate(user.birthDate)
               : label ===
                 ("journalingDayOfTheMonth" as keyof IUserDoc["mentalHealthGoals"])
               ? (() => {

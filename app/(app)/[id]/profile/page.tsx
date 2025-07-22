@@ -27,9 +27,9 @@ const SettingsUser = async () => {
       {/* Profile Header */}
       <div className="rounded-t-3xl border border-accent/20 backgrop-blur-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+          <div className="flex flex-col sm:flex-row max-sm:items-center justify-between ">
             {/* Profile Information */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6  ">
               <div className="relative">
                 {user.avatarURL ? null : (
                   <UserCircle className="stroke-1 w-16 h-16 sm:w-20 sm:h-20 rounded-full " />
@@ -39,7 +39,7 @@ const SettingsUser = async () => {
                 </div>
               </div>
               <div className="text-center sm:text-left">
-                <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-1 font-comfortaa">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gradient mb-1 font-comfortaa">
                   {user.name}
                 </h1>
                 <p className="text-accent text-base sm:text-lg font-medium">
@@ -48,25 +48,36 @@ const SettingsUser = async () => {
                 <p className="text-foreground/60 text-sm">{user.email}</p>
               </div>
             </div>
-            <form
-              action={async () => {
-                "use server";
-                await signOut({ redirect: true, redirectTo: "/" });
-              }}
-            >
+            <div className="flex flex-col justify-between items-end">
+              <form
+                className=""
+                action={async () => {
+                  "use server";
+                  await signOut({ redirect: true, redirectTo: "/" });
+                }}
+              >
+                <ButtonSlide
+                  text="Sign Out"
+                  icon={LogOut}
+                  type="submit"
+                  slideLeft
+                  className="text-sm! py-1!"
+                />
+              </form>
               <ButtonSlide
-                text="Sign Out"
-                icon={LogOut}
-                type="submit"
+                text="Change Password"
+                icon={KeyRound}
                 slideLeft
+                link="/profile/change-password"
+                className=" opacity-80 hover:opacity-90 text-sm py-1!"
               />
-            </form>
+            </div>
           </div>
         </div>
       </div>
       <div className="border p-5 border-accent/20 backgrop-blur-sm">
         <div className="flex items-center space-x-3 mb-5">
-          <h2 className="text-xl font-bold text-foreground font-comfortaa">
+          <h2 className="text-xl font-bold  font-comfortaa text-gradient">
             Profile Info
           </h2>
         </div>
@@ -95,19 +106,12 @@ const SettingsUser = async () => {
               { value: "male", label: "Male" },
             ]}
           />
-          <ButtonSlide
-            text="Change Password"
-            icon={KeyRound}
-            slideLeft
-            link="/profile/change-password"
-            className="mx-5 opacity-80 hover:opacity-90"
-          />
         </div>
       </div>
       {user.preferences.trackMeals && (
         <div className="border p-5 border-accent/20 backgrop-blur-sm">
           <div className="flex items-center space-x-3 mb-5">
-            <h2 className="text-xl font-bold text-foreground font-comfortaa">
+            <h2 className="text-xl font-bold text-gradient font-comfortaa">
               Nutrition & Activity
             </h2>
           </div>
@@ -176,7 +180,7 @@ const SettingsUser = async () => {
       {user.preferences.trackMood && (
         <div className="border p-5 border-accent/20 backgrop-blur-sm">
           <div className="flex items-center space-x-3 mb-5">
-            <h2 className="text-xl font-bold text-foreground font-comfortaa">
+            <h2 className="text-xl font-bold text-gradient font-comfortaa">
               Mindfulness & Mood
             </h2>
           </div>

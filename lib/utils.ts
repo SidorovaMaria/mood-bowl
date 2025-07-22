@@ -17,3 +17,24 @@ export const getAgeFromBirthDate = (birthDate: Date | string): number => {
 
   return age;
 };
+export const getFormattedDate = (date: Date | string): string => {
+  const d = new Date(date);
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+  return d.toLocaleDateString("en-GB", options);
+};
+
+export const getWeekdayDate = (date: Date | string): string => {
+  const d = new Date(date);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  };
+  // Format: Tue, 22 Jul 2025
+  return d.toLocaleDateString("en-GB", options).replace(/,/g, ""); // Remove commas for desired format
+};

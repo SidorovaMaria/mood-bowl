@@ -163,3 +163,23 @@ export const updateUserSchema = UserSchema.pick({
   isProfileComplete: true,
   preferences: true,
 });
+
+export const createFoodItemSchema = z.object({
+  name: z.string().min(1, "Food item name is required"),
+  brand: z.string().optional(),
+  category: z.string().optional(),
+  servingSize: z.number().positive("Serving size must be a positive number"),
+  servingUnit: z.string().min(1, "Serving unit is required"),
+  caloriesPerServing: z
+    .number()
+    .positive("Calories per serving must be a positive number")
+    .min(1, "Calories per serving is required"),
+  proteinPerServing: z.number().optional(),
+  carbsPerServing: z.number().optional(),
+  totalFatsPerServing: z.number().optional(),
+  saturatedFatsPerServing: z.number().optional(),
+  fiberPerServing: z.number().optional(),
+  sugarPerServing: z.number().optional(),
+  sodiumPerServing: z.number().optional(),
+  userId: z.string().optional(), // Optional, if the food item is user-specific
+});

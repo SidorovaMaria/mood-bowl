@@ -43,9 +43,25 @@ interface updateUserParams {
   };
   mentalHealthGoals?: {
     meditationMinutesPerDay?: number;
-    journalingFrequency?: "daily" | "weekly" | "monthly";
+    journalingFrequency?: "daily" | "weekly" | "monthly" | "never";
     journalingDayOfTheWeek?: string;
     journalingDayOfTheMonth?: number; // Required if journalingFrequency is "monthly", value: 1-28
     gratitudeEntriesPerDay?: number;
   };
+}
+interface newFoodItemParams {
+  name: string;
+  brand?: string;
+  category?: string;
+  servingSize: number; // in grams
+  servingUnit: string; // e.g., "g", "oz", "ml"
+  caloriesPerServing: number;
+  proteinPerServing?: number;
+  carbsPerServing?: number;
+  totalFatsPerServing?: number;
+  saturatedFatsPerServing?: number;
+  fiberPerServing?: number;
+  sugarPerServing?: number;
+  sodiumPerServing?: number;
+  userId?: string; // Optional, if the food item is user-specific
 }
