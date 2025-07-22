@@ -1,12 +1,13 @@
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import ProfileInfoDropdown from "@/components/main-application/settings/ProfileInfoDropdown";
 import ProfileInfoEdit from "@/components/main-application/settings/ProfileInfoEdit";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { IUserDoc } from "@/database/user.model";
-import { getUser, updateUser } from "@/lib/actions/user.actions";
+import { getUser } from "@/lib/actions/user.actions";
 import { getAgeFromBirthDate } from "@/lib/utils";
 
-import { CircleFadingPlus, KeyRound, UserCircle } from "lucide-react";
+import { CircleFadingPlus, KeyRound, LogOut, UserCircle } from "lucide-react";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const SettingsUser = async () => {
@@ -47,7 +48,19 @@ const SettingsUser = async () => {
                 <p className="text-foreground/60 text-sm">{user.email}</p>
               </div>
             </div>
-            <div></div>
+            <form
+              action={async () => {
+                "use server";
+                await signOut({ redirect: true, redirectTo: "/" });
+              }}
+            >
+              <ButtonSlide
+                text="Sign Out"
+                icon={LogOut}
+                type="submit"
+                slideLeft
+              />
+            </form>
           </div>
         </div>
       </div>
@@ -157,6 +170,82 @@ const SettingsUser = async () => {
                 { value: "gain", label: "Gain" },
               ]}
             />
+          </div>
+        </div>
+      )}
+      {user.preferences.trackMood && (
+        <div className="border p-5 border-accent/20 backgrop-blur-sm">
+          <div className="flex items-center space-x-3 mb-5">
+            <h2 className="text-xl font-bold text-foreground font-comfortaa">
+              Mindfulness & Mood
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <ProfileInfoEdit
+              user={user}
+              title="Meditation Minutes"
+              label={
+                "meditationMinutesPerDay" as keyof IUserDoc["mentalHealthGoals"]
+              }
+              preferences="mentalHealthGoals"
+              type="number"
+            />
+            <ProfileInfoEdit
+              user={user}
+              title="Gratitude Entries per Day"
+              label={
+                "gratitudeEntriesPerDay" as keyof IUserDoc["mentalHealthGoals"]
+              }
+              preferences="mentalHealthGoals"
+              type="number"
+            />
+            <div className="col-span-2">
+              <ProfileInfoDropdown
+                user={user}
+                title="Journaling Frequency"
+                label={
+                  "journalingFrequency" as keyof IUserDoc["mentalHealthGoals"]
+                }
+                preferences="mentalHealthGoals"
+                options={[
+                  { value: "daily", label: "Daily" },
+                  { value: "weekly", label: "Weekly" },
+                  { value: "monthly", label: "Monthly" },
+                  { value: "never", label: "Never" },
+                ]}
+              />
+            </div>
+
+            {user.mentalHealthGoals?.journalingFrequency === "weekly" && (
+              <ProfileInfoDropdown
+                user={user}
+                title="Journaling Day of the Week"
+                label={
+                  "journalingDayOfTheWeek" as keyof IUserDoc["mentalHealthGoals"]
+                }
+                preferences="mentalHealthGoals"
+                options={[
+                  { value: "Monday", label: "Monday" },
+                  { value: "Tuesday", label: "Tuesday" },
+                  { value: "Wednesday", label: "Wednesday" },
+                  { value: "Thursday", label: "Thursday" },
+                  { value: "Friday", label: "Friday" },
+                  { value: "Saturday", label: "Saturday" },
+                  { value: "Sunday", label: "Sunday" },
+                ]}
+              />
+            )}
+            {user.mentalHealthGoals?.journalingFrequency === "monthly" && (
+              <ProfileInfoEdit
+                user={user}
+                title="Journaling Day of the Month"
+                label={
+                  "journalingDayOfTheMonth" as keyof IUserDoc["mentalHealthGoals"]
+                }
+                preferences="mentalHealthGoals"
+                type="number"
+              />
+            )}
           </div>
         </div>
       )}

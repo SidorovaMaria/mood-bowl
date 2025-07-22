@@ -101,6 +101,37 @@ const ProfileInfoEdit = ({
                     ? (user[preferences] as Record<string, unknown>)?.[label]
                     : user[label as keyof IUserDoc]
                 ).toLocaleDateString()
+              : label ===
+                ("journalingDayOfTheMonth" as keyof IUserDoc["mentalHealthGoals"])
+              ? (() => {
+                  const day = preferences
+                    ? (user[preferences] as Record<string, unknown>)?.[label]
+                    : user[label as keyof IUserDoc];
+                  if (typeof day !== "number") return "Not set";
+                  const suffix =
+                    day === 1
+                      ? "st"
+                      : day === 2
+                      ? "nd"
+                      : day === 3
+                      ? "rd"
+                      : "th";
+                  return `${day}${suffix}`;
+                })()
+              : label ===
+                  ("meditationMinutesPerDay" as keyof IUserDoc["mentalHealthGoals"]) ||
+                label ===
+                  ("gratitudeEntriesPerDay" as keyof IUserDoc["mentalHealthGoals"])
+              ? (preferences
+                  ? (user[preferences] as Record<string, unknown>)?.[label]
+                  : user[label as keyof IUserDoc]) === 0 ||
+                (preferences
+                  ? (user[preferences] as Record<string, unknown>)?.[label]
+                  : user[label as keyof IUserDoc]) === undefined
+                ? "Not set"
+                : preferences
+                ? (user[preferences] as Record<string, unknown>)?.[label]
+                : user[label as keyof IUserDoc]
               : label === "email"
               ? preferences
                 ? (user[preferences] as Record<string, unknown>)?.[label]

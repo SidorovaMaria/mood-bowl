@@ -25,7 +25,7 @@ type OnboardingData = {
   };
   mentalHealthGoals?: {
     meditationMinutesPerDay?: number;
-    journalingFrequency?: "daily" | "weekly" | "monthly";
+    journalingFrequency?: "daily" | "weekly" | "monthly" | "never";
     journalingDayOfTheWeek?: string;
     journalingDayOfTheMonth?: number;
     gratitudeEntriesPerDay?: number;

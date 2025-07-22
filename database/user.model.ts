@@ -29,7 +29,7 @@ export interface IUser {
   };
   mentalHealthGoals?: {
     meditationMinutesPerDay?: number;
-    journalingFrequency?: "daily" | "weekly" | "monthly";
+    journalingFrequency?: "daily" | "weekly" | "monthly" | "never";
     journalingDayOfTheWeek?: string[]; // Required if journalingFrequency is "weekly", values: "Monday"..."Sunday"
     journalingDayOfTheMonth?: number; // Required if journalingFrequency is "monthly", value: 1-28
     gratitudeEntriesPerDay?: number;
@@ -103,7 +103,8 @@ const UserSchema = new Schema<IUser>(
       meditationMinutesPerDay: { type: Number },
       journalingFrequency: {
         type: String,
-        enum: ["daily", "weekly", "monthly"],
+        enum: ["daily", "weekly", "monthly", "never"],
+        default: "daily",
       },
       journalingDayOfTheWeek: {
         type: String,
@@ -116,8 +117,9 @@ const UserSchema = new Schema<IUser>(
           "Saturday",
           "Sunday",
         ],
+        default: "Monday",
       },
-      journalingDayOfTheMonth: { type: Number, min: 1, max: 28 }, // Required if journalingFrequency is "monthly"
+      journalingDayOfTheMonth: { type: Number, min: 1, max: 28, default: 1 }, // Required if journalingFrequency is "monthly"
       gratitudeEntriesPerDay: { type: Number },
     },
   },

@@ -49,7 +49,7 @@ export async function SignUpWithCredentials(
           email,
           name,
           sex: "unknown",
-          birthDate: new Date(),
+          birthDate: new Date("2000-01-01"), // Default date, should be updated later
           preferences: {
             trackMood: false,
             trackMeals: false,

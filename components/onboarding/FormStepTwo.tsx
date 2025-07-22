@@ -18,9 +18,9 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Button } from "../ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import Link from "next/link";
+
+import { ArrowLeft } from "lucide-react";
+
 import ButtonSlide from "../MyUi/ButtonSlide";
 const StepTwoSchema = z.object({
   mentalHealthGoals: z.object({
@@ -32,7 +32,7 @@ const StepTwoSchema = z.object({
       .max(1440, {
         message: "That's a whole day! Try something under 1440 minutes 😅",
       }),
-    journalingFrequency: z.enum(["daily", "weekly", "monthly"]),
+    journalingFrequency: z.enum(["daily", "weekly", "monthly", "never"]),
     journalingDayOfTheWeek: z.enum([
       "Monday",
       "Tuesday",
@@ -141,7 +141,7 @@ const FormStepTwo = () => {
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="grid grid-cols-1 md:grid-cols-3 items-center w-full"
+                  className="grid grid-cols-2 md:grid-cols-4 items-center w-full"
                 >
                   <FormItem className="w-full">
                     <RadioGroupItem
@@ -196,6 +196,24 @@ const FormStepTwo = () => {
                        hover:not-peer-data-[state=checked]:-translate-y-2 transitoin-colors duration-300 "
                     >
                       Monthly
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="w-full">
+                    <RadioGroupItem
+                      id="never"
+                      value="never"
+                      className="peer hidden"
+                    />
+                    <FormLabel
+                      htmlFor="never"
+                      className="cursor-pointer font-bold w-full peer-data-[state=checked]:bg-gradient-to-r from-primary to-accent
+                          peer-data-[state=checked]:text-background 
+                       py-3 px-4 border rounded-xl 
+                       peer-data-[state=checked]:border-0 
+                       hover:not-peer-data-[state=checked]:shadow-[2px_3px_0px] hover:not-peer-data-[state=checked]:shadow-white 
+                       hover:not-peer-data-[state=checked]:-translate-y-2 transitoin-colors duration-300 "
+                    >
+                      Never
                     </FormLabel>
                   </FormItem>
                 </RadioGroup>
