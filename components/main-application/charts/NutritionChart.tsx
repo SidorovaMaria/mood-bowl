@@ -85,9 +85,11 @@ const renderActiveShape = ({
   );
 };
 
-const NutritionChart = () => {
+const NutritionChart = ({ nutritionData }: { nutritionData: ChartData[] }) => {
+  const activeNutritionData = nutritionData.filter((item) => item.value > 0);
+
   if (
-    NutritionData.reduce((acc, item) => acc + item.value, 0) === 0 &&
+    nutritionData.reduce((acc, item) => acc + item.value, 0) === 0 &&
     MealBasedValues.reduce((acc, item) => acc + item.value, 0) === 0
   ) {
     return (
@@ -127,7 +129,7 @@ const NutritionChart = () => {
             dataKey="value"
             className="pointer-events-auto"
           />
-          <Pie
+          {/* <Pie
             data={activeMealBasedValues}
             cx="50%"
             cy="50%"
@@ -172,7 +174,7 @@ const NutritionChart = () => {
               );
             }}
             labelLine={false}
-          />
+          /> */}
         </PieChart>
       </ResponsiveContainer>
     </>
@@ -184,15 +186,15 @@ export default NutritionChart;
 // Placeholder for the NutritionChart component
 // This component will eventually render a pie chart showing the distribution of macronutrients
 // such as carbohydrates, proteins, and fats in a user's diet.
-const NutritionData = [
-  { name: "Protein", value: 10, fill: "#2c2cda" },
-  { name: "CHO", value: 0, fill: "#00B4D8" },
-  { name: "Fat", value: 38, fill: "#FFA600" },
-  { name: "Sat. Fats", value: 0, fill: "#ff6F51" },
-  { name: "Fiber", value: 0, fill: "#2ECC71" },
-  { name: "Sugar", value: 0, fill: "#F72585" },
-];
-const activeNutritionData = NutritionData.filter((item) => item.value > 0);
+// const NutritionData = [
+//   { name: "Protein", value: 10, fill: "#2c2cda" },
+//   { name: "CHO", value: 0, fill: "#00B4D8" },
+//   { name: "Fat", value: 38, fill: "#FFA600" },
+//   { name: "Sat. Fats", value: 0, fill: "#ff6F51" },
+//   { name: "Fiber", value: 0, fill: "#2ECC71" },
+//   { name: "Sugar", value: 0, fill: "#F72585" },
+// ];
+// const activeNutritionData = NutritionData.filter((item) => item.value > 0);
 
 const MealBasedValues = [
   { name: "Breakfast", value: 240, fill: "rgba(174, 214, 241, 0.9)" },

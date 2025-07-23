@@ -1,15 +1,20 @@
+"use client";
 import React from "react";
 import { Pie, PieChart } from "recharts";
-type ChartData = { name: string; value: number; fill: string };
+
 const SmallFoodChart = ({
   data = [],
   totalKcal = 0,
+  fill = "#fff",
+  stroke = false,
 }: {
   data: ChartData[];
   totalKcal: number;
+  fill?: string;
+  stroke?: boolean;
 }) => {
   return (
-    <PieChart width={100} height={100}>
+    <PieChart width={100} height={100} className="pointer-events-none">
       <Pie
         data={data}
         dataKey="value"
@@ -18,6 +23,7 @@ const SmallFoodChart = ({
         innerRadius={35}
         outerRadius={45}
         paddingAngle={10}
+        stroke={stroke ? "#fff" : "none"}
         fill="#8884d8"
       />
       <text
@@ -28,7 +34,7 @@ const SmallFoodChart = ({
         fontSize={16}
         dy="-0.5em"
         fontWeight={600}
-        fill="#fff"
+        fill={fill}
       >
         {totalKcal}
         <tspan x={50} dy="1.5em" fontSize={12}>

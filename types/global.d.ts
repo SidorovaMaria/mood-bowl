@@ -18,3 +18,14 @@ interface RouteParams {
   params: Promise<Record<string, string>>;
   searchParams: Promise<Record<string, string>>;
 }
+interface MealTypeGroups {
+  breakfast: IMealItemDoc[];
+  lunch: IMealItemDoc[];
+  dinner: IMealItemDoc[];
+  snack: IMealItemDoc[];
+}
+interface ChartData {
+  name: string;
+  value: number;
+  fill: string;
+}

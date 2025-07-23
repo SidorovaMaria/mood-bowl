@@ -7,7 +7,6 @@ import { getUser } from "@/lib/actions/user.actions";
 import { getAgeFromBirthDate } from "@/lib/utils";
 
 import { CircleFadingPlus, KeyRound, LogOut, UserCircle } from "lucide-react";
-import { redirect } from "next/navigation";
 import React from "react";
 
 const SettingsUser = async () => {
@@ -20,6 +19,7 @@ const SettingsUser = async () => {
     console.error("Failed to fetch user data:", error);
     return <div>Error loading user settings.</div>;
   }
+
   const user = data.user;
 
   return (

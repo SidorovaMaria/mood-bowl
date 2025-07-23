@@ -58,7 +58,7 @@ const NewFoodForm = () => {
       userId: "1234567890abcdef12345678", // Replace with actual user ID
     });
     if (!success) {
-      console.log("Error adding food item:", error);
+      console.error("Error submitting food item:", error);
       toast.error(
         "There was an error submitting the food item. Please try again later on contact customer suupport."
       );

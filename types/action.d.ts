@@ -72,3 +72,6 @@ interface AddMealItemsParams {
   foodItemId: string; // ID of the food item
   quantity: number; // Quantity of the food item consumed in serving units
 }
+interface getMealItemParams {
+  date: Date;
+}

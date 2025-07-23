@@ -3,7 +3,7 @@ import { Document, model, models, Schema, Types } from "mongoose";
 export interface IMealItem {
   userId: Types.ObjectId;
   date: Date;
-  mealType: "breakfast" | "lunch" | "dinner" | "snack" | "beverage" | "other";
+  mealType: "breakfast" | "lunch" | "dinner" | "snack";
   foodItemId: Types.ObjectId;
   quantity: number; // Quantity of the food item consumed in serving Units
   calories?: number;
@@ -26,7 +26,7 @@ const MealItemSchema = new Schema<IMealItem>(
     date: { type: Date, required: true, index: true },
     mealType: {
       type: String,
-      enum: ["breakfast", "lunch", "dinner", "snack", "beverage", "other"],
+      enum: ["breakfast", "lunch", "dinner", "snack"],
       required: true,
     },
     foodItemId: {
@@ -60,24 +60,24 @@ MealItemSchema.pre("save", async function (next) {
     const food = await FoodItem.findById(mealItem.foodItemId);
     if (!food) return next(new Error("FoodItem not found"));
     const ratio = mealItem.quantity / food.servingSize;
-    mealItem.calories = food.caloriesPerServing * ratio;
+    mealItem.calories = Number((food.caloriesPerServing * ratio).toFixed(0));
     mealItem.protein = food.proteinPerServing
-      ? food.proteinPerServing * ratio
+      ? Number((food.proteinPerServing * ratio).toFixed(0))
       : undefined;
     mealItem.carbs = food.carbsPerServing
-      ? food.carbsPerServing * ratio
+      ? Number((food.carbsPerServing * ratio).toFixed(0))
       : undefined;
-    mealItem.fats = food.fatsPerServing
-      ? food.fatsPerServing * ratio
+    mealItem.fats = food.totalFatsPerServing
+      ? Number((food.totalFatsPerServing * ratio).toFixed(0))
       : undefined;
     mealItem.fiber = food.fiberPerServing
-      ? food.fiberPerServing * ratio
+      ? Number((food.fiberPerServing * ratio).toFixed(0))
       : undefined;
     mealItem.sugar = food.sugarPerServing
-      ? food.sugarPerServing * ratio
+      ? Number((food.sugarPerServing * ratio).toFixed(0))
       : undefined;
     mealItem.sodium = food.sodiumPerServing
-      ? food.sodiumPerServing * ratio
+      ? Number((food.sodiumPerServing * ratio).toFixed(0))
       : undefined;
   }
   next();

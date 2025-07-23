@@ -14,12 +14,11 @@ interface Props {
 const FoodSearch = ({
   route,
   placeholder,
-  otherClasses,
-  iconPosition = "left",
-}: Props) => {
+}: // otherClasses,
+// iconPosition = "left",
+Props) => {
   const pathname = usePathname();
   const router = useRouter();
-  console.log("pathname", pathname);
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
   const [searchQuery, setSearchQuery] = useState(query);

@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { PopoverContent } from "@/components/ui/popover";
 import {
   Select,
+  SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -20,7 +21,7 @@ import { IFoodItemDoc } from "@/database/foodItem.model";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
-import { SelectContent } from "@radix-ui/react-select";
+
 import { format } from "date-fns";
 import { Asterisk, CalendarIcon, Plus } from "lucide-react";
 import React, { useEffect } from "react";
@@ -61,14 +62,14 @@ const MealitemForm = ({
   }, [quantity, foodItem.servingSize]);
 
   const totalKcal = Math.round(foodItem.caloriesPerServing * debouncedRatio);
-  const totalFats = Math.round(
-    (foodItem.totalFatsPerServing || 0) * debouncedRatio
+  const totalFats = Number(
+    ((foodItem.totalFatsPerServing || 0) * debouncedRatio).toFixed(1)
   );
-  const totalCarbs = Math.round(
-    (foodItem.carbsPerServing || 0) * debouncedRatio
+  const totalCarbs = Number(
+    ((foodItem.carbsPerServing || 0) * debouncedRatio).toFixed(1)
   );
-  const totalProtein = Math.round(
-    (foodItem.proteinPerServing || 0) * debouncedRatio
+  const totalProtein = Number(
+    ((foodItem.proteinPerServing || 0) * debouncedRatio).toFixed(1)
   );
   const graphData = [
     { name: "Fats", value: totalFats, fill: "var(--color-fats)" },
@@ -137,7 +138,7 @@ const MealitemForm = ({
             name="mealType"
             render={({ field }) => (
               <FormItem className="flex items-center">
-                <FormLabel className="flex-2 whitespace-nowrap">
+                <FormLabel className="flex-2 ">
                   Meal Type
                   <Asterisk className="text-red-500 size-4 -top-2 -left-2 relative" />
                 </FormLabel>
@@ -145,12 +146,11 @@ const MealitemForm = ({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
-                    <SelectTrigger className="capitalize text-left outline-none border-none px-2 ">
-                      <SelectValue placeholder="Select meal type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="bg-gradient-to-br from-background-light to-background text-foreground border-none w-[110%] -left-[5%]">
+                  <SelectTrigger className="capitalize text-left outline-none border-none px-2 ">
+                    <SelectValue placeholder="Select meal type" />
+                  </SelectTrigger>
+
+                  <SelectContent className="bg-gradient-to-br from-background-light to-background text-foreground rounded-xl p-2 border-none -left-4">
                     {[
                       {
                         value: "breakfast",
@@ -228,7 +228,7 @@ const MealitemForm = ({
           />
         </form>
       </Form>
-      <div className="container grid grid-cols-4 items-center">
+      <div className=" grid grid-cols-4 items-center">
         <SmallFoodChart data={graphData} totalKcal={totalKcal} />
         <div className="flex flex-col items-center gap-0.5 text-protein">
           {/* Percentage of calories from protein */}

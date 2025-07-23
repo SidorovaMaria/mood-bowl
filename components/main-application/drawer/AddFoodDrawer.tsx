@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ArrowLeft, Plus, Undo2 } from "lucide-react";
+import { ArrowLeft, Check, Plus, Undo2 } from "lucide-react";
 
 import {
   Drawer,
@@ -58,11 +58,10 @@ export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
             </div>
           </div>
 
-          <DrawerFooter className="grid grid-cols-2 gap-6">
-            <DrawerClose asChild className="inline-flex">
-              <ButtonSlide text="Cancel" icon={ArrowLeft} slideLeft />
+          <DrawerFooter>
+            <DrawerClose asChild>
+              <ButtonSlide text="Done" className="w-1/2 mx-auto" icon={Check} />
             </DrawerClose>
-            <ButtonSlide text="Add" icon={Plus} />
           </DrawerFooter>
         </div>
       </DrawerContent>
