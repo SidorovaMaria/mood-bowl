@@ -19,7 +19,7 @@ export async function SignUpWithCredentials(
     schema: SignUpSchema,
   });
 
-  const { name, username, email, password } = params;
+  const { name, username, email, password } = validatedData.params!;
   const session = await mongoose.startSession();
   session.startTransaction();
   let transactionCommitted = false; // <-- flag

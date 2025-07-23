@@ -1,4 +1,3 @@
-import { User } from "lucide-react";
 import { z } from "zod";
 
 export const AccountSchema = z.object({
@@ -182,4 +181,29 @@ export const createFoodItemSchema = z.object({
   sugarPerServing: z.number().optional(),
   sodiumPerServing: z.number().optional(),
   userId: z.string().optional(), // Optional, if the food item is user-specific
+});
+export const GetFoodItemsSchema = z.object({
+  query: z.string().optional(),
+});
+
+export const AddMealItemsSchema = z.object({
+  date: z.preprocess(
+    (val) => {
+      if (typeof val === "string") return new Date(val);
+      return val;
+    },
+    z.date().refine((date) => !isNaN(date.getTime()), {
+      message: "Invalid date format",
+    })
+  ),
+  mealType: z.enum([
+    "breakfast",
+    "lunch",
+    "dinner",
+    "snack",
+    "beverage",
+    "other",
+  ]),
+  foodItemId: z.string().min(1, "Food item ID is required"),
+  quantity: z.number().min(1, "Quantity must be at least 1"),
 });

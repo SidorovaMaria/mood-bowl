@@ -5,12 +5,14 @@ import Link from "next/link";
 
 interface ButtonSlideProps {
   icon?: LucideIcon;
-  text: string;
+  text?: string;
   slideLeft?: boolean;
   type?: "button" | "submit" | "reset";
   link?: string;
   onClick?: () => void;
   className?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form?: any;
 }
 const ButtonSlide = ({
   icon = ArrowRight,
@@ -20,19 +22,23 @@ const ButtonSlide = ({
   link,
   onClick,
   className = "",
+  form,
 }: ButtonSlideProps) => {
   const Icon = icon;
   return (
     <Button
       asChild={!!link}
       type={type}
+      form={form}
       onClick={onClick}
       className={`form-submit-button px-4 py-5 rounded-2xl font-bold text-base group relative z-10 ${className}`}
     >
       {link ? (
         <Link href={link} className="flex items-center gap-2">
           {slideLeft && <Icon className="form-submit-btn-icon" />}
-          <p className="relative z-10 group-hover:text-background">{text}</p>
+          {text && (
+            <p className="relative z-10 group-hover:text-background">{text}</p>
+          )}
           {!slideLeft && <Icon className="form-submit-btn-icon" />}
           <div
             className={`${
@@ -43,7 +49,9 @@ const ButtonSlide = ({
       ) : (
         <>
           {slideLeft && <Icon className="form-submit-btn-icon" />}
-          <p className="relative z-10 group-hover:text-background">{text}</p>
+          {text && (
+            <p className="relative z-10 group-hover:text-background">{text}</p>
+          )}
           {!slideLeft && <Icon className="form-submit-btn-icon" />}
           <div
             className={`${

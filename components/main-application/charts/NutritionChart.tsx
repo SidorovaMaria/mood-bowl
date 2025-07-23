@@ -185,7 +185,7 @@ export default NutritionChart;
 // This component will eventually render a pie chart showing the distribution of macronutrients
 // such as carbohydrates, proteins, and fats in a user's diet.
 const NutritionData = [
-  { name: "Protein", value: 10, fill: "#6C5CE8" },
+  { name: "Protein", value: 10, fill: "#2c2cda" },
   { name: "CHO", value: 0, fill: "#00B4D8" },
   { name: "Fat", value: 38, fill: "#FFA600" },
   { name: "Sat. Fats", value: 0, fill: "#ff6F51" },

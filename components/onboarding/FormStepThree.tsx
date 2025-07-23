@@ -15,11 +15,9 @@ import {
 import { Input } from "../ui/input";
 import { RadioGroup } from "../ui/radio-group";
 import { RadioGroupItem } from "@radix-ui/react-radio-group";
-import { Button } from "../ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/context/OnboardingContext";
-import Link from "next/link";
 import ButtonSlide from "../MyUi/ButtonSlide";
 
 const stepThreeSchema = z.object({

@@ -1,17 +1,31 @@
-import { auth } from "@/auth";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
+import { AddFoodDrawer } from "@/components/main-application/drawer/AddFoodDrawer";
 import NewFoodForm from "@/components/main-application/forms/newFoodForm";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { getFoodItems } from "@/lib/actions/fooitem.action";
 import { getUser } from "@/lib/actions/user.actions";
 import { getFormattedDate, getWeekdayDate } from "@/lib/utils";
-import { CircleFadingPlus, Plus, UserCircle } from "lucide-react";
+import { CircleFadingPlus, Plus, Search, UserCircle } from "lucide-react";
 import React from "react";
 
-const MealsPage = async ({ params }: RouteParams) => {
+const MealsPage = async ({ params, searchParams }: RouteParams) => {
   const { date, id } = await params;
-  const { success, data, error } = await getUser({ userId: id });
-  if (!success || !data) {
-    throw new Error(error?.message || "Failed to fetch user data");
+  const {
+    success: successUser,
+    data,
+    error: errorUser,
+  } = await getUser({ userId: id });
+  if (!successUser || !data) {
+    throw new Error(errorUser?.message || "Failed to fetch user data");
+  }
+  const { query } = await searchParams;
+  const {
+    success,
+    data: foodsData,
+    error,
+  } = await getFoodItems({ query: query || "" });
+  if (!success) {
+    throw new Error(error?.message || "Failed to fetch food items");
   }
 
   return (
@@ -24,12 +38,7 @@ const MealsPage = async ({ params }: RouteParams) => {
               <p className="px-1 text-foreground/80 mb-4">
                 {getWeekdayDate(new Date())}{" "}
               </p>
-              <ButtonSlide
-                type="button"
-                className="rounded-lg"
-                text="Add Food"
-                icon={Plus}
-              />
+              <AddFoodDrawer data={foodsData?.foodItems} />
             </div>
             <div className="md:flex-1 w-[400px] h-[300px]">
               <NutritionChart />

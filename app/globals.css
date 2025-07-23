@@ -10,6 +10,13 @@
   --color-primary: #ffe38d;
   --color-secondary: #ffa87e;
   --color-accent: #81c5af;
+  --color-protein: #0062ff;
+  --color-carbs: #00b4d8;
+  --color-sat-fats: #ff6f51;
+  --color-fats: #ffa600;
+  --color-fiber: #0aa149;
+  --color-sugar: #f72585;
+
   --animate-swing: swin-left-to-right 1s ease-in-out infinite alternate;
   --animate-bounce-right: boune-to-right 0.5s ease-in-out infinite alternate;
 }
@@ -153,4 +160,15 @@ body {
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield; /* Firefox */
 }

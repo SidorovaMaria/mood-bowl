@@ -65,3 +65,10 @@ interface newFoodItemParams {
   sodiumPerServing?: number;
   userId?: string; // Optional, if the food item is user-specific
 }
+
+interface AddMealItemsParams {
+  date: Date;
+  mealType: "breakfast" | "lunch" | "dinner" | "snack" | "beverage" | "other";
+  foodItemId: string; // ID of the food item
+  quantity: number; // Quantity of the food item consumed in serving units
+}

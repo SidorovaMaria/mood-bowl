@@ -58,6 +58,7 @@ const NewFoodForm = () => {
       userId: "1234567890abcdef12345678", // Replace with actual user ID
     });
     if (!success) {
+      console.log("Error adding food item:", error);
       toast.error(
         "There was an error submitting the food item. Please try again later on contact customer suupport."
       );
@@ -313,31 +314,43 @@ const CustomFormFieldInput = ({
 
 const servingUnits = [
   {
-    value: "grams",
+    value: "g",
     label: "Grams (g)",
   },
   {
-    value: "milliliters",
+    value: "ml",
     label: "Milliliters (ml)",
+  },
+  {
+    value: "L",
+    label: "Liters (L)",
   },
   {
     value: "cups",
     label: "Cups",
   },
   {
-    value: "tablespoons",
+    value: "tbsp",
     label: "Tablespoons (tbsp)",
   },
   {
-    value: "teaspoons",
+    value: "tsp",
     label: "Teaspoons (tsp)",
   },
   {
-    value: "pieces",
+    value: "pcs",
     label: "Pieces (pcs)",
   },
   {
-    value: "ounces",
+    value: "oz",
     label: "Ounces (oz)",
+  },
+  {
+    value: "lbs",
+    label: "Pounds (lbs)",
+  },
+  {
+    value: "kg",
+    label: "Kilograms (kg)",
   },
 ];
