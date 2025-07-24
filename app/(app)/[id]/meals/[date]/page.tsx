@@ -1,8 +1,6 @@
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
 import SmallFoodChart from "@/components/main-application/charts/SmallFoodChart";
 import { AddFoodDrawer } from "@/components/main-application/drawer/AddFoodDrawer";
-import NewFoodForm from "@/components/main-application/forms/newFoodForm";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import {
   Popover,
   PopoverContent,
@@ -88,7 +86,14 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
       fill: "var(--color-sugar)",
     },
   ];
-
+  const mealTypeCalories = Array.isArray(nutritionData?.kcalbyMealType)
+    ? nutritionData.kcalbyMealType.map((item) => ({
+        name: item._id,
+        value: item.totalCalories,
+        fill: `var(--color-${item._id})`, // Assuming meal types are named as 'breakfast', 'lunch', 'dinner', 'snack'
+      }))
+    : [];
+  console.log("mealTypeCalories", mealTypeCalories);
   return (
     <main>
       <div className="">
@@ -110,7 +115,10 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
               <AddFoodDrawer data={foodsData?.foodItems} />
             </div>
             <div className=" w-[400px] h-[300px]">
-              <NutritionChart nutritionData={nutrition} />
+              <NutritionChart
+                nutritionData={nutrition}
+                mealBasedKcal={mealTypeCalories}
+              />
             </div>
           </div>
           <div>
@@ -186,7 +194,7 @@ const DailyDairy = async ({ date }: { date: Date }) => {
       <section className="my-3">
         <h1 className="text-xl">Snacks</h1>
         <div className=" h-[1px] w-full bg-gradient-to-l from-primary to-accent opacity-50" />
-        <div className="grid grid-flow-col-dense mt-4 gap-8">
+        <div className="flex flex-wrap gap-8 ">
           {snack.length > 0 ? (
             snack.map((item: MealItemWithFoodDetails) => (
               <FoodItemCard key={String(item._id)} foodItem={item} />
@@ -215,13 +223,13 @@ const FoodItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
       <PopoverTrigger>
         <div
           className="p-4 bg-gradient-to-br from-accent/80 to-primary/80 rounded-2xl text-background font-bold
-    flex flex-col h-full"
+    flex flex-col h-full cursor-pointer"
         >
           <h2 className="text-base w-full whitespace-nowrap ">
             {foodItem.foodItemId.name}
           </h2>
           <p className="text-xs w-full  text-background/80">
-            {foodItem.foodItemId.brand || "Unknown Brand"}
+            {foodItem.foodItemId.brand || <span>&nbsp;</span>}
           </p>
           <div className="mx-auto">
             <SmallFoodChart
@@ -233,7 +241,38 @@ const FoodItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
           </div>
         </div>
       </PopoverTrigger>
-      <PopoverContent>hi</PopoverContent>
+      <PopoverContent
+        align="center"
+        side="top"
+        className=" bg-background-light text-foreground border-none "
+      >
+        <div className="flex items-center justify-between w-full">
+          <h2>{foodItem.foodItemId.name}</h2>
+          <p>{foodItem.calories}kcal</p>
+        </div>
+        <ul className="grid grid-cols-5 mt-4 items-center gap-2">
+          <li className="flex flex-col items-center">
+            <p className="text-sm font-bold ">{foodItem.protein}g</p>
+            <p className="text-xs">Protein</p>
+          </li>
+          <li className="flex flex-col items-center">
+            <p className="text-sm font-bold ">{foodItem.carbs}g</p>
+            <p className="text-xs">Carbs</p>
+          </li>
+          <li className="flex flex-col items-center">
+            <p className="text-sm font-bold ">{foodItem.fats}g</p>
+            <p className="text-xs">Fats</p>
+          </li>
+          <li className="flex flex-col items-center">
+            <p className="text-sm font-bold ">{foodItem.sugar}g</p>
+            <p className="text-xs">Sugar</p>
+          </li>
+          <li className="flex flex-col items-center">
+            <p className="text-sm font-bold ">{foodItem.fiber}g</p>
+            <p className="text-xs">Fiber</p>
+          </li>
+        </ul>
+      </PopoverContent>
     </Popover>
   );
 };

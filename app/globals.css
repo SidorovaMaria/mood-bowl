@@ -16,6 +16,10 @@
   --color-fats: #ffa600;
   --color-fiber: #0aa149;
   --color-sugar: #f72585;
+  --color-breakfast: #fff3b0;
+  --color-lunch: #c8e6c9;
+  --color-dinner: #d1c4e9;
+  --color-snack: #ffd1ba;
 
   --animate-swing: swin-left-to-right 1s ease-in-out infinite alternate;
   --animate-bounce-right: boune-to-right 0.5s ease-in-out infinite alternate;

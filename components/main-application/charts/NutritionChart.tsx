@@ -85,23 +85,32 @@ const renderActiveShape = ({
   );
 };
 
-const NutritionChart = ({ nutritionData }: { nutritionData: ChartData[] }) => {
+const NutritionChart = ({
+  nutritionData,
+  mealBasedKcal,
+}: {
+  nutritionData: ChartData[];
+  mealBasedKcal: ChartData[];
+}) => {
   const activeNutritionData = nutritionData.filter((item) => item.value > 0);
+  const activeMealBasedKcal = mealBasedKcal.filter((item) => item.value > 0);
 
   if (
     nutritionData.reduce((acc, item) => acc + item.value, 0) === 0 &&
-    MealBasedValues.reduce((acc, item) => acc + item.value, 0) === 0
+    mealBasedKcal.reduce((acc, item) => acc + item.value, 0) === 0
   ) {
     return (
-      <div className="flex items-center justify-center h-full aspect-square bg-gradient-to-br from-accent via-primary to-accent rounded-full text-center p-6">
-        <div className="space-y-2">
-          <div className="text-4xl">🥣</div>
-          <p className="text-lg font-bold text-background">
-            Nothing on your plate yet!
-          </p>
-          <p className="text-sm text-background">
-            Log a meal to see your nutrition chart light up ✨
-          </p>
+      <div className="flex items-center justify-center h-full w-full">
+        <div className=" h-3/4 aspect-square bg-gradient-to-br from-accent via-primary to-accent rounded-full text-center p-6">
+          <div className="space-y-2">
+            <div className="text-4xl">🥣</div>
+            <p className="text-lg font-bold text-background">
+              Nothing on your plate yet!
+            </p>
+            <p className="text-sm text-background">
+              Log a meal to see your nutrition chart light up ✨
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -129,15 +138,14 @@ const NutritionChart = ({ nutritionData }: { nutritionData: ChartData[] }) => {
             dataKey="value"
             className="pointer-events-auto"
           />
-          {/* <Pie
-            data={activeMealBasedValues}
+          <Pie
+            data={activeMealBasedKcal}
             cx="50%"
             cy="50%"
             innerRadius={85}
             outerRadius={100}
-            fill="none"
+            fill="fill"
             paddingAngle={2}
-            stroke="fill"
             dataKey="value"
             pointerEvents="none"
             label={({
@@ -160,6 +168,7 @@ const NutritionChart = ({ nutritionData }: { nutritionData: ChartData[] }) => {
                 <text
                   x={x}
                   y={y}
+                  style={{ textTransform: "capitalize" }}
                   textAnchor="middle"
                   dominantBaseline="insideStart"
                   fontSize={12}
@@ -174,7 +183,7 @@ const NutritionChart = ({ nutritionData }: { nutritionData: ChartData[] }) => {
               );
             }}
             labelLine={false}
-          /> */}
+          />
         </PieChart>
       </ResponsiveContainer>
     </>
@@ -196,11 +205,11 @@ export default NutritionChart;
 // ];
 // const activeNutritionData = NutritionData.filter((item) => item.value > 0);
 
-const MealBasedValues = [
-  { name: "Breakfast", value: 240, fill: "rgba(174, 214, 241, 0.9)" },
-  { name: "Lunch", value: 0, fill: "rgba(129, 199, 132, 0.9)" },
-  { name: "Dinner", value: 0, fill: "rgba(255, 138, 128, 0.9)" },
-  { name: "Snacks", value: 0, fill: "rgba(179, 157, 219, 0.9)" },
-  { name: "Dessert", value: 0, fill: "rgba(255, 205, 210, 0.9)" },
-];
-const activeMealBasedValues = MealBasedValues.filter((item) => item.value > 0);
+// const MealBasedValues = [
+//   { name: "Breakfast", value: 240, fill: "rgba(174, 214, 241, 0.9)" },
+//   { name: "Lunch", value: 0, fill: "rgba(129, 199, 132, 0.9)" },
+//   { name: "Dinner", value: 0, fill: "rgba(255, 138, 128, 0.9)" },
+//   { name: "Snacks", value: 0, fill: "rgba(179, 157, 219, 0.9)" },
+//   { name: "Dessert", value: 0, fill: "rgba(255, 205, 210, 0.9)" },
+// ];
+// const activeMealBasedValues = MealBasedValues.filter((item) => item.value > 0);

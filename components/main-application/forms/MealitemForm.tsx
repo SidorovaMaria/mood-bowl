@@ -77,8 +77,13 @@ const MealitemForm = ({
     { name: "Protein", value: totalProtein, fill: "var(--color-protein)" },
   ];
   const onSubmit = async (values: z.infer<typeof mealItemSchema>) => {
+    //Convert date to UTC since the backend expects UTC dates
+    const rawDate = new Date(values.date);
+    const utcDate = new Date(
+      Date.UTC(rawDate.getFullYear(), rawDate.getMonth(), rawDate.getDate())
+    );
     const { success, error } = await addMealItem({
-      date: values.date,
+      date: utcDate,
       mealType: values.mealType,
       foodItemId: foodItem._id!.toString(),
       quantity: values.quantity,
@@ -189,7 +194,7 @@ const MealitemForm = ({
             name="date"
             render={({ field }) => (
               <FormItem className="flex items-center justify-center">
-                <FormLabel>
+                <FormLabel className="flex-1">
                   Date
                   <Asterisk className="text-red-500 size-4 -top-2 -left-2 relative" />
                 </FormLabel>

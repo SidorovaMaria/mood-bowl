@@ -78,6 +78,7 @@ export async function addMealItem(
   if (validationResult instanceof Error) {
     return handleError(validationResult) as ErrorResponse;
   }
+
   const { user } = validationResult.session!;
   if (!user) {
     throw new UnauthorizedError("User not authenticated");
@@ -121,9 +122,13 @@ export async function addMealItem(
   }
 }
 
-export async function getNutritionByDate(params: {
-  date: Date;
-}): Promise<ActionResponse<{ nutrition: Record<string, number> }>> {
+export async function getNutritionByDate(params: { date: Date }): Promise<
+  ActionResponse<
+    { nutrition: Record<string, number> } & {
+      kcalbyMealType: Record<string, number>;
+    }
+  >
+> {
   const validationResult = await action({
     params,
     schema: getNutritionByDateSchema,
@@ -163,11 +168,26 @@ export async function getNutritionByDate(params: {
         },
       },
     ]).session(session);
+    const kcalbyMealType = await MealItem.aggregate([
+      {
+        $match: {
+          userId: new mongoose.Types.ObjectId(user.id),
+          date: { $gte: startOfDay, $lte: endOfDay },
+        },
+      },
+      {
+        $group: {
+          _id: "$mealType",
+          totalCalories: { $sum: "$calories" },
+        },
+      },
+    ]).session(session);
     await session.commitTransaction();
     return {
       success: true,
       data: {
         nutrition: JSON.parse(JSON.stringify(nutrition[0] || {})),
+        kcalbyMealType: JSON.parse(JSON.stringify(kcalbyMealType)),
       },
       status: 200,
     };
