@@ -1,4 +1,3 @@
-import MealItem from "@/database/mealitem.model";
 import { z } from "zod";
 
 export const AccountSchema = z.object({
@@ -209,6 +208,27 @@ export const AddMealItemsSchema = z.object({
   quantity: z.number().min(1, "Quantity must be at least 1"),
 });
 
+export const updateMealItemSchema = z.object({
+  mealItemId: z.string().min(1, "Meal item ID is required"),
+  date: z.preprocess(
+    (val) => {
+      if (typeof val === "string") return new Date(val);
+      return val;
+    },
+    z.date().refine((date) => !isNaN(date.getTime()), {
+      message: "Invalid date format",
+    })
+  ),
+  mealType: z.enum([
+    "breakfast",
+    "lunch",
+    "dinner",
+    "snack",
+    "beverage",
+    "other",
+  ]),
+  quantity: z.number().min(1, "Quantity must be at least 1"),
+});
 export const getMealItemsSchema = z.object({
   date: z.preprocess(
     (val) => {
@@ -231,4 +251,8 @@ export const getNutritionByDateSchema = z.object({
       message: "Invalid date format",
     })
   ),
+});
+
+export const deleteMealItemSchema = z.object({
+  mealItemId: z.string().min(1, "Meal item ID is required"),
 });

@@ -3,8 +3,10 @@
 import MealItem, { IMealItemDoc } from "@/database/mealitem.model";
 import {
   AddMealItemsSchema,
+  deleteMealItemSchema,
   getMealItemsSchema,
   getNutritionByDateSchema,
+  updateMealItemSchema,
 } from "../validation";
 import { UnauthorizedError } from "../http-errors";
 import handleError from "../errors";
@@ -14,11 +16,7 @@ import { revalidatePath } from "next/cache";
 
 export interface MealItemWithFoodDetails
   extends Omit<IMealItemDoc, "foodItemId"> {
-  foodItemId: {
-    name: string;
-    brand?: string;
-    category?: string;
-  };
+  foodItemId: { _id: string; name: string; brand?: string; category?: string };
 }
 export async function getMealItems(
   params: getMealItemParams
@@ -196,5 +194,78 @@ export async function getNutritionByDate(params: { date: Date }): Promise<
     return handleError(error) as ErrorResponse;
   } finally {
     session.endSession();
+  }
+}
+
+export async function deleteMealItem(params: {
+  mealItemId: string;
+}): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: deleteMealItemSchema,
+    authorize: true,
+  });
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+  const { user } = validationResult.session!;
+  if (!user) {
+    throw new UnauthorizedError("User not authenticated");
+  }
+  try {
+    const mealItem = await MealItem.findOneAndDelete({
+      _id: params.mealItemId,
+      userId: user.id,
+    });
+    if (!mealItem) {
+      return {
+        success: false,
+        error: { message: "Meal item not found" },
+        status: 404,
+      };
+    }
+    revalidatePath(`${user.id}/meals/${mealItem.date}`);
+    return { success: true };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function updateMealItem(
+  params: updateMealItemsParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: updateMealItemSchema,
+    authorize: true,
+  });
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+  const { user } = validationResult.session!;
+  if (!user) {
+    throw new UnauthorizedError("User not authenticated");
+  }
+  try {
+    const mealItem = await MealItem.findOne({
+      _id: params.mealItemId,
+      userId: user.id,
+    });
+    if (!mealItem) {
+      return {
+        success: false,
+        error: { message: "Meal item not found" },
+        status: 404,
+      };
+    }
+    mealItem.date = params.date;
+    mealItem.mealType = params.mealType;
+    mealItem.quantity = params.quantity;
+    mealItem.save();
+
+    revalidatePath(`${user.id}/meals/${mealItem.date}`);
+    return { success: true };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
   }
 }

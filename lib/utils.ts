@@ -1,10 +1,7 @@
-import { IMealItemDoc } from "@/database/mealitem.model";
-
 import { clsx, type ClassValue } from "clsx";
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import { MealItemWithFoodDetails } from "./actions/mealitem.action";
-import { de } from "date-fns/locale";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -90,23 +87,26 @@ export const getPreviosandNextDates = (
 
 export const categorizeMeals = (mealItems: MealItemWithFoodDetails[]) => {
   return mealItems.reduce(
-    (acc: MealItemWithFoodDetails[][], item: MealItemWithFoodDetails) => {
+    (
+      acc: { [key: string]: MealItemWithFoodDetails[] },
+      item: MealItemWithFoodDetails
+    ) => {
       switch (item.mealType) {
         case "breakfast":
-          acc[0].push(item);
+          acc.breakfast.push(item);
           break;
         case "lunch":
-          acc[1].push(item);
+          acc.lunch.push(item);
           break;
         case "dinner":
-          acc[2].push(item);
+          acc.dinner.push(item);
           break;
         case "snack":
-          acc[3].push(item);
+          acc.snack.push(item);
           break;
       }
       return acc;
     },
-    [[], [], [], []] // breakfast, lunch, dinner, snack
+    { breakfast: [], lunch: [], dinner: [], snack: [] } // breakfast, lunch, dinner, snack
   );
 };

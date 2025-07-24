@@ -92,7 +92,7 @@ const MealitemForm = ({
       console.error("Error adding meal item:", error);
       return;
     } else {
-      toast.success(`${foodItem.name} added to your dairy!`);
+      toast.success(`${foodItem.name} added to ${values.mealType} `);
       close();
     }
   };

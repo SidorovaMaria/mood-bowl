@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ArrowLeft, Check, Plus, Undo2 } from "lucide-react";
+import { Check, Plus, Undo2 } from "lucide-react";
 
 import {
   Drawer,
@@ -13,7 +13,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FoodSearch from "../search/FoodSearch";
 import { IFoodItemDoc } from "@/database/foodItem.model";
 import {
@@ -23,9 +23,23 @@ import {
 } from "@/components/ui/popover";
 import { AnimatePresence, motion } from "motion/react";
 import MealitemForm from "../forms/MealitemForm";
+import NewFoodForm from "../forms/newFoodForm";
+import { removeKeysFromUrlQuery } from "@/lib/url";
 
 export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [showNewFoodForm, setShowNewFoodForm] = React.useState(false);
+  const router = useRouter();
+  const closeAddFoodForm = () => {
+    const newUrl = removeKeysFromUrlQuery({
+      params: searchParams.toString(),
+      keysToRemove: ["query"],
+    });
+    console.log("New URL after closing form:", newUrl);
+    router.push(newUrl);
+    setShowNewFoodForm(false);
+  };
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -37,26 +51,45 @@ export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
         />
       </DrawerTrigger>
       <DrawerContent className="min-h-[85vh]! ">
-        <div className=" px-8 md:px-0 mx-auto w-full max-w-3xl">
-          <DrawerHeader>
-            <DrawerTitle className="text-2xl font-bold text-gradient">
-              Add New Food
-            </DrawerTitle>
-          </DrawerHeader>
-          <div className="p-4 w-full pb-0">
-            <FoodSearch route={pathname} placeholder="Search for food..." />
-            <div className="flex flex-col gap-1 mt-2 overflow-x-scroll max-h-[400px] ">
-              {data && data.length > 0 ? (
-                data.map((foodItem: IFoodItemDoc) => (
-                  <FoodInfo key={String(foodItem._id)} foodItem={foodItem} />
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  No food items found.
-                </p>
-              )}
+        <DrawerHeader>
+          <DrawerTitle className="text-xl font-bold text-gradient">
+            Add New Food
+          </DrawerTitle>
+        </DrawerHeader>
+        <div className=" px-8 md:px-0 mx-auto w-full max-w-3xl overflow-scroll">
+          {showNewFoodForm ? (
+            <div className="overflow-scroll">
+              <NewFoodForm close={() => closeAddFoodForm()} />
             </div>
-          </div>
+          ) : (
+            <div className="p-4 py-0 w-full pb-0">
+              <FoodSearch route={pathname} placeholder="Search for food..." />
+              <div className="flex flex-col gap-1 mt-2 overflow-x-scroll max-h-[400px] ">
+                {data && data.length > 0 ? (
+                  data.map((foodItem: IFoodItemDoc) => (
+                    <FoodInfo key={String(foodItem._id)} foodItem={foodItem} />
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-background-light rounded-lg gap-5">
+                    <p className="text-lg text-muted-foreground">
+                      No food items found.
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col items-center gap-4 justify-center my-10 w-full ">
+                <p className="font-bold text-lg text-gradient">
+                  Not found what you are looking for?
+                </p>
+                <ButtonSlide
+                  onClick={() => setShowNewFoodForm(true)}
+                  text="Create New Food"
+                  className="ml-2"
+                  icon={Plus}
+                />
+              </div>
+            </div>
+          )}
 
           <DrawerFooter>
             <DrawerClose asChild>

@@ -32,7 +32,7 @@ import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { addFoodItem } from "@/lib/actions/fooitem.action";
 import { toast } from "sonner";
 
-const NewFoodForm = () => {
+const NewFoodForm = ({ close }: { close: () => void }) => {
   const form = useForm<z.infer<typeof createFoodItemSchema>>({
     resolver: zodResolver(createFoodItemSchema),
     defaultValues: {
@@ -67,6 +67,7 @@ const NewFoodForm = () => {
         `Thank you! ${data?.foodItem.name} has been added to the food database!`
       );
       form.reset();
+      close();
     }
   };
   return (

@@ -32,7 +32,6 @@ type PieSectorDataItem = React.SVGProps<SVGPathElement> &
 const renderActiveShape = ({
   cx,
   cy,
-  midAngle,
   innerRadius,
   outerRadius,
   startAngle,
@@ -130,8 +129,8 @@ const NutritionChart = ({
             data={activeNutritionData}
             cx="50%"
             cy="50%"
-            innerRadius={60}
-            outerRadius={80}
+            innerRadius={50}
+            outerRadius={70}
             fill="none"
             stroke="none"
             paddingAngle={5}
@@ -142,10 +141,10 @@ const NutritionChart = ({
             data={activeMealBasedKcal}
             cx="50%"
             cy="50%"
-            innerRadius={85}
-            outerRadius={100}
+            innerRadius={75}
+            outerRadius={85}
             fill="fill"
-            paddingAngle={2}
+            paddingAngle={6}
             dataKey="value"
             pointerEvents="none"
             label={({
@@ -160,7 +159,7 @@ const NutritionChart = ({
             }) => {
               // Calculate label position closer to center
               const RADIAN = Math.PI / 180;
-              const radius = innerRadius + (outerRadius - innerRadius) * 3.5;
+              const radius = innerRadius + (outerRadius - innerRadius) * 3;
               const safeMidAngle = midAngle ?? 0;
               const x = cx + radius * Math.cos(-safeMidAngle * RADIAN);
               const y = cy + radius * Math.sin(-safeMidAngle * RADIAN);

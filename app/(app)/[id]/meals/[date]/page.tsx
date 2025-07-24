@@ -1,11 +1,7 @@
+import MealItemCard from "@/components/main-application/cards/MealItemCard";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
-import SmallFoodChart from "@/components/main-application/charts/SmallFoodChart";
 import { AddFoodDrawer } from "@/components/main-application/drawer/AddFoodDrawer";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { MealTypeColors } from "@/constants";
 
 import { getFoodItems } from "@/lib/actions/fooitem.action";
 import {
@@ -20,9 +16,6 @@ import {
   getRelativeDay,
   getWeekdayDate,
 } from "@/lib/utils";
-
-import { format, parse } from "date-fns";
-import { get } from "http";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -58,42 +51,25 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
       nutritionError?.message || "Failed to fetch nutrition data"
     );
   }
-
-  const nutrition = [
-    {
-      name: "Protein",
-      value: nutritionData?.nutrition.totalProtein || 0,
-      fill: "var(--color-protein)",
-    },
-    {
-      name: "Carbs",
-      value: nutritionData?.nutrition.totalCarbs || 0,
-      fill: "var(--color-carbs)",
-    },
-    {
-      name: "Fats",
-      value: nutritionData?.nutrition.totalFats || 0,
-      fill: "var(--color-fats)",
-    },
-    {
-      name: "Fiber",
-      value: nutritionData?.nutrition.totalFiber || 0,
-      fill: "var(--color-fiber)",
-    },
-    {
-      name: "Sugar",
-      value: nutritionData?.nutrition.totalSugar || 0,
-      fill: "var(--color-sugar)",
-    },
-  ];
-  const mealTypeCalories = Array.isArray(nutritionData?.kcalbyMealType)
+  const DailyNutrition = [
+    { name: "Protein", key: "totalProtein", fill: "var(--color-protein)" },
+    { name: "Carbs", key: "totalCarbs", fill: "var(--color-carbs)" },
+    { name: "Fats", key: "totalFats", fill: "var(--color-fats)" },
+    { name: "Fiber", key: "totalFiber", fill: "var(--color-fiber)" },
+    { name: "Sugar", key: "totalSugar", fill: "var(--color-sugar)" },
+  ].map(({ name, key, fill }) => ({
+    name,
+    value: nutritionData?.nutrition[key] || 0,
+    fill,
+  }));
+  const DailyCaloriesbyMealType = Array.isArray(nutritionData?.kcalbyMealType)
     ? nutritionData.kcalbyMealType.map((item) => ({
         name: item._id,
         value: item.totalCalories,
-        fill: `var(--color-${item._id})`, // Assuming meal types are named as 'breakfast', 'lunch', 'dinner', 'snack'
+        fill: MealTypeColors[item._id as keyof typeof MealTypeColors], // Assuming meal types are named as 'breakfast', 'lunch', 'dinner', 'snack'
       }))
     : [];
-  console.log("mealTypeCalories", mealTypeCalories);
+  console.log("DailyCaloriesbyMealType", DailyCaloriesbyMealType);
   return (
     <main>
       <div className="">
@@ -116,8 +92,8 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
             </div>
             <div className=" w-[400px] h-[300px]">
               <NutritionChart
-                nutritionData={nutrition}
-                mealBasedKcal={mealTypeCalories}
+                nutritionData={DailyNutrition}
+                mealBasedKcal={DailyCaloriesbyMealType}
               />
             </div>
           </div>
@@ -140,139 +116,43 @@ const DailyDairy = async ({ date }: { date: Date }) => {
     throw new Error(error?.message || "Failed to fetch meal items");
   }
 
-  if (!data || data.foodLogged.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[200px]">
-        <section className="my-3">
-          <h1 className="text-xl">No meals logged for today</h1>
-        </section>
-      </div>
-    );
-  }
-  const [breakfast, lunch, dinner, snack] = categorizeMeals(data.foodLogged);
+  const mealTypes = categorizeMeals(data?.foodLogged ?? []);
+  console.log("mealTypes", mealTypes);
   return (
     <div>
-      <section className="my-3">
-        <h1 className="text-xl">Breakfast</h1>
-        <div className=" h-[1px] w-full bg-gradient-to-l from-primary to-accent opacity-50" />
-        <div className="grid grid-flow-col-dense mt-4 gap-8">
-          {breakfast.length > 0 ? (
-            breakfast.map((item: MealItemWithFoodDetails) => (
-              <FoodItemCard key={String(item._id)} foodItem={item} />
-            ))
-          ) : (
-            <p>No breakfast logged</p>
-          )}
-        </div>
-      </section>
-      <section className="my-3">
-        <h1 className="text-xl">Lunch</h1>
-        <div className=" h-[1px] w-full bg-gradient-to-l from-primary to-accent opacity-50" />
-        <div className="grid grid-flow-col-dense mt-4 gap-8">
-          {lunch.length > 0 ? (
-            lunch.map((item: MealItemWithFoodDetails) => (
-              <FoodItemCard key={String(item._id)} foodItem={item} />
-            ))
-          ) : (
-            <p>No lunch logged</p>
-          )}
-        </div>
-      </section>
-      <section className="my-3">
-        <h1 className="text-xl">Dinner</h1>
-        <div className=" h-[1px] w-full bg-gradient-to-l from-primary to-accent opacity-50" />
-        <div className="grid grid-flow-col-dense mt-4 gap-8">
-          {dinner.length > 0 ? (
-            dinner.map((item: MealItemWithFoodDetails) => (
-              <FoodItemCard key={String(item._id)} foodItem={item} />
-            ))
-          ) : (
-            <p>No dinner logged</p>
-          )}
-        </div>
-      </section>
-      <section className="my-3">
-        <h1 className="text-xl">Snacks</h1>
-        <div className=" h-[1px] w-full bg-gradient-to-l from-primary to-accent opacity-50" />
-        <div className="flex flex-wrap gap-8 ">
-          {snack.length > 0 ? (
-            snack.map((item: MealItemWithFoodDetails) => (
-              <FoodItemCard key={String(item._id)} foodItem={item} />
-            ))
-          ) : (
-            <p>No snacks logged</p>
-          )}
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const FoodItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
-  const chartData = [
-    {
-      name: "Protein",
-      value: foodItem.protein || 0,
-      fill: "var(--color-protein)",
-    },
-    { name: "Carbs", value: foodItem.carbs || 0, fill: "var(--color-carbs)" },
-    { name: "Fats", value: foodItem.fats || 0, fill: "var(--color-fats)" },
-  ];
-  return (
-    <Popover>
-      <PopoverTrigger>
-        <div
-          className="p-4 bg-gradient-to-br from-accent/80 to-primary/80 rounded-2xl text-background font-bold
-    flex flex-col h-full cursor-pointer"
-        >
-          <h2 className="text-base w-full whitespace-nowrap ">
-            {foodItem.foodItemId.name}
-          </h2>
-          <p className="text-xs w-full  text-background/80">
-            {foodItem.foodItemId.brand || <span>&nbsp;</span>}
-          </p>
-          <div className="mx-auto">
-            <SmallFoodChart
-              stroke
-              data={chartData}
-              fill={"var(--color-background)"}
-              totalKcal={foodItem.calories || 0}
-            />
+      {Object.entries(mealTypes).map(([mealType, meals]) => (
+        <section className="my-3" key={mealType}>
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-xl capitalize font-bold">{mealType}</h1>
+            <div className="flex items-center gap-2 text-sm font-bold text-foreground">
+              <p className=" bg-gradient-to-r from-primary to-accent text-background px-3 py-1 rounded-lg ">
+                {meals.reduce((acc, item) => acc + (item.calories ?? 0), 0)}{" "}
+                kcal
+              </p>
+              <p className=" bg-protein  px-3 py-1 rounded-lg">
+                {meals.reduce((acc, item) => acc + (item.protein ?? 0), 0)}g
+                Protein
+              </p>
+              <p className=" bg-fats px-3 py-1 rounded-lg">
+                {meals.reduce((acc, item) => acc + (item.fats ?? 0), 0)}g Fats
+              </p>
+              <p className=" bg-carbs  px-3 py-1 rounded-lg">
+                {meals.reduce((acc, item) => acc + (item.carbs ?? 0), 0)}g Carbs
+              </p>
+            </div>
           </div>
-        </div>
-      </PopoverTrigger>
-      <PopoverContent
-        align="center"
-        side="top"
-        className=" bg-background-light text-foreground border-none "
-      >
-        <div className="flex items-center justify-between w-full">
-          <h2>{foodItem.foodItemId.name}</h2>
-          <p>{foodItem.calories}kcal</p>
-        </div>
-        <ul className="grid grid-cols-5 mt-4 items-center gap-2">
-          <li className="flex flex-col items-center">
-            <p className="text-sm font-bold ">{foodItem.protein}g</p>
-            <p className="text-xs">Protein</p>
-          </li>
-          <li className="flex flex-col items-center">
-            <p className="text-sm font-bold ">{foodItem.carbs}g</p>
-            <p className="text-xs">Carbs</p>
-          </li>
-          <li className="flex flex-col items-center">
-            <p className="text-sm font-bold ">{foodItem.fats}g</p>
-            <p className="text-xs">Fats</p>
-          </li>
-          <li className="flex flex-col items-center">
-            <p className="text-sm font-bold ">{foodItem.sugar}g</p>
-            <p className="text-xs">Sugar</p>
-          </li>
-          <li className="flex flex-col items-center">
-            <p className="text-sm font-bold ">{foodItem.fiber}g</p>
-            <p className="text-xs">Fiber</p>
-          </li>
-        </ul>
-      </PopoverContent>
-    </Popover>
+          <div className=" h-[1px] w-full bg-gradient-to-l from-primary to-accent opacity-50" />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
+            {meals.length > 0 ? (
+              meals.map((item: MealItemWithFoodDetails) => (
+                <MealItemCard key={String(item._id)} foodItem={item} />
+              ))
+            ) : (
+              <p>No {mealType} logged</p>
+            )}
+          </div>
+        </section>
+      ))}
+    </div>
   );
 };

@@ -202,3 +202,9 @@ export const onboardingSteps = [
   { id: "4", name: "Goals & Diet" },
   { id: "5", name: "Review" },
 ];
+export const MealTypeColors = {
+  breakfast: "#fff3b0",
+  lunch: "#c8e6c9",
+  dinner: "#d1c4e9",
+  snack: "#ffd1ba",
+};
