@@ -107,12 +107,12 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.7 }}
-          className="bg-gradient-to-b from-primary to-accent opacity-80 hover:opacity-100 text-background font-bold px-6 py-3 rounded-full text-lg mb-6
+          className="bg-gradient-to-b from-primary/90 to-accent/90 opacity-80 hover:opacity-100  font-bold px-6 py-3 rounded-full text-lg mb-6
         transition-all transform hover:scale-105 whitespace-nowrap cursor-pointer shadow-lg group"
         >
           <Link href="/sign-in">
             Start Your Journey{" "}
-            <ArrowRightCircle className="inline text-background group-hover:animate-bounce-right" />
+            <ArrowRightCircle className="inline group-hover:animate-bounce-right" />
           </Link>
         </motion.button>
 
@@ -192,7 +192,7 @@ const FeatureHightlight = ({
       <h3 className="text-lg font-bold ">{title}</h3>
       <p className="text-foreground text-xs leading-relaxed px-2">{text}</p>
       {coming && (
-        <div className="mt-4 text-sm font-bold bg-secondary text-background fontbold px-3 py-1 rounded-xl opacity-80">
+        <div className="mt-4 text-sm font-bold bg-gradient-to-br from-primary to-secondary/80 fontbold px-4 py-2 rounded-xl ">
           Coming Soon <Rocket className="inline size-3" />
         </div>
       )}

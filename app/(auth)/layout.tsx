@@ -17,7 +17,18 @@ const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
         <div className="absolute top-3/4 left-1/4 w-16 h-16 bg-accent/50 rounded-full blur-md"></div>
 
         <div className="max-w-md text-center relative z-10">
-          <h1 className="text-3xl font-bold text-foreground mb-8">MooDBowl</h1>
+          <div className="flex items-center my-10 justify-center">
+            <h1 className="font-comforta text-4xl text-center font-bold relative group cursor-pointer">
+              M<span className="text-accent font-bold">oo</span>DB
+              <span className="text-accent font-bold">ow</span>l
+              <span className="absolute top-[58%] text-accent left-14 font-bold text-3xl rotate-90 group-hover:animate-swing">
+                )
+              </span>
+              <span className="absolute bottom-[60%] text-accent right-7 font-bold text-3xl -rotate-90 group-hover:animate-swing">
+                )
+              </span>
+            </h1>
+          </div>
           <h2
             className="text-2xl font-bold text-foreground mb-2"
             style={{ fontFamily: "var(--font-comfortaa)" }}

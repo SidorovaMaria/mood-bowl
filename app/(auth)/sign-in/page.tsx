@@ -94,7 +94,7 @@ const SignIn = () => {
         Not a member yet?{" "}
         <Link
           href="/sign-up"
-          className="link text-background  ml-1 font-bold hover:text-primary"
+          className="link text-background  ml-1 font-bold hover:text-accent"
         >
           Sign Up
           <span className="slider" />

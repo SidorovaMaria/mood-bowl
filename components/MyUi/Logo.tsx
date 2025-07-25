@@ -1,8 +1,9 @@
+"use client";
 import React from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-const Logo = ({ imageLogo }: { imageLogo?: boolean }) => {
+const Logo = ({ fontStyle }: { fontStyle?: string }) => {
   return (
     <Link href="/" className="flex items-center">
       <motion.div
@@ -21,18 +22,9 @@ const Logo = ({ imageLogo }: { imageLogo?: boolean }) => {
         animate="initial"
         className="flex items-center cursor-pointer space-x-2"
       >
-        <div className="w-8 h-8 flex items-center justify-center">
-          {imageLogo && (
-            <Image
-              src="/images/icons/happyLogo.png"
-              alt="Logo"
-              width={120}
-              height={120}
-              className=""
-            />
-          )}
-        </div>
-        <span className="text-2xl lg:text-2xl font-bold font-comfortaa cursor-pointer">
+        <span
+          className={`text-2xl lg:text-2xl font-bold font-comfortaa cursor-pointer ${fontStyle}`}
+        >
           Moo
           <motion.span
             variants={{

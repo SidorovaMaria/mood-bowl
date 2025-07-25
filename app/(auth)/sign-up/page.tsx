@@ -164,18 +164,13 @@ const SignUpPage = () => {
             text="Create an Account"
             icon={UserRoundPlus}
           />
-          {/* <Button type="submit" className="submit-button group relative z-10">
-            <UserRoundPlus className="inline-flex size-5 relative z-10" />
-            <p className="relative z-10">Create an Account</p>
-            <div className="submit-btn-bg"></div>
-          </Button> */}
         </form>
       </Form>
       <p className="text-sm font-medium">
         Already have an account?
         <Link
           href="/sign-in"
-          className="link text-background  ml-1 font-bold hover:text-primary"
+          className="link text-background  ml-1 font-bold hover:text-accent"
         >
           Sign In
           <span className="slider" />

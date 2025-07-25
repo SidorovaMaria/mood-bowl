@@ -36,9 +36,7 @@ const ButtonSlide = ({
       {link ? (
         <Link href={link} className="flex items-center gap-2">
           {slideLeft && <Icon className="form-submit-btn-icon" />}
-          {text && (
-            <p className="relative z-10 group-hover:text-background">{text}</p>
-          )}
+          {text && <p className="relative z-10 text-foreground">{text}</p>}
           {!slideLeft && <Icon className="form-submit-btn-icon" />}
           <div
             className={`${
@@ -49,10 +47,10 @@ const ButtonSlide = ({
       ) : (
         <>
           {slideLeft && <Icon className="form-submit-btn-icon" />}
-          {text && (
-            <p className="relative z-10 group-hover:text-background">{text}</p>
+          {text && <p className="relative z-10 text-foreground ">{text}</p>}
+          {!slideLeft && (
+            <Icon className="form-submit-btn-icon text-foreground" />
           )}
-          {!slideLeft && <Icon className="form-submit-btn-icon" />}
           <div
             className={`${
               slideLeft ? "form-back-btn-bg" : "form-submit-btn-bg"

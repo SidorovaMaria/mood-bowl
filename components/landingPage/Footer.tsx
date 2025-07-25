@@ -10,12 +10,12 @@ const Footer = () => {
           <div className="flex flex-col gap-4">
             <div className="flex items-center">
               <h4 className="font-comforta text-3xl text-center font-bold relative group cursor-pointer">
-                M<span className="text-primary font-bold">oo</span>DB
-                <span className="text-primary font-bold">ow</span>l
-                <span className="absolute top-[58%] text-primary left-12 font-bold text-2xl rotate-90 group-hover:animate-swing">
+                M<span className="text-accent font-bold">oo</span>DB
+                <span className="text-accent font-bold">ow</span>l
+                <span className="absolute top-[58%] text-accent left-12 font-bold text-2xl rotate-90 group-hover:animate-swing">
                   )
                 </span>
-                <span className="absolute bottom-[60%] text-primary right-7 font-bold text-2xl -rotate-90 group-hover:animate-swing">
+                <span className="absolute bottom-[60%] text-accent right-7 font-bold text-2xl -rotate-90 group-hover:animate-swing">
                   )
                 </span>
               </h4>

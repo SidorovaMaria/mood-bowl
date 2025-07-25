@@ -14,21 +14,16 @@ const LandingNavbar = () => {
     <header className="fixed top-0 w-full z-50 bg-[var(--color-background)]/90 backdrop-blur-sm border-b border-background-light">
       <div className="container  mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Logo imageLogo />
+          <Logo />
           <nav className="hidden md:flex items-center space-x-8 ">
-            <Link href="#features" className="link">
-              Features
-              <span className="slider" />
-            </Link>
-            <Link href="#about" className="link">
-              About
-              <span className="slider" />
-            </Link>
-            <Link href="#blog" className="link">
-              Blog
-              <span className="slider" />
-            </Link>
+            {landingLinks.map((link) => (
+              <Link key={link.id} href={link.href} className="link">
+                {link.title}
+                <span className="slider" />
+              </Link>
+            ))}
           </nav>
+
           {data?.user?.id ? (
             <div className="flex items-center space-x-4 ">
               <Button
@@ -62,7 +57,7 @@ const LandingNavbar = () => {
 
               <Button
                 variant="outline"
-                className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-2xl font-bold whitespace-nowrap cursor-pointer group hover:scale-105"
+                className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-2xl font-bold whitespace-nowrap cursor-pointer group hover:scale-105 border-none"
               >
                 <Link href="/sign-up" className="flex items-center gap-2">
                   Get Started
@@ -78,3 +73,21 @@ const LandingNavbar = () => {
 };
 
 export default LandingNavbar;
+
+const landingLinks = [
+  {
+    id: "features",
+    title: "Features",
+    href: "#features",
+  },
+  {
+    id: "about",
+    title: "About",
+    href: "#about",
+  },
+  {
+    id: "blog",
+    title: "Blog",
+    href: "#blog",
+  },
+];

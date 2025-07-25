@@ -73,10 +73,10 @@ const CTASection = () => {
                     }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                   >
-                    <div className="w-8 h-8 flex items-center justify-center p-2 border rounded-full group-hover:text-primary group-hover:translate-y-[-2px] transition-transform duration-150 group-hover:scale-110">
+                    <div className="w-8 h-8 flex items-center justify-center p-2 border rounded-full group-hover:text-accent group-hover:translate-y-[-2px] transition-transform duration-150 group-hover:scale-110 ">
                       <Icon />
                     </div>
-                    <span className="hover:text-primary transition-colors">
+                    <span className="hover:text-accent transition-colors cursor-pointer">
                       {item.text}
                     </span>
                   </motion.div>

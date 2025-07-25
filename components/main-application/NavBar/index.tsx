@@ -29,17 +29,17 @@ const NavBar = () => {
                   <Link
                     href={`/${data?.user?.id}/${href}`}
                     className={`group flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 relative ${
-                      isActive && "font-bold! text-background"
+                      isActive && "font-bold! "
                     }`}
                   >
                     <Icon
                       className={`text-lg transition-transform ${
-                        isActive
-                          ? "scale-110 text-background "
-                          : "text-foreground/70 group-hover:scale-105"
+                        isActive ? "scale-110  " : "group-hover:scale-110"
                       }`}
                     />
-                    <span className="text-sm ">{label}</span>
+                    <span className="text-sm group-hover:font-bold">
+                      {label}
+                    </span>
 
                     {isActive && (
                       <motion.div

@@ -26,16 +26,16 @@
   --color-primary: #4f627e;
   --color-secondary: #ffa87e;
   --color-accent: #81c5af;
-  --color-protein: #0062ff;
-  --color-carbs: #00b4d8;
-  --color-sat-fats: #f85f40;
-  --color-fats: #e87502;
-  --color-fiber: #0aa149;
-  --color-sugar: #f72585;
-  --color-breakfast: #fff3b0;
-  --color-lunch: #c8e6c9;
-  --color-dinner: #d1c4e9;
-  --color-snack: #ffd1ba;
+  --color-protein: #6aa0ff;
+  --color-carbs: #80c4ca;
+  --color-sat-fats: #ec6c5c;
+  --color-fats: #f8a145;
+  --color-fiber: #48c9a9;
+  --color-sugar: #ff778b;
+  --color-breakfast: #48c9a9;
+  --color-lunch: #48c9a9;
+  --color-dinner: #48c9a9;
+  --color-snack: #48c9a9;
 
   --animate-swing: swin-left-to-right 1s ease-in-out infinite alternate;
   --animate-bounce-right: boune-to-right 0.5s ease-in-out infinite alternate;
@@ -55,10 +55,10 @@ body {
     @apply text-center text-sm max-w-xs mx-auto md:text-lg md:max-w-md lg:max-w-2xl lg:text-xl px-4 bg-background;
   }
   .link {
-    @apply text-foreground hover:text-primary  font-bold transition-colors duration-300 relative;
+    @apply text-foreground hover:text-accent  font-bold transition-colors duration-300 relative;
   }
   .slider::before {
-    @apply absolute bottom-0 left-0 h-0.5 w-full bg-primary transition-transform duration-500 ease-in-out;
+    @apply absolute bottom-0 left-0 h-0.5 w-full bg-accent transition-transform duration-500 ease-in-out;
 
     transform: scaleX(0);
     content: "";
@@ -75,7 +75,7 @@ body {
     @apply cursor-pointer! bg-transparent! border hover:border-transparent   overflow-hidden;
   }
   .form-submit-btn-icon {
-    @apply inline-flex size-5 relative z-10 group-hover:text-background transition-colors duration-300;
+    @apply inline-flex size-5 relative z-10 transition-colors duration-300;
   }
 
   .form-submit-btn-bg {
@@ -181,7 +181,7 @@ body {
   --popover-foreground: oklch(0.129 0.042 264.695);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: #eff1f1d7;
-  --destructive: oklab(53.854% 0.18708 0.10114);
+  --destructive: #871109;
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
