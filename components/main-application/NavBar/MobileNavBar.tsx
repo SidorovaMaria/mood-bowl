@@ -9,8 +9,8 @@ const MobileNavBar = () => {
   const pathname = usePathname();
   const { data } = useSession();
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-background-light to-background backdrop-blur-sm ">
-      <div className=" mx-auto px-6 py-2 border-t rounded-t-md">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-background-light to-transparent backdrop-blur-sm ">
+      <div className=" mx-auto px-6 py-2 ">
         <ul className="flex items-center justify-around px-4">
           {AppNavigationItems.map(({ href, label, icon }) => {
             const Icon = icon;

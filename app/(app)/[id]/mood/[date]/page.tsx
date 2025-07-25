@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const MoodDahboard = async ({ params, searchParams }: RouteParams) => {
+const MoodDahboard = async ({ params }: RouteParams) => {
   const { date, id } = await params;
   const {
     success: successUser,
@@ -34,12 +34,14 @@ const MoodDahboard = async ({ params, searchParams }: RouteParams) => {
     <main className="-mt-26">
       {/* Mood Log and Date */}
       <div className="relative rounded-b-4xl pt-26">
-        <div className="absolute inset-0 overflow-hidden rounded-b-4xl">
+        <div className="fixed inset-0 overflow-hidden rounded-b-4xl">
+          <div className="absolute inset-0 bg-background-light/50 -z-10" />
           <Image
-            src="/images/dark-calm.jpg"
+            src="/images/dark-mood.jpg"
             fill
+            priority
             alt="Calm Mood"
-            className="object-cover  brightness-50"
+            className="object-cover brightness-50 -z-20"
           />
         </div>
 

@@ -45,7 +45,7 @@ const Logo = ({ imageLogo }: { imageLogo?: boolean }) => {
               animate: {
                 rotate: [0, 180],
                 y: [0, -10, -3],
-                color: "#ffe38d",
+                color: "var(--color-primary)",
                 transition: { duration: 0.7, ease: "easeInOut" },
               },
             }}

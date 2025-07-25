@@ -15,14 +15,14 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="hidden lg:block fixed top-0 w-full z-50 bg-gradient-to-t  backdrop-blur-xs ">
+    <nav className="hidden lg:block fixed top-0 w-full z-50 bg-gradient-to-b from-background to-transparent backdrop-blur-sm ">
       <div className="mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Logo />
           <ul className="flex items-center gap-4">
             {AppNavigationItems.map(({ href, label, icon }) => {
               const Icon = icon;
-              const isActive = pathname === `/${data?.user?.id}${href}`;
+              const isActive = pathname.includes(`/${data?.user?.id}${href}`);
 
               return (
                 <motion.li initial={false} key={label}>

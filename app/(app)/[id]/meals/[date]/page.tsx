@@ -18,6 +18,7 @@ import {
   getWeekdayDate,
 } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -72,8 +73,17 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
     : [];
   console.log("DailyCaloriesbyMealType", DailyCaloriesbyMealType);
   return (
-    <main className="max-sm:px-4 container lg:max-w-6xl mx-auto">
-      <div className="">
+    <main className="-mt-26">
+      <div className="relative rounded-b-4xl pt-26">
+        <div className="fixed -z-10 inset-0 overflow-hidden rounded-b-4xl">
+          <div className="absolute inset-0 bg-background-light/20 -z-10" />
+          <Image
+            src="/images/dark-food.jpg"
+            fill
+            alt="Calm Mood"
+            className="object-cover brightness-50 -z-20"
+          />
+        </div>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between max-sm:justify-center gap-2 md:gap-8">
             <div className="flex flex-col items-center max-sm:items-center gap-1">
@@ -100,10 +110,10 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
               />
             </div>
           </div>
-          <div>
-            <DailyDairy date={new Date(date)} />
-          </div>
         </div>
+      </div>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
+        <DailyDairy date={new Date(date)} />
       </div>
     </main>
   );
