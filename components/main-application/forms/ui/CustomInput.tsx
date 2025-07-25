@@ -11,6 +11,7 @@ import React from "react";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { Path } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { text } from "stream/consumers";
 
 type CustomInputProps<T extends FieldValues> = {
   form: UseFormReturn<T>;
@@ -21,6 +22,7 @@ type CustomInputProps<T extends FieldValues> = {
   placeholder?: string;
   className?: string;
   small?: boolean;
+  textArea?: boolean;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 const CustomInput = <T extends FieldValues>({
@@ -33,6 +35,7 @@ const CustomInput = <T extends FieldValues>({
   className = "",
   small,
   onKeyDown,
+  textArea = false,
 }: CustomInputProps<T>) => {
   return (
     <FormField
@@ -51,21 +54,33 @@ const CustomInput = <T extends FieldValues>({
             )}
           </FormLabel>
           <FormControl>
-            <input
-              value={field.value === 0 ? "" : field.value}
-              type={type}
-              placeholder={placeholder}
-              onChange={
-                type === "number"
-                  ? (e) => field.onChange(Number(e.target.value))
-                  : field.onChange
-              }
-              onKeyDown={onKeyDown}
-              className={`font-bold text-base placeholder:text-foreground/80 
+            {textArea ? (
+              <textarea
+                value={field.value === 0 ? "" : field.value}
+                placeholder={placeholder}
+                onChange={field.onChange}
+                className={`font-bold text-base placeholder:text-foreground/50 
               placeholder:text-sm px-3 py-1.5 outline-none border
-              rounded-md border-accent/70 focus:border-accent
-              focus:bg-gradient-to-b from-accent/20 to-background-light `}
-            />
+              rounded-md border-primary/70 focus:border-primary
+              focus:bg-gradient-to-b from-accent/20 to-accent/10 `}
+              />
+            ) : (
+              <input
+                value={field.value === 0 ? "" : field.value}
+                type={type}
+                placeholder={placeholder}
+                onChange={
+                  type === "number"
+                    ? (e) => field.onChange(Number(e.target.value))
+                    : field.onChange
+                }
+                onKeyDown={onKeyDown}
+                className={`font-bold text-base placeholder:text-foreground/50 
+              placeholder:text-sm px-3 py-1.5 outline-none border
+              rounded-md border-primary/70 focus:border-primary
+              focus:bg-gradient-to-b from-accent/20 to-accent/10 `}
+              />
+            )}
           </FormControl>
           <FormMessage className="text-xs text-secondary" />
         </FormItem>
