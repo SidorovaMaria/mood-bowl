@@ -33,9 +33,7 @@ const UserLayout = async ({ children }: { children: ReactNode }) => {
   return (
     <main>
       <NavBar />
-      <div className="lg:py-20 py-8 pb-26 max-sm:px-4 container lg:max-w-6xl mx-auto">
-        {children}
-      </div>
+      <div className="lg:py-20 py-8 pb-26 ">{children}</div>
       <MobileNavBar />
     </main>
   );

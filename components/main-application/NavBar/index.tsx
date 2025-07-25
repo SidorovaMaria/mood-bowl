@@ -15,8 +15,8 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="hidden lg:block fixed top-0 w-full z-50 bg-gradient-to-t from-background/50 to-background-light/50 backdrop-blur-xs ">
-      <div className=" mx-auto px-6 py-4">
+    <nav className="hidden lg:block fixed top-0 w-full z-50 bg-gradient-to-t  backdrop-blur-xs ">
+      <div className="mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Logo />
           <ul className="flex items-center gap-4">

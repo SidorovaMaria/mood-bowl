@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import { MealItemWithFoodDetails } from "./actions/mealitem.action";
+import { Mood, moodResponses } from "@/constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -110,3 +111,12 @@ export const categorizeMeals = (mealItems: MealItemWithFoodDetails[]) => {
     { breakfast: [], lunch: [], dinner: [], snack: [] } // breakfast, lunch, dinner, snack
   );
 };
+
+export function getRandomMoodResponse(mood: Mood): string {
+  const moodData = moodResponses[mood];
+  if (!moodData) return "";
+
+  const { responses } = moodData;
+  const randomIndex = Math.floor(Math.random() * responses.length);
+  return responses[randomIndex];
+}

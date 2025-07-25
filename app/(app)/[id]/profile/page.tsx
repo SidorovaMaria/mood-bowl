@@ -23,7 +23,7 @@ const SettingsUser = async () => {
   const user = data.user;
 
   return (
-    <main className="">
+    <main className="max-sm:px-4 container lg:max-w-6xl mx-auto">
       {/* Profile Header */}
       <div className="rounded-t-3xl border border-accent/20 backgrop-blur-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">

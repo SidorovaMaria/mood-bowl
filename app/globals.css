@@ -1,11 +1,27 @@
 @import "tailwindcss";
-
+:root {
+  --color-happy: #fde170;
+  --color-sad: #bed8c3;
+  --color-neutral: #ffd98e;
+  --color-tired: #ffbd83;
+  --color-angry: #fa8a55;
+  --color-anxious: #d3cad5;
+  --color-excited: #f4a630;
+  --color-bored: #bed8c1;
+  --color-stressed: #ffbb88;
+  --color-confused: #f0fe71;
+  --color-motivated: #ffd279;
+  --color-lonely: #aec7cf;
+  --color-calm: #f3e09a;
+  --color-grateful: #febd85;
+  --color-overwhelmed: #8998a0;
+}
 @theme {
   --font-comfortaa: "Comfortaa", cursive;
   --font-comic-neue: "Comic Neue", cursive;
-  --font-pacifico: "Pacifico", cursive;
+  --font-baloo: "Baloo 2", cursive;
   --color-background: #011515;
-  --color-background-light: #112b29;
+  --color-background-light: #111718;
   --color-foreground: #eff1f1;
   --color-primary: #ffe38d;
   --color-secondary: #ffa87e;
@@ -23,8 +39,11 @@
 
   --animate-swing: swin-left-to-right 1s ease-in-out infinite alternate;
   --animate-bounce-right: boune-to-right 0.5s ease-in-out infinite alternate;
+  --animate-modal-in-drop: modal-in-drop 0.3s ease-out forwards;
+  --animate-modal-out-drop: modal-out-drop 0.3s ease-in forwards;
+  --animate-fade-up: fade-up 0.3s ease-out forwards;
+  --animate-focus-progress: focus-progress ease-in-out forwards;
 }
-
 body {
   @apply font-comfortaa bg-background text-foreground selection:bg-secondary/50 selection:text-primary;
 }
@@ -58,6 +77,7 @@ body {
   .form-submit-btn-icon {
     @apply inline-flex size-5 relative z-10 group-hover:text-background transition-colors duration-300;
   }
+
   .form-submit-btn-bg {
     @apply absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300;
   }
@@ -83,6 +103,46 @@ body {
   }
 }
 
+@keyframes modal-in-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes modal-out-drop {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+}
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes focus-progress {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

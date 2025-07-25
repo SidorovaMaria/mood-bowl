@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Comfortaa, Comic_Neue, Pacifico } from "next/font/google";
+import { Comfortaa, Comic_Neue, Pacifico, Baloo_2 } from "next/font/google";
 import "./globals.css";
 import LandingNavbar from "@/components/landingPage/LandingNavbar";
 import { Toaster } from "@/components/ui/sonner";
@@ -12,11 +12,11 @@ const comfortaa = Comfortaa({
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
 });
-const pacifico = Pacifico({
-  weight: "400",
+const baloo = Baloo_2({
+  weight: ["500", "600", "700", "800"],
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-pacifico",
+  variable: "--font-baloo",
 });
 
 const comic_neue = Comic_Neue({
@@ -48,7 +48,7 @@ export default async function RootLayout({
       </head>
       <SessionProvider session={session}>
         <body
-          className={`${comfortaa.variable} ${comic_neue.variable} ${pacifico.variable} antialiased`}
+          className={`${comfortaa.variable} ${comic_neue.variable} ${baloo.variable} antialiased`}
         >
           <Toaster richColors />
           {children}

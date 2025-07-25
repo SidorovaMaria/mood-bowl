@@ -251,6 +251,17 @@ export const getNutritionByDateSchema = z.object({
     })
   ),
 });
+export const getDailyDairyByDateSchema = z.object({
+  date: z.preprocess(
+    (val) => {
+      if (typeof val === "string") return new Date(val);
+      return val;
+    },
+    z.date().refine((date) => !isNaN(date.getTime()), {
+      message: "Invalid date format",
+    })
+  ),
+});
 
 export const deleteMealItemSchema = z.object({
   mealItemId: z.string().min(1, "Meal item ID is required"),

@@ -72,7 +72,7 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
     : [];
   console.log("DailyCaloriesbyMealType", DailyCaloriesbyMealType);
   return (
-    <main>
+    <main className="max-sm:px-4 container lg:max-w-6xl mx-auto">
       <div className="">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between max-sm:justify-center gap-2 md:gap-8">

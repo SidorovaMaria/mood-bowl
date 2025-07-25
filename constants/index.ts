@@ -208,3 +208,159 @@ export const MealTypeColors = {
   dinner: "#d1c4e9",
   snack: "#ffd1ba",
 };
+
+export const MOODS_LIST = [
+  "happy",
+  "sad",
+  "neutral",
+  "tired",
+  "angry",
+  "anxious",
+  "excited",
+  "bored",
+  "stressed",
+  "calm",
+  "confused",
+  "motivated",
+  "lonely",
+  "grateful",
+  "overwhelmed",
+];
+export type Mood = (typeof MOODS_LIST)[number];
+export const moodResponses: Record<Mood, { responses: string[] }> = {
+  happy: {
+    responses: [
+      "You're glowing today! Capture this joy in your journal so Future You can re-read it.",
+      "Feeling good? Add a quick gratitude entry—it’ll amplify the positivity",
+      "Happiness is worth remembering. Why not log what made you smile today?",
+      "Let’s keep the momentum going—try a short meditation to stay centered in the joy.",
+      "You’re in a great headspace—perfect time to plan tomorrow or write a reflection.",
+    ],
+  },
+  sad: {
+    responses: [
+      "Feeling low? Try journaling it out—it’s a safe space just for you.",
+      "Sadness is part of being human. Writing about it might help lighten the load.",
+      "You're not alone. A short meditation could help ground you today",
+      "Maybe list 1 or 2 small things you’re grateful for. It can shift the tone gently.",
+      "Want to set a reminder for self-care? Start with one note in your diary.",
+    ],
+  },
+  neutral: {
+    responses: [
+      "A neutral day is still worth logging. What made it feel steady?",
+      "Try adding one gratitude entry—let’s give your day a little spark.",
+      "Use your journal to reflect: what could lift this day from ‘okay’ to ‘nice’?",
+      "Not sure how you feel? A 2-minute meditation can help clarify your state.",
+      "Neutral days are a great time to check in. What’s something small you did well today?",
+    ],
+  },
+  tired: {
+    responses: [
+      "Feeling drained? Journal a few words—then close your eyes for a break.",
+      "Exhausted? Skip the typing—just record a gratitude with one word.",
+      "Consider a breathing meditation. It might help restore your energy.",
+      "No pressure today. Even just logging that you’re tired is a win.",
+      "Write down what’s making you tired—sometimes naming it helps release it.",
+    ],
+  },
+  angry: {
+    responses: [
+      "Channel that energy into journaling—get the thoughts out without judgment.",
+      "You’re safe to feel anger. Let your diary hold it for now.",
+      "A calming meditation could help shift the heat. Want to try one?",
+      "Try writing 1 thing you do have control over today—it can shift perspective",
+      "Pause. Write it out. Then maybe add one thing you’re grateful for—it might feel surprising.",
+    ],
+  },
+  anxious: {
+    responses: [
+      "Let your anxiety speak through journaling—it often lessens when expressed.",
+      "A quick meditation could help you breathe through this moment.",
+      "Try naming 3 small gratitudes. Shifting focus can calm anxious energy.",
+      "You're safe here. Use this space to untangle the thoughts buzzing in your mind.",
+      "Anxiety is tough. Maybe write down one thing you can control today?",
+    ],
+  },
+  excited: {
+    responses: [
+      "Excited? Write it down! Capture the moment while it’s vivid.",
+      "Add a gratitude entry for what’s giving you this buzz—it’ll double the joy.",
+      "Try a short breathing meditation to stay grounded in your excitement.",
+      "Excitement is electric—channel it with a journal prompt: What am I looking forward to?",
+      "Your energy is contagious! Make a note of what’s lighting your fire.",
+    ],
+  },
+  bored: {
+    responses: [
+      "Bored? Try a fun journal prompt like ‘If I could teleport right now…’",
+      "Use your gratitude list to shake off boredom—what little things still made you smile?",
+      "Meditation might spark a fresh idea or help break the blah.",
+      "What could you do for 5 minutes that feels new? Log the outcome after.",
+      "Write a ‘letter to your future self’ in the journal—something playful.",
+    ],
+  },
+  stressed: {
+    responses: [
+      "Journal it all—no filter. Then close the tab and breathe.",
+      "Overwhelmed? Gratitude entries can bring perspective in seconds.",
+      "Take a break—your meditation timer is ready anytime you are.",
+      "Write one thing that can wait till tomorrow. Then let it go.",
+      "Track what’s stressing you—it could help you notice a pattern.",
+    ],
+  },
+  calm: {
+    responses: [
+      "Calm feels rare—write about what helped you reach it.",
+      "Add a gratitude entry while you’re centered—it’ll lock it in even more.",
+      "Use a meditation to sustain this serenity or prep for a good night’s rest.",
+      "Your journal might love a peaceful entry today—try writing a poem or doodle your mood.",
+      "Calm moments are great for reflection. What’s one thing you’ve learned this week?",
+    ],
+  },
+  confused: {
+    responses: [
+      "Confusion is a great journal topic. Let your thoughts wander onto the page.",
+      "Try a short meditation to settle the mental noise—clarity may follow.",
+      "Log a question that’s on your mind. It could become clearer later.",
+      "Confused? That’s okay. Gratitude might give your mind a steady base.",
+      "Write down 3 things you do know. Ground yourself in certainty.",
+    ],
+  },
+  motivated: {
+    responses: [
+      "Crush your day—then come back and log how it went.",
+      "You're pumped! Plan your next steps in the journal.",
+      "Use your energy to list goals—tiny or big—and track your progress later.",
+      "Feeling focused? Set a short-term challenge in your diary and revisit it next week.",
+      "This fire’s real—anchor it with a gratitude entry about what sparked it.",
+    ],
+  },
+  lonely: {
+    responses: [
+      "Lonely? Your journal’s listening. Say anything you need to.",
+      "Try writing a letter to someone you miss. You don’t have to send it.",
+      "List one comforting thing from today—even a warm drink counts.",
+      "Use meditation to feel more connected with yourself—just for a few minutes.",
+      "Logging your loneliness is an act of care. You’re doing something healing.",
+    ],
+  },
+  grateful: {
+    responses: [
+      "Add to your gratitude list—stack those good feelings!",
+      "Feeling thankful? Why not write a journal entry that captures the full moment?",
+      "This is the perfect time to meditate on that goodness—let it soak in.",
+      "Gratitude is powerful. Share a note with your future self in your diary.",
+      "Take a photo, draw it, or log it—however you want to preserve this moment.",
+    ],
+  },
+  overwhelmed: {
+    responses: [
+      "Let it all out—no edits—your journal is here for the mess.",
+      "Try a grounding meditation. Just 3 minutes might help.",
+      "List 3 things you’ve already done today, even small ones. You're doing more than you think.",
+      "Write down what’s not urgent. Push that to tomorrow.",
+      "You’re showing up, even overwhelmed. That’s strength. Make a quick gratitude note if you can.",
+    ],
+  },
+};
