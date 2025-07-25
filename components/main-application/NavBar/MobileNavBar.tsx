@@ -10,11 +10,11 @@ const MobileNavBar = () => {
   const { data } = useSession();
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-background-light to-background backdrop-blur-sm ">
-      <div className="container mx-auto px-6 py-4">
+      <div className=" mx-auto px-6 py-2 border-t rounded-t-md">
         <ul className="flex items-center justify-around px-4">
           {AppNavigationItems.map(({ href, label, icon }) => {
             const Icon = icon;
-            const isActive = pathname === `/${data?.user?.id}${href}`;
+            const isActive = pathname.includes(`/${data?.user?.id}${href}`);
             return (
               <motion.li key={label}>
                 <Link
@@ -30,7 +30,7 @@ const MobileNavBar = () => {
                         : "text-foreground/70 group-hover:scale-105"
                     }`}
                   />
-                  <span className="text-sm ">{label}</span>
+                  <span className="text-xs max-sm:hidden">{label}</span>
 
                   {isActive && (
                     <motion.div

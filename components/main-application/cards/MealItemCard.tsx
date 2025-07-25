@@ -49,12 +49,14 @@ const MealItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
             className="p-4 bg-gradient-to-br from-accent/80 to-primary/80 rounded-2xl text-background font-bold
     flex flex-col h-full cursor-pointer w-full"
           >
-            <h2 className="text-base w-full  ">{foodItem.foodItemId.name}</h2>
+            <h2 className="max-sm:text-sm text-base w-full">
+              {foodItem.foodItemId.name}
+            </h2>
             <p className="text-xs w-full  text-background/80">
               {foodItem.foodItemId.brand || <span>&nbsp;</span>}
             </p>
 
-            <div className="mx-auto">
+            <div className="mx-auto scale-80 md:scale-90 lg:scale-100">
               <SmallFoodChart
                 stroke
                 data={chartData}

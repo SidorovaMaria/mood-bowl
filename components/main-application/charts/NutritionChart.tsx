@@ -159,7 +159,7 @@ const NutritionChart = ({
             }) => {
               // Calculate label position closer to center
               const RADIAN = Math.PI / 180;
-              const radius = innerRadius + (outerRadius - innerRadius) * 3;
+              const radius = innerRadius + (outerRadius - innerRadius) * 4;
               const safeMidAngle = midAngle ?? 0;
               const x = cx + radius * Math.cos(-safeMidAngle * RADIAN);
               const y = cy + radius * Math.sin(-safeMidAngle * RADIAN);

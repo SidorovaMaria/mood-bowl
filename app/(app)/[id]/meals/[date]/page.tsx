@@ -1,5 +1,6 @@
 import MealItemCard from "@/components/main-application/cards/MealItemCard";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
+
 import { AddFoodDrawer } from "@/components/main-application/drawer/AddFoodDrawer";
 import { MealTypeColors } from "@/constants";
 
@@ -74,7 +75,7 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
     <main>
       <div className="">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between max-sm:justify-center gap-10">
+          <div className="flex flex-col md:flex-row items-center justify-between max-sm:justify-center gap-2 md:gap-8">
             <div className="flex flex-col items-center max-sm:items-center gap-1">
               <div className="flex items-center w-full justify-between gap-2">
                 <Link href={`/${id}/meals/${prevDate}`}>
@@ -89,8 +90,10 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
                 {getWeekdayDate(new Date(date))}
               </p>
               <AddFoodDrawer data={foodsData?.foodItems} />
+              {/* <AddFood data={foodsData?.foodItems} /> */}
             </div>
-            <div className=" w-[400px] h-[300px]">
+
+            <div className=" w-[400px] h-[300px] ">
               <NutritionChart
                 nutritionData={DailyNutrition}
                 mealBasedKcal={DailyCaloriesbyMealType}
@@ -122,21 +125,21 @@ const DailyDairy = async ({ date }: { date: Date }) => {
     <div>
       {Object.entries(mealTypes).map(([mealType, meals]) => (
         <section className="my-3" key={mealType}>
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-2 max-sm:flex-col max-sm:gap-1">
             <h1 className="text-xl capitalize font-bold">{mealType}</h1>
-            <div className="flex items-center gap-2 text-sm font-bold text-foreground">
-              <p className=" bg-gradient-to-r from-primary to-accent text-background px-3 py-1 rounded-lg ">
+            <div className="flex items-center gap-2 text-xs font-bold text-foreground text-center">
+              <p className=" bg-gradient-to-r from-primary/90 to-accent/90 text-background px-3 py-1 rounded-md ">
                 {meals.reduce((acc, item) => acc + (item.calories ?? 0), 0)}{" "}
-                kcal
+                Kcal
               </p>
-              <p className=" bg-protein  px-3 py-1 rounded-lg">
+              <p className=" bg-protein/90  px-3 py-1 rounded-md">
                 {meals.reduce((acc, item) => acc + (item.protein ?? 0), 0)}g
                 Protein
               </p>
-              <p className=" bg-fats px-3 py-1 rounded-lg">
+              <p className=" bg-fats/90 px-3 py-1 rounded-md">
                 {meals.reduce((acc, item) => acc + (item.fats ?? 0), 0)}g Fats
               </p>
-              <p className=" bg-carbs  px-3 py-1 rounded-lg">
+              <p className=" bg-carbs/90 px-3 py-1 rounded-md">
                 {meals.reduce((acc, item) => acc + (item.carbs ?? 0), 0)}g Carbs
               </p>
             </div>

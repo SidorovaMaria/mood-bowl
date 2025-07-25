@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Check, Plus, Undo2 } from "lucide-react";
-
+import { Check, Plus, TriangleAlert, Undo2 } from "lucide-react";
+import { Drawer as DrawerVault } from "vaul";
 import {
   Drawer,
   DrawerClose,
@@ -23,8 +23,9 @@ import {
 } from "@/components/ui/popover";
 import { AnimatePresence, motion } from "motion/react";
 import MealitemForm from "../forms/MealitemForm";
-import NewFoodForm from "../forms/newFoodForm";
+
 import { removeKeysFromUrlQuery } from "@/lib/url";
+import AddFoodItemForm from "../forms/AddFoodItemForm";
 
 export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
   const pathname = usePathname();
@@ -50,47 +51,66 @@ export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
           icon={Plus}
         />
       </DrawerTrigger>
-      <DrawerContent className="min-h-[85vh]! ">
+      <DrawerContent className="min-h-[90vh]! ">
         <DrawerHeader>
           <DrawerTitle className="text-xl font-bold text-gradient">
             Add New Food
           </DrawerTitle>
         </DrawerHeader>
         <div className=" px-8 md:px-0 mx-auto w-full max-w-3xl overflow-scroll">
-          {showNewFoodForm ? (
-            <div className="overflow-scroll">
-              <NewFoodForm close={() => closeAddFoodForm()} />
+          <div className="p-4 py-0 w-full pb-0">
+            <FoodSearch route={pathname} placeholder="Search for food..." />
+            <div className="flex flex-col gap-1 mt-2 overflow-x-scroll max-h-[350px] ">
+              {data && data.length > 0 ? (
+                data.map((foodItem: IFoodItemDoc) => (
+                  <FoodInfo key={String(foodItem._id)} foodItem={foodItem} />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center w-full h-[150px] md:h-[200px] ">
+                  <p className="text-lg text-muted-foreground">
+                    No food items found.
+                  </p>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="p-4 py-0 w-full pb-0">
-              <FoodSearch route={pathname} placeholder="Search for food..." />
-              <div className="flex flex-col gap-1 mt-2 overflow-x-scroll max-h-[400px] ">
-                {data && data.length > 0 ? (
-                  data.map((foodItem: IFoodItemDoc) => (
-                    <FoodInfo key={String(foodItem._id)} foodItem={foodItem} />
-                  ))
-                ) : (
-                  <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-background-light rounded-lg gap-5">
-                    <p className="text-lg text-muted-foreground">
-                      No food items found.
+            <DrawerVault.NestedRoot>
+              <DrawerTrigger
+                asChild
+                className="flex flex-col items-center gap-2 justify-center mt-2 w-full"
+              >
+                <div>
+                  <p className="font-bold text-base text-gradient">
+                    Not found what you are looking for?
+                  </p>
+                  <ButtonSlide
+                    onClick={() => setShowNewFoodForm(true)}
+                    text="Create New Food"
+                    className="text-sm"
+                    icon={Plus}
+                  />
+                </div>
+              </DrawerTrigger>
+              <DrawerVault.Portal>
+                <DrawerVault.Overlay className="fixed inset-0 bg-black/40" />
+                <DrawerContent className="bg-background-light flex flex-col rounded-t-[10px] h-[85vh]! max-h-[85vh]! mt-24  fixed bottom-0 left-0 right-0 z-[100]">
+                  <div className="max-w-sm md:max-w-xl lg:max-w-2xl mx-auto bg-red-40 ">
+                    <DrawerTitle className="text-2xl pt-4 font-bold text-gradient text-center">
+                      Add a Food to Community Database
+                    </DrawerTitle>
+                    <p className="text-sm text-center p-2 text-foreground/80">
+                      <TriangleAlert className="text-yellow-500 size-5 inline-block mr-1" />
+                      You’re adding a public food item to our database. Please
+                      double-check the info so everyone can benefit from
+                      accurate data.
                     </p>
                   </div>
-                )}
-              </div>
-              <div className="flex flex-col items-center gap-4 justify-center my-10 w-full ">
-                <p className="font-bold text-lg text-gradient">
-                  Not found what you are looking for?
-                </p>
-                <ButtonSlide
-                  onClick={() => setShowNewFoodForm(true)}
-                  text="Create New Food"
-                  className="ml-2"
-                  icon={Plus}
-                />
-              </div>
-            </div>
-          )}
-
+                  <div className="max-w-md  md:max-w-2xl lg:max-w-4xl mx-auto   overflow-y-scroll p-5 mb-10 rounded-xl">
+                    <AddFoodItemForm formId={"add-food-item-form"} />
+                  </div>
+                </DrawerContent>
+              </DrawerVault.Portal>
+            </DrawerVault.NestedRoot>
+          </div>
           <DrawerFooter>
             <DrawerClose asChild>
               <ButtonSlide text="Done" className="w-1/2 mx-auto" icon={Check} />
@@ -102,7 +122,7 @@ export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
   );
 }
 
-const FoodInfo = ({ foodItem }: { foodItem: IFoodItemDoc }) => {
+export const FoodInfo = ({ foodItem }: { foodItem: IFoodItemDoc }) => {
   const [addFoodOpen, setAddFoodOpen] = React.useState(false);
   return (
     <div key={String(foodItem._id)} className="flex flex-col w-full pl-4 ">

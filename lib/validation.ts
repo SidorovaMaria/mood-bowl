@@ -164,15 +164,14 @@ export const updateUserSchema = UserSchema.pick({
 });
 
 export const createFoodItemSchema = z.object({
-  name: z.string().min(1, "Food item name is required"),
+  name: z.string().min(1, "Oops! Name can't be empty."),
   brand: z.string().optional(),
   category: z.string().optional(),
-  servingSize: z.number().positive("Serving size must be a positive number"),
-  servingUnit: z.string().min(1, "Serving unit is required"),
+  servingSize: z.number().positive("Hmm, serving size must be more than zero."),
+  servingUnit: z.string().min(1, "What's the unit? (e.g. g, ml)"),
   caloriesPerServing: z
     .number()
-    .positive("Calories per serving must be a positive number")
-    .min(1, "Calories per serving is required"),
+    .min(1, "We need to know the calories, Not burning them!"),
   proteinPerServing: z.number().optional(),
   carbsPerServing: z.number().optional(),
   totalFatsPerServing: z.number().optional(),
