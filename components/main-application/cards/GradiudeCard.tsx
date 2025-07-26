@@ -3,9 +3,10 @@ import React, { use } from "react";
 import AddGratitudesForm from "../forms/AddGratitudesForm";
 import { Sparkle, Trash2 } from "lucide-react";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
-import { toast } from "sonner";
+
 import { deleteGratitude } from "@/lib/actions/dailydairy.action";
 import { useParams } from "next/navigation";
+import { toast } from "@/components/MyUi/Toast";
 interface Props {
   graditutes: {
     message?: string | undefined;
@@ -21,10 +22,19 @@ const GradiudeCard = ({ graditutes, gradituteGoal }: Props) => {
       message: messageId,
     });
     if (!success) {
-      toast.error("Failed to delete gratitude");
+      toast({
+        type: "error",
+        title: "Failed to delete gratitude",
+        description: error?.message || "Please try again later.",
+      });
       return;
     }
-    toast.success("Gratitude deleted successfully");
+    toast({
+      type: "success",
+      title: "Gratitude deleted successfully",
+      description: "Your gratitude has been removed.",
+    });
+
     setSubmitMore(false);
   };
 

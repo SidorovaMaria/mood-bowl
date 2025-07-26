@@ -9,7 +9,8 @@ import CustomInput from "./ui/CustomInput";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { NotebookPen } from "lucide-react";
 import { addGratitude } from "@/lib/actions/dailydairy.action";
-import { toast } from "sonner";
+import { toast } from "@/components/MyUi/Toast";
+
 const GratitudesSchema = z.object({
   gratitude: z.string().min(1, "Gratitude cannot be empty"),
 });
@@ -32,10 +33,16 @@ const AddGratitudesForm = ({
       message: values.gratitude,
     });
     if (!success) {
-      toast.error("Sorry we failed to add gratitude");
-      return;
+      toast({
+        type: "error",
+        title: "Failed to add gratitude",
+        description: error?.message || "Please try again later.",
+      });
     }
-    toast.success("Gratitude added successfully");
+    toast({
+      type: "success",
+      title: "Your gratitude has been recorded.",
+    });
     form.reset();
     stopSubmitting();
   };

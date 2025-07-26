@@ -3,8 +3,8 @@ import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 
-import { toast } from "sonner";
 import { signIn } from "next-auth/react";
+import { toast } from "../MyUi/Toast";
 
 const GoogleSignIn = () => {
   const handleSignIn = async (provider: "github" | "google") => {
@@ -14,7 +14,11 @@ const GoogleSignIn = () => {
         redirect: true,
       });
     } catch (error) {
-      toast.error(error + "Failed to sign in with Google. Please try again.");
+      toast({
+        title: "Error",
+        description: error + "Failed to sign in with Google. Please try again.",
+        type: "error",
+      });
     }
   };
   return (

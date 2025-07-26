@@ -1,4 +1,5 @@
 "use client";
+import { toast } from "@/components/MyUi/Toast";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -14,7 +15,6 @@ import { EditUserInfo } from "@/lib/actions/user.actions";
 
 import { EditIcon, SaveIcon, Undo2 } from "lucide-react";
 import React, { useState } from "react";
-import { toast } from "sonner";
 
 const ProfileInfoDropdown = ({
   user,
@@ -67,26 +67,6 @@ const ProfileInfoDropdown = ({
     setIsEditing(!isEditing);
   };
   const onSave = async () => {
-    // //  Check goal settings if target and current weight are different from goal
-    // if (
-    //   preferences === "fitnessGoals" &&
-    //   label === ("goal" as keyof IUserDoc["fitnessGoals"])
-    // ) {
-    //   const currentWeight = user.fitnessGoals!.currentWeightKg;
-    //   const targetWeight = user.fitnessGoals!.targetWeightKg;
-    //   if (currentWeight <= targetWeight && selectedOption === "lose") {
-    //     toast.error(
-    //       'Current weight must be greater than target weight for "Lose" goal.'
-    //     );
-    //     return;
-    //   }
-    //   if (currentWeight >= targetWeight && selectedOption === "gain") {
-    //     toast.error(
-    //       'Current weight must be less than target weight for "Gain" goal.'
-    //     );
-    //     return;
-    //   }
-    // }
     const { success, error } = await EditUserInfo({
       user,
       label: preferences
@@ -95,12 +75,16 @@ const ProfileInfoDropdown = ({
       value: selectedOption,
     });
     if (!success) {
-      toast.error("Failed to update", {
+      toast({
+        title: "Error",
         description: error?.message || "An error occurred while updating.",
+        type: "error",
       });
     } else {
-      toast.success(`${title} updated successfully.`);
-      setIsEditing(false);
+      toast({
+        title: `${title || label} updated successfully.`,
+        type: "success",
+      });
     }
   };
   return (

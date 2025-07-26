@@ -5,11 +5,10 @@ import { SignUpSchema } from "@/lib/validation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,14 +16,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UserRoundPlus } from "lucide-react";
-import Image from "next/image";
+
 import Link from "next/link";
-import { sign } from "crypto";
+
 import { SignUpWithCredentials } from "@/lib/actions/auth.actions";
-import { Action, toast } from "sonner";
+
 import { useRouter } from "next/navigation";
 import { IUserDoc } from "@/database/user.model";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { toast } from "@/components/MyUi/Toast";
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -43,14 +43,21 @@ const SignUpPage = () => {
       values
     )) as ActionResponse<IUserDoc>;
     if (result?.success) {
-      toast.success("Account created successfully!");
+      toast({
+        title: "Account Created",
+        description: "Your account has been created successfully!",
+        type: "success",
+      });
       if (result.data) {
         router.push(`/onboarding/1`);
       }
     } else {
-      toast.error(
-        result?.error?.message || "Something went wrong, please try again."
-      );
+      toast({
+        title: "Error",
+        description:
+          result?.error?.message || "Something went wrong, please try again.",
+        type: "error",
+      });
     }
   }
   return (

@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signInWithCredentials } from "@/lib/actions/auth.actions";
-import { toast } from "sonner";
+
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import Link from "next/link";
+import { toast } from "@/components/MyUi/Toast";
 const SignIn = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof SignInSchema>>({
@@ -32,11 +33,17 @@ const SignIn = () => {
 
     if (result?.success) {
       router.push(`/onboarding/1`);
-      toast.success("Welcome back!");
+      toast({
+        title: "Sign In Successful",
+        description: "You have successfully signed in.",
+        type: "success",
+      });
     } else {
-      toast.error(
-        result?.error?.message || "Something went wrong, please try again."
-      );
+      toast({
+        title: "Sign In Failed",
+        description: result?.error?.message || "Please try again.",
+        type: "error",
+      });
     }
   }
 

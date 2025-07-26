@@ -1,5 +1,6 @@
 "use client";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { toast } from "@/components/MyUi/Toast";
 import {
   Select,
   SelectContent,
@@ -14,7 +15,6 @@ import { set } from "mongoose";
 import { AnimatePresence, motion } from "motion/react";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
-import { toast } from "sonner";
 interface MeditationCardProps {
   meditation: {
     minutes: number;
@@ -40,9 +40,16 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
 
     if (!success) {
       console.error("Failed to update meditation:", error);
-      toast.error("Failed to save meditation.");
+      toast({
+        title: "Error",
+        description: error?.message || "An unexpected error occurred.",
+        type: "error",
+      });
     } else {
-      toast.success("Meditation updated successfully");
+      toast({
+        title: "Meditation updated successfully!",
+        type: "success",
+      });
     }
   }, [selectedDuration]);
 

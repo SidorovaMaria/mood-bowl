@@ -5,7 +5,7 @@ import LandingNavbar from "@/components/landingPage/LandingNavbar";
 
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "sonner";
 
 const comfortaa = Comfortaa({
   variable: "--font-comfortaa",

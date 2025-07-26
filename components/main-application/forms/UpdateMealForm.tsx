@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { updateMealItem } from "@/lib/actions/mealitem.action";
 import {
   Form,
@@ -26,6 +25,7 @@ import { format } from "date-fns";
 import { CalendarIcon, FileCheck, Undo2 } from "lucide-react";
 import { PopoverContent } from "@radix-ui/react-popover";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { toast } from "@/components/MyUi/Toast";
 const UpdateMealForm = ({
   quantity,
   mealType,
@@ -62,10 +62,17 @@ const UpdateMealForm = ({
     });
     if (!success) {
       console.error("Error updating meal item:", error);
-      toast.error(`Failed to update meal item`);
+      toast({
+        title: "Error",
+        description: error?.message || "An unexpected error occurred.",
+        type: "error",
+      });
       return;
     } else {
-      toast.success(`Meal item updated successfully!`);
+      toast({
+        title: `Your meal updated successfully!`,
+        type: "success",
+      });
       form.reset();
       setClose();
     }

@@ -13,25 +13,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "../ui/input";
+
 import { Button } from "../ui/button";
 
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/context/OnboardingContext";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CalendarIcon,
-  SmileIcon,
-  UtensilsCrossed,
-} from "lucide-react";
+import { CalendarIcon, SmileIcon, UtensilsCrossed } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
-import Link from "next/link";
-import { toast } from "sonner";
 import ButtonSlide from "../MyUi/ButtonSlide";
 
 const StepOneSchema = z.object({

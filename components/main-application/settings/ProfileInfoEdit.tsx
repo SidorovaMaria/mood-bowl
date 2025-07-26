@@ -1,4 +1,5 @@
 "use client";
+import { toast } from "@/components/MyUi/Toast";
 import { Button } from "@/components/ui/button";
 import { IUserDoc } from "@/database/user.model";
 import { EditUserInfo } from "@/lib/actions/user.actions";
@@ -7,7 +8,6 @@ import { getFormattedDate } from "@/lib/utils";
 import { EditIcon, SaveIcon, Undo2 } from "lucide-react";
 
 import React, { useState } from "react";
-import { toast } from "sonner";
 
 const ProfileInfoEdit = ({
   user,
@@ -65,11 +65,16 @@ const ProfileInfoEdit = ({
       value,
     });
     if (!success) {
-      toast.error("Failed to update", {
+      toast({
+        title: "Error",
         description: error?.message || "An error occurred while updating.",
+        type: "error",
       });
     } else {
-      toast.success("User information updated successfully.");
+      toast({
+        title: "User information updated successfully.",
+        type: "success",
+      });
       setIsEditing(false);
     }
   };

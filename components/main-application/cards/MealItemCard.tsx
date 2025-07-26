@@ -4,7 +4,6 @@ import {
   deleteMealItem,
   MealItemWithFoodDetails,
 } from "@/lib/actions/mealitem.action";
-import { toast } from "sonner";
 import { NotebookPen, Trash2 } from "lucide-react";
 import {
   Popover,
@@ -17,6 +16,7 @@ import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { useState } from "react";
 
 import UpdateMealForm from "../forms/UpdateMealForm";
+import { toast } from "@/components/MyUi/Toast";
 
 const MealItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
   console.log("Food Item in MealItemCard:", foodItem);
@@ -36,9 +36,16 @@ const MealItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
     });
     if (!success) {
       console.error("Error deleting meal item:", error);
-      toast.error(`Failed to delete ${foodItem.foodItemId.name}`);
+      toast({
+        title: "Error",
+        description: error?.message || "An unexpected error occurred.",
+        type: "error",
+      });
     } else {
-      toast.success(`${foodItem.foodItemId.name} removed from your dairy!`);
+      toast({
+        title: `${foodItem.foodItemId.name} removed from your diary!`,
+        type: "success",
+      });
     }
   };
   return (

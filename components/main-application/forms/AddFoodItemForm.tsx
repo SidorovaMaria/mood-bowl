@@ -5,12 +5,13 @@ import React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { addFoodItem } from "@/lib/actions/fooitem.action";
-import { toast } from "sonner";
+
 import { Form } from "@/components/ui/form";
 import CustomInput from "./ui/CustomInput";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import CustomSelect from "./ui/CustomSelect";
 import { availableUnits } from "./constants";
+import { toast } from "@/components/MyUi/Toast";
 
 const AddFoodItemForm = ({ formId }: { formId: string }) => {
   const form = useForm<z.infer<typeof createFoodItemSchema>>({
@@ -40,13 +41,17 @@ const AddFoodItemForm = ({ formId }: { formId: string }) => {
     });
     if (!success) {
       console.error("Error submitting food item:", error);
-      toast.error(
-        "There was an error submitting the food item. Please try again later on contact customer suupport."
-      );
+      toast({
+        title: "Error",
+        description: error?.message || "An unexpected error occurred.",
+        type: "error",
+      });
     } else {
-      toast.success(
-        `Thank you! ${data?.foodItem.name} has been added to the food database!`
-      );
+      toast({
+        title: `Food item ${data?.foodItem.name} added successfully!`,
+        type: "success",
+      });
+
       form.reset();
       close();
     }

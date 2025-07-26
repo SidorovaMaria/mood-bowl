@@ -1,11 +1,7 @@
-import { auth, signIn } from "@/auth";
 import GoogleSignIn from "@/components/authentication/GoogleSignIn";
 import SlidignReviews from "@/components/authentication/SlidignReviews";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 import React, { ReactNode } from "react";
-import { toast } from "sonner";
 
 const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
   return (

@@ -30,7 +30,8 @@ import { z } from "zod";
 import SmallFoodChart from "../charts/SmallFoodChart";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { addMealItem } from "@/lib/actions/mealitem.action";
-import { toast } from "sonner";
+import { toast } from "@/components/MyUi/Toast";
+
 const mealItemSchema = z.object({
   mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]),
   quantity: z.number().positive(),
@@ -89,10 +90,17 @@ const MealitemForm = ({
       quantity: values.quantity,
     });
     if (!success) {
-      console.error("Error adding meal item:", error);
+      toast({
+        title: "Error",
+        description: error?.message || "An unexpected error occurred.",
+        type: "error",
+      });
       return;
     } else {
-      toast.success(`${foodItem.name} added to ${values.mealType} `);
+      toast({
+        title: `${foodItem.name} added to ${values.mealType} `,
+        type: "success",
+      });
       close();
     }
   };
