@@ -5,7 +5,8 @@ import AddJournalModal from "@/components/main-application/modals/AddJournalModa
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { IJournalEntry, IJournalEntryDoc } from "@/database/journalEntry.model";
 import { IUserDoc } from "@/database/user.model";
-import { getDailyDiaries } from "@/lib/actions/dailydiary.action";
+import { getDailyDiariesByDate } from "@/lib/actions/dailydiary.action";
+import { getJournalEntries } from "@/lib/actions/journalEntry.action";
 import { getUser } from "@/lib/actions/user.actions";
 import { getRelativeDay, getWeekdayDate } from "@/lib/utils";
 import { BookHeart, Leaf } from "lucide-react";
@@ -28,19 +29,21 @@ const MoodDahboard = async ({ params }: RouteParams) => {
     success,
     data: diaryData,
     error,
-  } = await getDailyDiaries({
+  } = await getDailyDiariesByDate({
     date: new Date(date),
-    meditationMinutes:
-      data.user.mentalHealthGoals?.meditationMinutesPerDay || 0,
   });
   if (!success || !diaryData) {
     throw new Error(error?.message || "Failed to fetch daily diary data");
   }
+  const {
+    success: successJournals,
+    data: journals,
+    error: errorJournals,
+  } = await getJournalEntries({
+    date: new Date(date),
+  });
   const { user } = data as { user: IUserDoc };
   const { diary } = diaryData;
-  const journals = diary.journals as unknown as IJournalEntryDoc[];
-
-  console.log("Diary Data:", diary);
 
   return (
     <div className="-mt-26 relative rounded-b-4xl pt-26">
@@ -95,7 +98,7 @@ const MoodDahboard = async ({ params }: RouteParams) => {
               icon={BookHeart}
             />
           </AddJournalModal>
-          {journals.length > 0 ? (
+          {/* {journals.length > 0 ? (
             <ul>
               {journals.map((journal) =>
                 typeof journal === "object" && journal !== null ? (
@@ -108,7 +111,7 @@ const MoodDahboard = async ({ params }: RouteParams) => {
               Today’s journal is still empty — let’s fill it with your
               thoughts..
             </p>
-          )}
+          )} */}
         </section>
       </main>
     </div>

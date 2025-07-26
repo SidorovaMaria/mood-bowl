@@ -3,6 +3,7 @@
 import DailyDiary, { IDailyDiaryDoc } from "@/database/dailydiary.model";
 import action from "../action";
 import handleError from "../errors";
+import mongoose from "mongoose";
 import {
   getDailyDiaryByDateSchema,
   UpdateMeditationSchema,
@@ -10,10 +11,10 @@ import {
 import { UnauthorizedError } from "../http-errors";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import User from "@/database/user.model";
 
-export async function getDailyDiaries(params: {
+export async function getDailyDiariesByDate(params: {
   date: Date;
-  meditationMinutes: number;
 }): Promise<ActionResponse<{ diary: IDailyDiaryDoc }>> {
   const validationResult = await action({
     params,
@@ -34,31 +35,22 @@ export async function getDailyDiaries(params: {
     startOfDay.setUTCHours(0, 0, 0, 0);
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
-    await DailyDiary.findOneAndUpdate(
+    const dailyDiary = await DailyDiary.findOneAndUpdate(
       {
         userId: user.id,
-        date: {
-          $gte: startOfDay,
-          $lte: endOfDay,
+        date: { $gte: startOfDay, $lte: endOfDay },
+      },
+      {
+        $setOnInsert: {
+          userId: user.id,
+          date: startOfDay,
         },
       },
       {
-        $set: {
-          "meditation.minutes": params.meditationMinutes, // Ensure meditation minutes are set
-          date: params.date, // Ensure date is set if new
-        },
-      },
-      { new: true, upsert: true }
+        new: true, // return the updated/new document
+        upsert: true, // create if not found
+      }
     );
-    const dailyDiary = await DailyDiary.findOne({
-      userId: user.id,
-      date: {
-        $gte: startOfDay,
-        $lte: endOfDay,
-      },
-    })
-      .populate("journals")
-      .lean();
 
     return {
       success: true,
@@ -214,25 +206,26 @@ export async function updateMeditation(params: {
   if (!user) {
     throw new UnauthorizedError("User not authenticated");
   }
-  console.log("Update Meditation Params:", params);
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     const startOfDay = new Date(params.date);
     startOfDay.setUTCHours(0, 0, 0, 0);
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
-
     const existingDiary = await DailyDiary.findOne({
       userId: user.id,
       date: { $gte: startOfDay, $lte: endOfDay },
     });
-    if (!existingDiary) {
-      throw new Error("Daily diary not found");
-    }
-    const totalMeditationMinutes =
-      (existingDiary.meditation.minutesCompleted || 0) +
-      params.minutesCompleted;
-    const completed =
-      totalMeditationMinutes >= existingDiary.meditation.minutes;
+
+    const userGoal = await User.findById(user.id).select(
+      "mentalHealthGoals.meditationMinutesPerDay"
+    );
+    const totalMeditationMinutes = existingDiary
+      ? existingDiary.meditation.minutesCompleted + params.minutesCompleted
+      : params.minutesCompleted;
+    const completed = userGoal >= totalMeditationMinutes;
     await DailyDiary.findOneAndUpdate(
       { userId: user.id, date: { $gte: startOfDay, $lte: endOfDay } },
       {

@@ -83,7 +83,6 @@ interface getMealItemParams {
   date: Date;
 }
 interface newJournalEntryParams {
-  date: Date;
   title: string;
   content: string;
   tags?: string[];

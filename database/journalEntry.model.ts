@@ -3,7 +3,6 @@ import { Document, model, models, Schema, Types } from "mongoose";
 
 export interface IJournalEntry {
   userId: Types.ObjectId;
-  date: Date;
   title: string;
   content: string;
   tags?: string[];
@@ -17,11 +16,6 @@ const JournalEntrySchema = new Schema<IJournalEntry>(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
-      index: true,
-    },
-    date: {
-      type: Date,
       required: true,
       index: true,
     },

@@ -19,7 +19,6 @@ import JournalTagCard from "../cards/JournalTagCard";
 import { BookHeart, Undo2 } from "lucide-react";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { createJournalEntry } from "@/lib/actions/journalEntry.action";
-import { useParams } from "next/navigation";
 import { toast } from "@/components/MyUi/Toast";
 
 const journalEntrySchema = z.object({
@@ -48,7 +47,6 @@ const JournalEntryForm = ({
 }: {
   closeJournaling: (isOpen: boolean) => void;
 }) => {
-  const { date } = useParams();
   const form = useForm<z.infer<typeof journalEntrySchema>>({
     resolver: zodResolver(journalEntrySchema),
     defaultValues: {
@@ -59,8 +57,7 @@ const JournalEntryForm = ({
     },
   });
   const handleSave = async (values: z.infer<typeof journalEntrySchema>) => {
-    const { success, data, error } = await createJournalEntry({
-      date: new Date(date as string),
+    const { success, error } = await createJournalEntry({
       title: values.title,
       content: values.content,
       tags: values.tags,
@@ -72,13 +69,11 @@ const JournalEntryForm = ({
         type: "error",
       });
     }
-    if (data) {
-      toast({
-        title: `${data.journal.title} has been saved!`,
-        type: "success",
-      });
-      closeJournaling(false);
-    }
+    toast({
+      title: `${values.title} has been saved!`,
+      type: "success",
+    });
+    closeJournaling(false);
   };
 
   const handleTagInputKeyDown = (

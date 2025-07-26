@@ -19,7 +19,6 @@ import UpdateMealForm from "../forms/UpdateMealForm";
 import { toast } from "@/components/MyUi/Toast";
 
 const MealItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
-  console.log("Food Item in MealItemCard:", foodItem);
   const [isEditing, setIsEditing] = useState(false);
   const chartData = [
     {

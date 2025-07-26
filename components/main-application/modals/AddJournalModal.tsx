@@ -26,7 +26,10 @@ const AddJournalModal = ({ children }: { children: ReactNode }) => {
   return (
     <Dialog open={open} onOpenChange={setCloseModal}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="bg-radial from-50% to-background/10 from-primary/30 border-none rounded-2xl">
+      <DialogContent
+        className="bg-radial from-50% to-background/10 from-primary/30 border-none rounded-2xl"
+        aria-labelledby="add-journal-modal"
+      >
         <DialogHeader>
           <DialogTitle
             asChild

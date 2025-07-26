@@ -5,12 +5,65 @@ import { newJournalEntrySchema } from "../validation";
 import handleError from "../errors";
 import { UnauthorizedError } from "../http-errors";
 import JournalEntry, { IJournalEntryDoc } from "@/database/journalEntry.model";
-import DailyDiary from "@/database/dailydiary.model";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { format } from "date-fns";
 
+export async function getJournalEntries(params: {
+  date: Date;
+}): Promise<ActionResponse<{ journalEntries: IJournalEntryDoc[] }>> {
+  const validationResult = await action({
+    params,
+    schema: z.object({
+      date: z.preprocess(
+        (val) => {
+          if (typeof val === "string") return new Date(val);
+          return val;
+        },
+        z.date().refine((date) => !isNaN(date.getTime()), {
+          message: "Invalid date format",
+        })
+      ),
+    }),
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+  const { user } = validationResult.session!;
+  if (!user) {
+    throw new UnauthorizedError("User not authenticated");
+  }
+
+  try {
+    const startOfDay = new Date(params.date);
+    startOfDay.setUTCHours(0, 0, 0, 0);
+    const endOfDay = new Date(params.date);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
+    const journalEntries = await JournalEntry.find({
+      userId: user.id,
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    }).lean();
+
+    return {
+      success: true,
+      data: {
+        journalEntries: JSON.parse(JSON.stringify(journalEntries)),
+      },
+      status: 200,
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
 export async function createJournalEntry(
   params: newJournalEntryParams
-): Promise<ActionResponse<{ journal: IJournalEntryDoc }>> {
+): Promise<ActionResponse> {
   const validationResult = await action({
     params,
     schema: newJournalEntrySchema,
@@ -24,27 +77,20 @@ export async function createJournalEntry(
     throw new UnauthorizedError("User not authenticated");
   }
   try {
-    const { date, title, content, tags, moodAtEntry } = params;
+    const { title, content, tags, moodAtEntry } = params;
     const journalEntry = await JournalEntry.create({
       userId: user.id,
-      date,
       title,
       content,
       tags,
       moodAtEntry,
     });
-    await DailyDiary.findOneAndUpdate(
-      { userId: user.id, date },
-      { $push: { journals: journalEntry._id } },
-      { new: true, upsert: true }
+    revalidatePath(
+      `${user.id}/journal/${format(journalEntry.createdAt, "yyyy-MM-dd")}`
     );
-    revalidatePath(`${user.id}/mood/${params.date}`);
 
     return {
       success: true,
-      data: {
-        journal: JSON.parse(JSON.stringify(journalEntry)),
-      },
       status: 201,
     };
   } catch (error) {

@@ -17,7 +17,6 @@ import { useParams } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
 interface MeditationCardProps {
   meditation: {
-    minutes: number;
     minutesCompleted?: number;
     completed: boolean;
   };
@@ -87,9 +86,9 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
 
   return (
     <aside className="glass-effect p-4 rounded-xl  flex flex-col ">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-8 justify-between">
         <h3 className="text-lg font-bold "> Meditation</h3>
-        <p className="gradient-bg-to-br text-white px-4 py-2 rounded-md text-sm font-bold">
+        <p className="gradient-bg-to-br text-white px-2.5 py-1.5 rounded-md text-sm font-bold">
           {meditation.minutesCompleted || 0}/{goal} min today
         </p>
       </div>
@@ -181,6 +180,15 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
               <SelectValue placeholder="Select duration" />
             </SelectTrigger>
             <SelectContent className="max-h-[200px] overflow-y-auto bg-gradient-to-b from-background-light to-primary text-foreground border-primary">
+              {![5, 10, 15, 20].includes(goal) && (
+                <SelectItem
+                  key={goal}
+                  value={String(goal)}
+                  className="focus:bg-gradient-to-r from-accent/70 to-primary "
+                >
+                  {goal} minutes
+                </SelectItem>
+              )}
               {Array.from({ length: 4 }, (_, i) => (i + 1) * 5).map((value) => (
                 <SelectItem
                   key={value}
