@@ -8,7 +8,6 @@ import SelectMoodModal from "../modals/SelectMoodModal";
 
 const MoodCard = ({ mood }: { mood: string }) => {
   const [response, setResponse] = useState("");
-
   useEffect(() => {
     setResponse(getRandomMoodResponse(mood));
   }, [mood]);

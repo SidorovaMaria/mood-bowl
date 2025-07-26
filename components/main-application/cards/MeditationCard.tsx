@@ -8,10 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { updateMeditation } from "@/lib/actions/dailydairy.action";
-import { Label, SelectLabel } from "@radix-ui/react-select";
-import { NotebookPen, Pause, RefreshCcw, Sparkle } from "lucide-react";
-import { set } from "mongoose";
+import { updateMeditation } from "@/lib/actions/dailydiary.action";
+
+import { Pause, RefreshCcw, Sparkle } from "lucide-react";
+
 import { AnimatePresence, motion } from "motion/react";
 import { useParams } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
@@ -32,6 +32,7 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
   const progress =
     ((selectedDuration * 60 - timeLeft) / (selectedDuration * 60)) * 100;
   const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
+
   const handleMeditationUpdate = useCallback(async () => {
     const { success, error } = await updateMeditation({
       date: new Date(date as string),
@@ -51,7 +52,7 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
         type: "success",
       });
     }
-  }, [selectedDuration]);
+  }, [selectedDuration, date]);
 
   useEffect(() => {
     if (isActive && timeLeft > 0) {

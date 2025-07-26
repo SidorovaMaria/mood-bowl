@@ -251,7 +251,7 @@ export const getNutritionByDateSchema = z.object({
     })
   ),
 });
-export const getDailyDairyByDateSchema = z.object({
+export const getDailyDiaryByDateSchema = z.object({
   date: z.preprocess(
     (val) => {
       if (typeof val === "string") return new Date(val);

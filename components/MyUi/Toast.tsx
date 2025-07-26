@@ -42,7 +42,7 @@ export function Toast(props: ToastProps) {
 }
 
 export function toast(toast: Omit<ToastProps, "id">) {
-  return sonnerToast.custom((id) => (
+  return sonnerToast.custom(() => (
     <Toast
       title={toast.title}
       type={toast.type}

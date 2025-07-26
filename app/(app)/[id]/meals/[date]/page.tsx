@@ -113,7 +113,7 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
         </div>
       </div>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
-        <DailyDairy date={new Date(date)} />
+        <DailyDiary date={new Date(date)} />
       </div>
     </main>
   );
@@ -121,7 +121,7 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
 
 export default MealsPage;
 
-const DailyDairy = async ({ date }: { date: Date }) => {
+const DailyDiary = async ({ date }: { date: Date }) => {
   const { success, data, error } = await getMealItems({
     date: new Date(date),
   });

@@ -1,25 +1,23 @@
 "use server";
 
-import DailyDairy, { IDailyDairyDoc } from "@/database/dailyDairy.mode";
+import DailyDiary, { IDailyDiaryDoc } from "@/database/dailydiary.model";
 import action from "../action";
 import handleError from "../errors";
 import {
-  getDailyDairyByDateSchema,
+  getDailyDiaryByDateSchema,
   UpdateMeditationSchema,
 } from "../validation";
 import { UnauthorizedError } from "../http-errors";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { min } from "date-fns";
-import { th } from "date-fns/locale";
 
 export async function getDailyDiaries(params: {
   date: Date;
   meditationMinutes: number;
-}): Promise<ActionResponse<{ dairy: IDailyDairyDoc }>> {
+}): Promise<ActionResponse<{ diary: IDailyDiaryDoc }>> {
   const validationResult = await action({
     params,
-    schema: getDailyDairyByDateSchema,
+    schema: getDailyDiaryByDateSchema,
     authorize: true,
   });
 
@@ -36,7 +34,7 @@ export async function getDailyDiaries(params: {
     startOfDay.setUTCHours(0, 0, 0, 0);
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
-    const dailyDairy = await DailyDairy.findOneAndUpdate(
+    const dailyDiary = await DailyDiary.findOneAndUpdate(
       {
         userId: user.id,
         date: {
@@ -55,7 +53,7 @@ export async function getDailyDiaries(params: {
 
     return {
       success: true,
-      data: { dairy: JSON.parse(JSON.stringify(dailyDairy)) },
+      data: { diary: JSON.parse(JSON.stringify(dailyDiary)) },
       status: 200,
     };
   } catch (error) {
@@ -66,10 +64,10 @@ export async function getDailyDiaries(params: {
 export async function updateDailyMood(params: {
   date: Date;
   mood: string;
-}): Promise<ActionResponse<{ dairy: IDailyDairyDoc }>> {
+}): Promise<ActionResponse> {
   const validationResult = await action({
     params,
-    schema: getDailyDairyByDateSchema.extend({
+    schema: getDailyDiaryByDateSchema.extend({
       mood: z.string().min(1, "Mood is required"),
     }),
     authorize: true,
@@ -89,7 +87,7 @@ export async function updateDailyMood(params: {
     startOfDay.setUTCHours(0, 0, 0, 0);
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
-    await DailyDairy.findOneAndUpdate(
+    await DailyDiary.findOneAndUpdate(
       { userId: user.id, date: { $gte: startOfDay, $lte: endOfDay } },
       { $set: { "moodEntries.mood": params.mood } },
       { new: true, upsert: true }
@@ -107,7 +105,7 @@ export async function updateDailyMood(params: {
 export async function addGratitude(params: {
   date: Date;
   message: string;
-}): Promise<ActionResponse<{ dairy: IDailyDairyDoc }>> {
+}): Promise<ActionResponse> {
   const validationResult = await action({
     params,
     schema: z.object({
@@ -132,7 +130,7 @@ export async function addGratitude(params: {
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
 
-    const dailyDairy = await DailyDairy.findOneAndUpdate(
+    await DailyDiary.findOneAndUpdate(
       { userId: user.id, date: { $gte: startOfDay, $lte: endOfDay } },
       { $push: { gratitudeEntries: { message: params.message } } },
       { new: true, upsert: true }
@@ -142,7 +140,6 @@ export async function addGratitude(params: {
 
     return {
       success: true,
-      data: { dairy: JSON.parse(JSON.stringify(dailyDairy)) },
       status: 200,
     };
   } catch (error) {
@@ -152,7 +149,7 @@ export async function addGratitude(params: {
 export async function deleteGratitude(params: {
   date: Date;
   message: string;
-}): Promise<ActionResponse<{ dairy: IDailyDairyDoc }>> {
+}): Promise<ActionResponse> {
   const validationResult = await action({
     params,
     schema: z.object({
@@ -174,7 +171,7 @@ export async function deleteGratitude(params: {
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
 
-    const dailyDairy = await DailyDairy.findOneAndUpdate(
+    await DailyDiary.findOneAndUpdate(
       { userId: user.id, date: { $gte: startOfDay, $lte: endOfDay } },
       { $pull: { gratitudeEntries: { message: params.message } } },
       { new: true }
@@ -184,7 +181,7 @@ export async function deleteGratitude(params: {
 
     return {
       success: true,
-      data: { dairy: JSON.parse(JSON.stringify(dailyDairy)) },
+
       status: 200,
     };
   } catch (error) {
@@ -215,19 +212,19 @@ export async function updateMeditation(params: {
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
 
-    const existingDairy = await DailyDairy.findOne({
+    const existingDiary = await DailyDiary.findOne({
       userId: user.id,
       date: { $gte: startOfDay, $lte: endOfDay },
     });
-    if (!existingDairy) {
-      throw new Error("Daily dairy not found");
+    if (!existingDiary) {
+      throw new Error("Daily diary not found");
     }
     const totalMeditationMinutes =
-      (existingDairy.meditation.minutesCompleted || 0) +
+      (existingDiary.meditation.minutesCompleted || 0) +
       params.minutesCompleted;
     const completed =
-      totalMeditationMinutes >= existingDairy.meditation.minutes;
-    await DailyDairy.findOneAndUpdate(
+      totalMeditationMinutes >= existingDiary.meditation.minutes;
+    await DailyDiary.findOneAndUpdate(
       { userId: user.id, date: { $gte: startOfDay, $lte: endOfDay } },
       {
         $set: {

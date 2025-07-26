@@ -2,7 +2,7 @@ import { Mood, MOODS_LIST } from "@/constants";
 
 import { Document, model, models, Schema, Types } from "mongoose";
 
-export interface IDailyDairy {
+export interface IDailyDiary {
   userId: Types.ObjectId;
   date: Date;
   moodEntries: {
@@ -24,8 +24,8 @@ export interface IDailyDairy {
     message?: string;
   }[];
 }
-export interface IDailyDairyDoc extends IDailyDairy, Document {}
-const DailyDairySchema = new Schema<IDailyDairy>(
+export interface IDailyDiaryDoc extends IDailyDiary, Document {}
+const DailyDiarySchema = new Schema<IDailyDiary>(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -63,6 +63,6 @@ const DailyDairySchema = new Schema<IDailyDairy>(
   }
 );
 
-const DailyDairy =
-  models?.DailyDairy || model<IDailyDairy>("DailyDairy", DailyDairySchema);
-export default DailyDairy;
+const DailyDiary =
+  models?.DailyDiary || model<IDailyDiary>("DailyDiary", DailyDiarySchema);
+export default DailyDiary;

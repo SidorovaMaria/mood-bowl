@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/hover-card";
 import { MOODS_LIST } from "@/constants";
 import Image from "next/image";
-import { updateDailyMood } from "@/lib/actions/dailydairy.action";
+import { updateDailyMood } from "@/lib/actions/dailydiary.action";
 import { useParams } from "next/navigation";
 import { TriangleAlert } from "lucide-react";
 

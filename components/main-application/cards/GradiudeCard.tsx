@@ -4,7 +4,7 @@ import AddGratitudesForm from "../forms/AddGratitudesForm";
 import { Sparkle, Trash2 } from "lucide-react";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 
-import { deleteGratitude } from "@/lib/actions/dailydairy.action";
+import { deleteGratitude } from "@/lib/actions/dailydiary.action";
 import { useParams } from "next/navigation";
 import { toast } from "@/components/MyUi/Toast";
 interface Props {
@@ -39,7 +39,7 @@ const GradiudeCard = ({ graditutes, gradituteGoal }: Props) => {
   };
 
   return (
-    <aside className="glass-effect p-4 rounded-xl  flex flex-col gap-4">
+    <aside className="glass-effect p-4 rounded-xl  h-fit flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-bold "> Gratitudes</h3>
         <p className="gradient-bg-to-br text-white px-4 py-2 rounded-md text-sm font-bold">

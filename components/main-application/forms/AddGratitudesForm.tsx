@@ -8,7 +8,7 @@ import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import CustomInput from "./ui/CustomInput";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { NotebookPen } from "lucide-react";
-import { addGratitude } from "@/lib/actions/dailydairy.action";
+import { addGratitude } from "@/lib/actions/dailydiary.action";
 import { toast } from "@/components/MyUi/Toast";
 
 const GratitudesSchema = z.object({
