@@ -78,14 +78,14 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
   };
 
   return (
-    <aside className="glass-effect p-4 rounded-xl min-w-sm flex flex-col ">
+    <aside className="glass-effect p-4 rounded-xl  flex flex-col ">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-bold "> Meditation</h3>
         <p className="gradient-bg-to-br text-white px-4 py-2 rounded-md text-sm font-bold">
           {meditation.minutesCompleted || 0}/{goal} min today
         </p>
       </div>
-      <div className="flex items-center gap-5 py-2">
+      <div className="flex flex-col items-center gap-1">
         <div className="text-center w-full">
           <div className="relative w-32 h-32 mx-auto mb-4">
             <svg className="w-32 h-32 transform -rotate-90">
@@ -120,7 +120,7 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
             </div>
           </div>
         </div>
-        <div className=" flex flex-col w-full  gap-3">
+        <div className="flex items-center my-1  gap-5">
           <AnimatePresence mode="wait" initial={false}>
             {isActive ? (
               <motion.div
@@ -129,13 +129,13 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="w-full "
+                className=""
               >
                 <ButtonSlide
                   text="Pause"
                   icon={Pause}
                   slideLeft
-                  className="rounded-lg border-foreground/70 hover:border-transparent text-sm py-3! w-full"
+                  className="rounded-lg border-foreground/70 hover:border-transparent text-sm py-3!"
                   onClick={() => setIsActive(false)}
                 />
               </motion.div>
@@ -146,11 +146,10 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="w-full "
               >
                 <ButtonSlide
                   text="Start"
-                  className="rounded-lg border-foreground/70 hover:border-transparent text-sm py-3! w-full"
+                  className="rounded-lg border-foreground/70 hover:border-transparent text-sm py-3! "
                   onClick={startTimer}
                   icon={Sparkle}
                 />
@@ -164,29 +163,27 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
             className="rounded-lg text-sm py-3! border-foreground/70 hover:border-transparent "
             onClick={() => resetTimer()}
           />
-          <div className=" flex items-center justify-center w-[200px] mx-auto">
-            <Select
-              value={String(selectedDuration)}
-              onValueChange={(value) => changeDuration(Number(value))}
-            >
-              <SelectTrigger className="w-full bg-background-light! font-bold px-3 py-1.5 outline-none border rounded-md border-foreground/70 focus:border-foreground/100  ring-0! focus:bg-gradient-to-b from-accent/20 to-background-light! aria-invalid:border-secondary ">
-                <SelectValue placeholder="Select duration" />
-              </SelectTrigger>
-              <SelectContent className="max-h-[200px] overflow-y-auto bg-gradient-to-b from-background-light to-primary text-foreground border-primary">
-                {Array.from({ length: 4 }, (_, i) => (i + 1) * 5).map(
-                  (value) => (
-                    <SelectItem
-                      key={value}
-                      value={String(value)}
-                      className="focus:bg-gradient-to-r from-accent/70 to-primary "
-                    >
-                      {value} minutes
-                    </SelectItem>
-                  )
-                )}
-              </SelectContent>
-            </Select>
-          </div>
+        </div>
+        <div className=" flex items-center justify-center w-[200px] mx-auto">
+          <Select
+            value={String(selectedDuration)}
+            onValueChange={(value) => changeDuration(Number(value))}
+          >
+            <SelectTrigger className="w-full bg-background-light! font-bold px-3 py-1.5 outline-none border rounded-md border-foreground/70 focus:border-foreground/100  ring-0! focus:bg-gradient-to-b from-accent/20 to-background-light! aria-invalid:border-secondary ">
+              <SelectValue placeholder="Select duration" />
+            </SelectTrigger>
+            <SelectContent className="max-h-[200px] overflow-y-auto bg-gradient-to-b from-background-light to-primary text-foreground border-primary">
+              {Array.from({ length: 4 }, (_, i) => (i + 1) * 5).map((value) => (
+                <SelectItem
+                  key={value}
+                  value={String(value)}
+                  className="focus:bg-gradient-to-r from-accent/70 to-primary "
+                >
+                  {value} minutes
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
       <AnimatePresence>

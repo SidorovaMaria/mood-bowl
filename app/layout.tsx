@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Comfortaa, Comic_Neue, Pacifico, Baloo_2 } from "next/font/google";
 import "./globals.css";
 import LandingNavbar from "@/components/landingPage/LandingNavbar";
-import { Toaster } from "@/components/ui/sonner";
+
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/sonner";
 
 const comfortaa = Comfortaa({
   variable: "--font-comfortaa",
@@ -50,7 +51,7 @@ export default async function RootLayout({
         <body
           className={`${comfortaa.variable} ${comic_neue.variable} ${baloo.variable} antialiased`}
         >
-          <Toaster richColors />
+          <Toaster />
           {children}
         </body>
       </SessionProvider>

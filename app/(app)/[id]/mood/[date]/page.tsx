@@ -57,17 +57,18 @@ const MoodDahboard = async ({ params }: RouteParams) => {
             <h1 className="text-3xl font-baloo font-bold">Hi, {user.name}!</h1>
             <h2 className="text-sm ">{getWeekdayDate(date)}</h2>
           </div>
-          <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-[1fr_2fr] my-8 gap-4">
+          <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-3 my-8 gap-4 ">
             <MoodCard mood={dairy.moodEntries.mood} />
-            <div className="md:ml-auto space-y-4">
-              {user.mentalHealthGoals?.gratitudeEntriesPerDay !== 0 && (
-                <GradiudeCard
-                  graditutes={dairy.gratitudeEntries}
-                  gradituteGoal={
-                    user.mentalHealthGoals?.gratitudeEntriesPerDay || 0
-                  }
-                />
-              )}
+
+            {user.mentalHealthGoals?.gratitudeEntriesPerDay !== 0 && (
+              <GradiudeCard
+                graditutes={dairy.gratitudeEntries}
+                gradituteGoal={
+                  user.mentalHealthGoals?.gratitudeEntriesPerDay || 0
+                }
+              />
+            )}
+            <div className="md:col-span-2 lg:col-span-1 md:mx-auto">
               {user.mentalHealthGoals?.meditationMinutesPerDay !== 0 && (
                 <MeditationCard
                   meditation={dairy.meditation}

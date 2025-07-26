@@ -43,14 +43,14 @@ const AddGratitudesForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex gap-1 items-end"
+        className="flex flex-col max-md:flex-row max-md:items-end  gap-2 items-center"
       >
         <CustomInput
           name="gratitude"
           form={form}
           label="What are you grateful for today?"
           placeholder="my family, my health, my job..."
-          className="w-full"
+          className="w-full "
         />
         <ButtonSlide
           text="Save"
