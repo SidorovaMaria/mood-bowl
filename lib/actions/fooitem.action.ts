@@ -13,7 +13,6 @@ export async function addFoodItem(
     schema: createFoodItemSchema,
     authorize: true,
   });
-  console.log("Validation Result:", validationResult);
 
   if (!validationResult.session?.user) {
     return handleError(validationResult) as ErrorResponse;

@@ -59,10 +59,10 @@ const CustomInput = <T extends FieldValues>({
                 value={field.value === 0 ? "" : field.value}
                 placeholder={placeholder}
                 onChange={field.onChange}
-                className={`font-bold text-base placeholder:text-foreground/50 
+                className={`font-bold text-sm placeholder:text-foreground/50 
               placeholder:text-sm px-3 py-1.5 outline-none border
               rounded-md border-primary/70 focus:border-primary
-              focus:bg-gradient-to-b from-accent/20 to-accent/10 `}
+              focus:bg-background/50 min-h-[100px] `}
               />
             ) : (
               <input
@@ -78,7 +78,7 @@ const CustomInput = <T extends FieldValues>({
                 className={`font-bold text-base placeholder:text-foreground/50 
               placeholder:text-sm px-3 py-1.5 outline-none border
               rounded-md border-primary/70 focus:border-primary
-              focus:bg-gradient-to-b from-accent/20 to-accent/10 `}
+              focus:bg-background/50`}
               />
             )}
           </FormControl>

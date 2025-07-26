@@ -60,6 +60,7 @@ body {
   @apply transition-[stroke-dashoffset] duration-100;
   will-change: stroke-dashoffset;
 }
+
 @layer components {
   .container-text {
     @apply text-center text-sm max-w-xs mx-auto md:text-lg md:max-w-md lg:max-w-2xl lg:text-xl px-4 bg-background;

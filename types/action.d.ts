@@ -82,3 +82,10 @@ interface updateMealItemsParams {
 interface getMealItemParams {
   date: Date;
 }
+interface newJournalEntryParams {
+  date: Date;
+  title: string;
+  content: string;
+  tags?: string[];
+  moodAtEntry: string;
+}

@@ -21,8 +21,8 @@ const MoodCard = ({ mood }: { mood: string }) => {
             <Image
               src={`/images/moods/${mood}.png`}
               alt={mood}
-              width={150}
-              height={150}
+              width={100}
+              height={100}
               className="rounded-full my-4"
             />
 
@@ -34,7 +34,7 @@ const MoodCard = ({ mood }: { mood: string }) => {
                 </p>
               </SelectMoodModal>
             </div>
-            <p className="text-base font-bold italic text-center py-2 lg:px-6 ">
+            <p className="text-sm font-bold italic text-center py-2 lg:px-6 ">
               - &ldquo;{response}&rdquo;
             </p>
           </div>

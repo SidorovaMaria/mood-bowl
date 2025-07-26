@@ -7,7 +7,7 @@ export interface IJournalEntry {
   title: string;
   content: string;
   tags?: string[];
-  moodAtEntry?: Mood;
+  moodAtEntry?: Mood | null;
 }
 
 export interface IJournalEntryDoc extends IJournalEntry, Document {}

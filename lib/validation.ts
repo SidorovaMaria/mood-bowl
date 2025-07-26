@@ -273,3 +273,21 @@ export const UpdateMeditationSchema = z.object({
 
   minutesCompleted: z.number().int().optional(),
 });
+export const newJournalEntrySchema = z.object({
+  date: z.preprocess(
+    (val) => {
+      if (typeof val === "string") return new Date(val);
+      return val;
+    },
+    z.date().refine((date) => !isNaN(date.getTime()), {
+      message: "Invalid date format",
+    })
+  ),
+  title: z.string().min(1, "Title is required").max(100, "Title is too long"),
+  content: z.string().min(1, "Content is required"),
+  tags: z
+    .array(z.string().min(1, "Tag cannot be empty").max(20, "Tag is too long"))
+    .max(5, "You can add up to 5 tags")
+    .optional(),
+  moodAtEntry: z.string().min(1, "Mood is required"), // Should be one of the defined moods
+});

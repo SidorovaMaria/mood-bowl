@@ -21,7 +21,11 @@ type CustomSelectProps<T extends FieldValues> = {
   label: string;
   required?: boolean;
   placeholder?: string;
-  options: { value: string; label: string }[];
+  customSelectItems?: boolean;
+  options?: { value: string; label: string }[];
+  children?: React.ReactNode;
+  maxHeight?: string;
+  className?: string;
 };
 const CustomSelect = <T extends FieldValues>({
   form,
@@ -29,7 +33,11 @@ const CustomSelect = <T extends FieldValues>({
   label,
   placeholder,
   options,
+  customSelectItems,
   required = false,
+  children,
+  maxHeight = "max-h-[200px]",
+  className = "",
 }: CustomSelectProps<T>) => {
   return (
     <FormField
@@ -45,20 +53,33 @@ const CustomSelect = <T extends FieldValues>({
           </FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
-              <SelectTrigger className=" bg-background-light! font-bold px-3 py-1.5 outline-none border rounded-md border-accent/70 focus:border-accent w-full focus:bg-gradient-to-b from-accent/20 to-background-light! aria-invalid:border-secondary ">
-                <SelectValue placeholder={placeholder} className="text-xs!" />
+              <SelectTrigger
+                className={`bg-transparent! w-full focus:bg-gradient-to-b from-accent/20 to-background-light! aria-invalid:border-secondary
+              font-bold   px-3 py-1.5 outline-none border
+              rounded-md border-primary/70 focus:border-primary
+              focus:bg-background/50 capitalize! ${className}`}
+              >
+                <SelectValue
+                  placeholder={placeholder}
+                  className="text-xs! placeholder:text-xs!"
+                />
               </SelectTrigger>
             </FormControl>
-            <SelectContent className="z-[100] max-h-[200px] overflow-y-auto bg-gradient-to-b from-background-light from-80% to-background text-foreground border-accent ">
-              {options.map((options) => (
-                <SelectItem
-                  className="focus:bg-gradient-to-r from-accent/50 to-primary/50 "
-                  key={options.value}
-                  value={options.value}
-                >
-                  {options.label}
-                </SelectItem>
-              ))}
+            <SelectContent
+              className={`z-[100] ${maxHeight} overflow-y-auto bg-gradient-to-b from-background-light to-primary text-foreground border-primary`}
+            >
+              {!customSelectItems
+                ? options &&
+                  options.map((options) => (
+                    <SelectItem
+                      className="focus:bg-gradient-to-r from-accent/50 to-primary/50 "
+                      key={options.value}
+                      value={options.value}
+                    >
+                      {options.label}
+                    </SelectItem>
+                  ))
+                : children}
             </SelectContent>
           </Select>
           <FormMessage className="text-xs text-secondary" />

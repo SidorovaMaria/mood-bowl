@@ -1,13 +1,17 @@
 import GradiudeCard from "@/components/main-application/cards/GradiudeCard";
 import MeditationCard from "@/components/main-application/cards/MeditationCard";
 import MoodCard from "@/components/main-application/cards/MoodCard";
+import AddJournalModal from "@/components/main-application/modals/AddJournalModal";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { IJournalEntry, IJournalEntryDoc } from "@/database/journalEntry.model";
 import { IUserDoc } from "@/database/user.model";
 import { getDailyDiaries } from "@/lib/actions/dailydiary.action";
 import { getUser } from "@/lib/actions/user.actions";
 import { getRelativeDay, getWeekdayDate } from "@/lib/utils";
+import { BookHeart, Leaf } from "lucide-react";
 
 import Image from "next/image";
-import Link from "next/link";
+
 import React from "react";
 
 const MoodDahboard = async ({ params }: RouteParams) => {
@@ -33,7 +37,10 @@ const MoodDahboard = async ({ params }: RouteParams) => {
     throw new Error(error?.message || "Failed to fetch daily diary data");
   }
   const { user } = data as { user: IUserDoc };
-  const { diary } = diaryData!;
+  const { diary } = diaryData;
+  const journals = diary.journals as unknown as IJournalEntryDoc[];
+
+  console.log("Diary Data:", diary);
 
   return (
     <div className="-mt-26 relative rounded-b-4xl pt-26">
@@ -75,7 +82,34 @@ const MoodDahboard = async ({ params }: RouteParams) => {
           </div>
         </section>
         {/* Journaling */}
-        <section className=" w-full min-h-20 bg-accent rounded-xl">Hi</section>
+        <section className="w-full glass-effect rounded-xl p-4 flex flex-col gap-4">
+          <h3 className="text-lg font-bold text-center ">
+            <Leaf className="inline mr-2 size-5 fill-primary" />
+            Journaling - Let Your Thoughts Breathe
+            <Leaf className=" ml-2 inline size-5 fill-primary " />
+          </h3>
+          <AddJournalModal>
+            <ButtonSlide
+              text="New Note for You"
+              className="w-fit mx-auto text-sm border-primary hover:border-transparent"
+              icon={BookHeart}
+            />
+          </AddJournalModal>
+          {journals.length > 0 ? (
+            <ul>
+              {journals.map((journal) =>
+                typeof journal === "object" && journal !== null ? (
+                  <li key={String(journal._id)}>{journal.title}</li>
+                ) : null
+              )}
+            </ul>
+          ) : (
+            <p className="font-baloo font-bold text-lg  text-gradient w-full text-center">
+              Today’s journal is still empty — let’s fill it with your
+              thoughts..
+            </p>
+          )}
+        </section>
       </main>
     </div>
   );

@@ -34,7 +34,7 @@ export async function getDailyDiaries(params: {
     startOfDay.setUTCHours(0, 0, 0, 0);
     const endOfDay = new Date(params.date);
     endOfDay.setUTCHours(23, 59, 59, 999);
-    const dailyDiary = await DailyDiary.findOneAndUpdate(
+    await DailyDiary.findOneAndUpdate(
       {
         userId: user.id,
         date: {
@@ -50,6 +50,15 @@ export async function getDailyDiaries(params: {
       },
       { new: true, upsert: true }
     );
+    const dailyDiary = await DailyDiary.findOne({
+      userId: user.id,
+      date: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    })
+      .populate("journals")
+      .lean();
 
     return {
       success: true,

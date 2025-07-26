@@ -10,7 +10,7 @@ export interface IDailyDiary {
     mood: Mood;
   };
 
-  journal: [Types.ObjectId];
+  journals: [Types.ObjectId];
   meditation: {
     minutes: number;
     minutesCompleted?: number;
@@ -38,7 +38,7 @@ const DailyDiarySchema = new Schema<IDailyDiary>(
       },
       note: { type: String, required: false },
     },
-    journal: [
+    journals: [
       {
         type: Schema.Types.ObjectId,
         ref: "JournalEntry",
