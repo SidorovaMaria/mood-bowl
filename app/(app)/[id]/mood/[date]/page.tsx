@@ -65,7 +65,7 @@ const MoodDahboard = async ({ params }: RouteParams) => {
               }
             />
           )}
-          <div className="md:col-span-2 lg:col-span-1 md:mx-auto">
+          <div className="md:col-span-2 lg:col-span-1 md:mx-auto lg:mx-0">
             {user.mentalHealthGoals?.meditationMinutesPerDay !== 0 && (
               <MeditationCard
                 meditation={diary.meditation}

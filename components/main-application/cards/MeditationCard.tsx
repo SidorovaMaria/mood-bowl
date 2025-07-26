@@ -94,8 +94,8 @@ const MeditationCard = ({ meditation, goal }: MeditationCardProps) => {
         </p>
       </div>
       <div className="flex flex-col items-center gap-1">
-        <div className="text-center w-full">
-          <div className="relative w-32 h-32 mx-auto mb-4">
+        <div className="text-center w-full ">
+          <div className="relative w-32 h-32 mx-auto my-2">
             <svg className="w-32 h-32 transform -rotate-90">
               <circle
                 cx="64"
