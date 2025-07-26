@@ -1,4 +1,5 @@
 import GradiudeCard from "@/components/main-application/cards/GradiudeCard";
+import MeditationCard from "@/components/main-application/cards/MeditationCard";
 import MoodCard from "@/components/main-application/cards/MoodCard";
 import { IUserDoc } from "@/database/user.model";
 import { getDailyDiaries } from "@/lib/actions/dailydairy.action";
@@ -25,12 +26,15 @@ const MoodDahboard = async ({ params }: RouteParams) => {
     error,
   } = await getDailyDiaries({
     date: new Date(date),
+    meditationMinutes:
+      data.user.mentalHealthGoals?.meditationMinutesPerDay || 0,
   });
   if (!success || !dairyData) {
-    throw new Error(error?.message || "Failed to fetch daily dairy data");
+    return <div>Loading...</div>;
   }
   const { user } = data as { user: IUserDoc };
-  const { dairy } = dairyData;
+  const { dairy } = dairyData!;
+  console.log("Dairy Data:", dairy, user);
 
   return (
     <main className="-mt-26">
@@ -55,16 +59,22 @@ const MoodDahboard = async ({ params }: RouteParams) => {
           </div>
           <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-[1fr_2fr] my-8 gap-4">
             <MoodCard mood={dairy.moodEntries.mood} />
-            {user.mentalHealthGoals?.gratitudeEntriesPerDay !== 0 && (
-              <div className="md:ml-auto">
+            <div className="md:ml-auto space-y-4">
+              {user.mentalHealthGoals?.gratitudeEntriesPerDay !== 0 && (
                 <GradiudeCard
                   graditutes={dairy.gratitudeEntries}
                   gradituteGoal={
                     user.mentalHealthGoals?.gratitudeEntriesPerDay || 0
                   }
                 />
-              </div>
-            )}
+              )}
+              {user.mentalHealthGoals?.meditationMinutesPerDay !== 0 && (
+                <MeditationCard
+                  meditation={dairy.meditation}
+                  goal={user.mentalHealthGoals?.meditationMinutesPerDay || 0}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

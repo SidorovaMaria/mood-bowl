@@ -261,8 +261,15 @@ export const getDailyDairyByDateSchema = z.object({
       message: "Invalid date format",
     })
   ),
+  meditationMinutes: z.number().int().optional().default(0),
 });
 
 export const deleteMealItemSchema = z.object({
   mealItemId: z.string().min(1, "Meal item ID is required"),
+});
+
+export const UpdateMeditationSchema = z.object({
+  date: z.date(),
+
+  minutesCompleted: z.number().int().optional(),
 });

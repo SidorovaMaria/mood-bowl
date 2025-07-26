@@ -31,7 +31,7 @@ const GradiudeCard = ({ graditutes, gradituteGoal }: Props) => {
   return (
     <aside className="glass-effect p-4 rounded-xl min-w-sm flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold ">Your Gratitudes</h3>
+        <h3 className="text-lg font-bold "> Gratitudes</h3>
         <p className="gradient-bg-to-br text-white px-4 py-2 rounded-md text-sm font-bold">
           {graditutes.length}/{gradituteGoal} today
         </p>

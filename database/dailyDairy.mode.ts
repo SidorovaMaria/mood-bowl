@@ -48,7 +48,7 @@ const DailyDairySchema = new Schema<IDailyDairy>(
       time: { type: Date, rquired: false },
     },
     meditation: {
-      minutes: { type: Number, required: false },
+      minutes: { type: Number, required: true, default: 0 },
       minutesCompleted: { type: Number, default: 0 },
       completed: { type: Boolean, default: false },
     },

@@ -23,7 +23,7 @@ const SelectMoodModal = ({ children }: { children: ReactNode }) => {
   const { date } = useParams();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>{children}</DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-background-light border-foreground/20!">
         <DialogHeader>
           <DialogTitle className="text-3xl text-gradient font-semibold font-baloo">
