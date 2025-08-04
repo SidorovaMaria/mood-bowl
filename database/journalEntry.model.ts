@@ -9,7 +9,10 @@ export interface IJournalEntry {
   moodAtEntry?: Mood | null;
 }
 
-export interface IJournalEntryDoc extends IJournalEntry, Document {}
+export interface IJournalEntryDoc extends IJournalEntry, Document {
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 const JournalEntrySchema = new Schema<IJournalEntry>(
   {

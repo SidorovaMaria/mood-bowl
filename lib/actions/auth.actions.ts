@@ -20,11 +20,12 @@ export async function SignUpWithCredentials(
   });
 
   const { name, username, email, password } = validatedData.params!;
-  const session = await mongoose.startSession();
-  session.startTransaction();
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
   let transactionCommitted = false; // <-- flag
   try {
-    const existingUser = await User.findOne({ email }).session(session);
+    const existingUser = await User.findOne({ email });
+    // .session(session);
     if (existingUser) {
       return {
         success: false,
@@ -33,7 +34,8 @@ export async function SignUpWithCredentials(
       };
     }
 
-    const existingUsername = await User.findOne({ username }).session(session);
+    const existingUsername = await User.findOne({ username });
+    // .session(session);
     if (existingUsername) {
       return {
         success: false,
@@ -56,8 +58,8 @@ export async function SignUpWithCredentials(
           },
           isProfileComplete: false,
         }, //DEfault values before onboarding
-      ],
-      { session }
+      ]
+      // { session }
     );
     await Account.create(
       [
@@ -68,11 +70,11 @@ export async function SignUpWithCredentials(
           providerAccountId: email,
           password: hashedPassword,
         },
-      ],
-      { session }
+      ]
+      // { session }
     );
 
-    await session.commitTransaction();
+    // await session.commitTransaction();
     transactionCommitted = true; // <-- set flag to true
     const result = await signIn("credentials", {
       email,
@@ -96,10 +98,10 @@ export async function SignUpWithCredentials(
     };
   } catch (error) {
     if (!transactionCommitted) {
-      await session.abortTransaction();
+      // await session.abortTransaction();
     }
     console.error("Error during user creation:", error);
-    await session.abortTransaction();
+    // await session.abortTransaction();
 
     return {
       success: false,
@@ -109,7 +111,7 @@ export async function SignUpWithCredentials(
       status: 500,
     };
   } finally {
-    session.endSession();
+    // session.endSession();
   }
 }
 

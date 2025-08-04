@@ -97,3 +97,39 @@ export async function createJournalEntry(
     return handleError(error) as ErrorResponse;
   }
 }
+export async function deleteJournalEntry(params: {
+  journalId: string;
+}): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: z.object({
+      journalId: z.string().min(1, "Jounral Entry Id is required"),
+    }),
+    authorize: true,
+  });
+  const { user } = validationResult.session!;
+  if (!user) {
+    throw new UnauthorizedError("User not authenticated");
+  }
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+  const { journalId } = validationResult.params!;
+
+  try {
+    const journalToDelete = await JournalEntry.findOneAndDelete({
+      _id: journalId,
+    });
+
+    revalidatePath(
+      `${user.id}/journal/${format(journalToDelete.createdAt, "yyyy-MM-dd")}`
+    );
+
+    return {
+      success: true,
+      status: 200,
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}

@@ -1,4 +1,5 @@
 import GradiudeCard from "@/components/main-application/cards/GradiudeCard";
+import JournalCard from "@/components/main-application/cards/JournalCard";
 import MeditationCard from "@/components/main-application/cards/MeditationCard";
 import MoodCard from "@/components/main-application/cards/MoodCard";
 import AddJournalModal from "@/components/main-application/modals/AddJournalModal";
@@ -9,6 +10,7 @@ import { getDailyDiariesByDate } from "@/lib/actions/dailydiary.action";
 import { getJournalEntries } from "@/lib/actions/journalEntry.action";
 import { getUser } from "@/lib/actions/user.actions";
 import { getRelativeDay, getWeekdayDate } from "@/lib/utils";
+import { th } from "date-fns/locale";
 import { BookHeart, Leaf } from "lucide-react";
 
 import Image from "next/image";
@@ -37,13 +39,19 @@ const MoodDahboard = async ({ params }: RouteParams) => {
   }
   const {
     success: successJournals,
-    data: journals,
+    data: journalsData,
     error: errorJournals,
   } = await getJournalEntries({
     date: new Date(date),
   });
   const { user } = data as { user: IUserDoc };
   const { diary } = diaryData;
+  if (!successJournals) {
+    throw new Error(
+      errorJournals?.message || "Failed to fetch journal entries"
+    );
+  }
+  const journals = journalsData?.journalEntries || [];
 
   return (
     <div className="-mt-26 relative rounded-b-4xl pt-26">
@@ -98,20 +106,18 @@ const MoodDahboard = async ({ params }: RouteParams) => {
               icon={BookHeart}
             />
           </AddJournalModal>
-          {/* {journals.length > 0 ? (
-            <ul>
-              {journals.map((journal) =>
-                typeof journal === "object" && journal !== null ? (
-                  <li key={String(journal._id)}>{journal.title}</li>
-                ) : null
-              )}
+          {journals && journals.length > 0 ? (
+            <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {journals.map((journal: IJournalEntryDoc) => (
+                <JournalCard key={String(journal._id)} journal={journal} />
+              ))}
             </ul>
           ) : (
             <p className="font-baloo font-bold text-lg  text-gradient w-full text-center">
               Today’s journal is still empty — let’s fill it with your
               thoughts..
             </p>
-          )} */}
+          )}
         </section>
       </main>
     </div>

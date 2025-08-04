@@ -1,3 +1,4 @@
+"use client";
 import { Trash2 } from "lucide-react";
 import React from "react";
 import { AnimatePresence, motion } from "motion/react";
@@ -5,9 +6,11 @@ import { AnimatePresence, motion } from "motion/react";
 const JournalTagCard = ({
   tag,
   handleRemove,
+  className = "",
 }: {
   tag: string;
-  handleRemove: (tag: string) => void;
+  handleRemove?: (tag: string) => void;
+  className?: string;
 }) => {
   return (
     <AnimatePresence mode="wait">
@@ -16,15 +19,17 @@ const JournalTagCard = ({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
-        className="px-3 py-1.5 rounded-md text-base font-bold gradient-bg-to-br flex items-center gap-2.5 opacity-80"
+        className={`px-3 py-1.5 rounded-md text-base font-bold gradient-bg-to-br flex items-center gap-2.5 opacity-80 ${className}`}
       >
         <p className="">#{tag}</p>
-        <button
-          onClick={() => handleRemove(tag)}
-          className=" hover:text-background cursor-pointer "
-        >
-          <Trash2 className="size-4" />
-        </button>
+        {handleRemove && (
+          <button
+            onClick={() => handleRemove(tag)}
+            className=" hover:text-background cursor-pointer "
+          >
+            <Trash2 className="size-4" />
+          </button>
+        )}
       </motion.div>
     </AnimatePresence>
   );

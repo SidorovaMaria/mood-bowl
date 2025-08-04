@@ -33,8 +33,8 @@ export async function getMealItems(
   if (!user) {
     throw new UnauthorizedError("User not authenticated");
   }
-  const session = await mongoose.startSession();
-  session.startTransaction();
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
   try {
     const startOfDay = new Date(params.date);
     startOfDay.setUTCHours(0, 0, 0, 0);
@@ -43,13 +43,12 @@ export async function getMealItems(
     const mealItems = await MealItem.find({
       userId: user.id,
       date: { $gte: startOfDay, $lte: endOfDay },
-    })
-      .populate({
-        path: "foodItemId",
-        select: "name brand",
-      })
-      .session(session);
-    await session.commitTransaction();
+    }).populate({
+      path: "foodItemId",
+      select: "name brand",
+    });
+    // .session(session);
+    // await session.commitTransaction();
     return {
       success: true,
       data: {
@@ -58,10 +57,10 @@ export async function getMealItems(
       status: 200,
     };
   } catch (error) {
-    await session.abortTransaction();
+    // await session.abortTransaction();
     return handleError(error) as ErrorResponse;
   } finally {
-    session.endSession();
+    // session.endSession();
   }
 }
 
@@ -81,8 +80,8 @@ export async function addMealItem(
   if (!user) {
     throw new UnauthorizedError("User not authenticated");
   }
-  const session = await mongoose.startSession();
-  session.startTransaction();
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
   const startOfDay = new Date(params.date);
   startOfDay.setUTCHours(0, 0, 0, 0);
   const endOfDay = new Date(params.date);
@@ -93,29 +92,30 @@ export async function addMealItem(
       date: { $gte: startOfDay, $lte: endOfDay },
       foodItemId: params.foodItemId,
       mealType: params.mealType,
-    }).session(session);
+    });
+    //.session(session);
 
     if (mealItemExists) {
       mealItemExists.quantity += params.quantity;
-      await mealItemExists.save({ session });
+      await mealItemExists.save(); //{ session }
     } else {
       const mealItem = new MealItem({
         ...params,
         userId: user.id,
       });
-      await mealItem.save({ session });
+      await mealItem.save(); //{ session }
     }
 
-    await session.commitTransaction();
-    session.endSession();
+    // await session.commitTransaction();
+    // session.endSession();
     revalidatePath(`${user.id}/meals/${params.date}`);
 
     return {
       success: true,
     };
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
+    // await session.abortTransaction();
+    // session.endSession();
     return handleError(error) as ErrorResponse;
   }
 }
@@ -139,8 +139,8 @@ export async function getNutritionByDate(params: { date: Date }): Promise<
   if (!user) {
     throw new UnauthorizedError("User not authenticated");
   }
-  const session = await mongoose.startSession();
-  session.startTransaction();
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
   try {
     const startOfDay = new Date(params.date);
     startOfDay.setUTCHours(0, 0, 0, 0);
@@ -165,7 +165,8 @@ export async function getNutritionByDate(params: { date: Date }): Promise<
           totalSodium: { $sum: "$sodium" },
         },
       },
-    ]).session(session);
+    ]);
+    // .session(session);
     const kcalbyMealType = await MealItem.aggregate([
       {
         $match: {
@@ -179,8 +180,9 @@ export async function getNutritionByDate(params: { date: Date }): Promise<
           totalCalories: { $sum: "$calories" },
         },
       },
-    ]).session(session);
-    await session.commitTransaction();
+    ]);
+    // .session(session);
+    // await session.commitTransaction();
     return {
       success: true,
       data: {
@@ -190,11 +192,12 @@ export async function getNutritionByDate(params: { date: Date }): Promise<
       status: 200,
     };
   } catch (error) {
-    await session.abortTransaction();
+    // await session.abortTransaction();
     return handleError(error) as ErrorResponse;
-  } finally {
-    session.endSession();
   }
+  // finally {
+  //   session.endSession();
+  // }
 }
 
 export async function deleteMealItem(params: {
