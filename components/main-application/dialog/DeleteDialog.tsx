@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { deleteGratitude } from "@/lib/actions/dailydiary.action";
 import { deleteJournalEntry } from "@/lib/actions/journalEntry.action";
 import { AlertCircle } from "lucide-react";
 import React, { ReactNode, use, useState } from "react";
@@ -18,31 +19,40 @@ interface Props {
   children: ReactNode;
   title: string;
   description: string;
-  actionBtn: string;
-  journalId: string;
+  itemId: string;
+  deleteItem: "note" | "gratitude";
 }
 const DeleteDialog = ({
   children,
   title,
   description,
-  actionBtn,
-  journalId,
+  itemId,
+  deleteItem,
 }: Props) => {
   const handleDelete = async () => {
-    const { success, error } = await deleteJournalEntry({
-      journalId: journalId,
-    });
+    let success;
+    let error;
+    if (deleteItem === "note") {
+      const { success: successJournal, error: errorJournal } =
+        await deleteJournalEntry({
+          journalId: itemId,
+        });
+      success = successJournal;
+      error = errorJournal;
+
+      console.log(itemId);
+    }
     if (!success) {
+      console.log(error);
       toast({
         type: "error",
-        title: "Could not delete note",
+        title: `Could not delete ${deleteItem}`,
       });
       return;
-      console.log(error);
     }
     toast({
       type: "success",
-      title: "Note delete succesfully ",
+      title: `${deleteItem} deleted succesfully `,
     });
   };
   return (
@@ -65,7 +75,7 @@ const DeleteDialog = ({
             onClick={() => handleDelete()}
             className="bg-red-500/50! font-bold! cursor-pointer border-1 hover:border-red-500/50 hover:scale-105  "
           >
-            {actionBtn}
+            Delete
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

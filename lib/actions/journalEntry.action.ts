@@ -1,7 +1,7 @@
 "use server";
 
 import action from "../action";
-import { newJournalEntrySchema } from "../validation";
+import { newJournalEntrySchema, updateJournalEntrySchema } from "../validation";
 import handleError from "../errors";
 import { UnauthorizedError } from "../http-errors";
 import JournalEntry, { IJournalEntryDoc } from "@/database/journalEntry.model";
@@ -92,6 +92,53 @@ export async function createJournalEntry(
     return {
       success: true,
       status: 201,
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+export async function updateJournalEntry(
+  params: updateJournalEntryParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: updateJournalEntrySchema,
+    authorize: true,
+  });
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+  const { user } = validationResult.session!;
+  if (!user) {
+    throw new UnauthorizedError("User not authenticated");
+  }
+  const { journalId, title, content, tags, moodAtEntry } =
+    validationResult.params!;
+  try {
+    const updatedEntry = await JournalEntry.findByIdAndUpdate(
+      journalId,
+      {
+        title,
+        content,
+        tags: tags || [],
+        moodAtEntry,
+        updatedAt: new Date(),
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedEntry) {
+      throw new Error("Journal entry not found");
+    }
+    revalidatePath(
+      `${user.id}/journal/${format(updatedEntry.createdAt, "yyyy-MM-dd")}`
+    );
+    return {
+      success: true,
+      status: 200,
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;

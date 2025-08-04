@@ -13,7 +13,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { useParams } from "next/navigation";
 import React, { ReactNode, useState } from "react";
 import JournalEntryForm from "../forms/JournalEntryForm";
-import { set } from "mongoose";
 
 const AddJournalModal = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
@@ -49,7 +48,10 @@ const AddJournalModal = ({ children }: { children: ReactNode }) => {
                 className="w-full flex flex-col gap-4"
                 key="form"
               >
-                <JournalEntryForm closeJournaling={setCloseModal} />
+                <JournalEntryForm
+                  actionType="create"
+                  closeJournaling={setCloseModal}
+                />
               </motion.div>
             ) : (
               <motion.div

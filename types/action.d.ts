@@ -88,3 +88,7 @@ interface newJournalEntryParams {
   tags?: string[];
   moodAtEntry: string;
 }
+
+interface updateJournalEntryParams extends newJournalEntryParams {
+  journalId: string;
+}

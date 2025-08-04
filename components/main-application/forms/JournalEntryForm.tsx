@@ -18,8 +18,12 @@ import Image from "next/image";
 import JournalTagCard from "../cards/JournalTagCard";
 import { BookHeart, Undo2 } from "lucide-react";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
-import { createJournalEntry } from "@/lib/actions/journalEntry.action";
+import {
+  createJournalEntry,
+  updateJournalEntry,
+} from "@/lib/actions/journalEntry.action";
 import { toast } from "@/components/MyUi/Toast";
+import { IJournalEntryDoc } from "@/database/journalEntry.model";
 
 const journalEntrySchema = z.object({
   title: z
@@ -44,35 +48,64 @@ const journalEntrySchema = z.object({
 
 const JournalEntryForm = ({
   closeJournaling,
+  journal,
+  actionType,
 }: {
   closeJournaling: (isOpen: boolean) => void;
+  journal?: IJournalEntryDoc;
+  actionType: "create" | "edit";
 }) => {
   const form = useForm<z.infer<typeof journalEntrySchema>>({
     resolver: zodResolver(journalEntrySchema),
     defaultValues: {
-      title: "",
-      content: "",
-      moodEntry: "",
-      tags: [],
+      title: journal?.title || "",
+      content: journal?.content || "",
+      moodEntry: journal?.moodAtEntry || "",
+      tags: journal?.tags || [],
     },
   });
   const handleSave = async (values: z.infer<typeof journalEntrySchema>) => {
-    const { success, error } = await createJournalEntry({
-      title: values.title,
-      content: values.content,
-      tags: values.tags,
-      moodAtEntry: values.moodEntry,
-    });
-    if (!success) {
+    if (actionType == "create") {
+      const { success, error } = await createJournalEntry({
+        title: values.title,
+        content: values.content,
+        tags: values.tags,
+        moodAtEntry: values.moodEntry,
+      });
+
+      if (!success) {
+        toast({
+          title: error?.message || "An unexpected error occurred.",
+          type: "error",
+        });
+      }
       toast({
-        title: error?.message || "An unexpected error occurred.",
-        type: "error",
+        title: `${values.title} has been saved!`,
+        type: "success",
+      });
+    } else if (actionType === "edit") {
+      if (!journal?._id) {
+        throw new Error("Invalid journal ID");
+      }
+      const { success, error } = await updateJournalEntry({
+        journalId: String(journal._id),
+        title: values.title,
+        content: values.content,
+        tags: values.tags,
+        moodAtEntry: values.moodEntry,
+      });
+      if (!success) {
+        toast({
+          title: error?.message || "An unexpected error occurred.",
+          type: "error",
+        });
+      }
+      toast({
+        title: `${values.title} has been updated`,
+        type: "success",
       });
     }
-    toast({
-      title: `${values.title} has been saved!`,
-      type: "success",
-    });
+
     closeJournaling(false);
   };
 
@@ -210,7 +243,11 @@ const JournalEntryForm = ({
             type="button"
             onClick={() => closeJournaling(false)}
           />
-          <ButtonSlide text="Save" icon={BookHeart} type="submit" />
+          <ButtonSlide
+            text={actionType === "create" ? "Save" : "Update"}
+            icon={BookHeart}
+            type="submit"
+          />
         </div>
       </form>
     </Form>

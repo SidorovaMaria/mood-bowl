@@ -282,3 +282,7 @@ export const newJournalEntrySchema = z.object({
     .optional(),
   moodAtEntry: z.string().min(1, "Mood is required"), // Should be one of the defined moods
 });
+
+export const updateJournalEntrySchema = newJournalEntrySchema.extend({
+  journalId: z.string().min(1, "Journal Id is required"),
+});

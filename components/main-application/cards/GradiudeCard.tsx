@@ -7,6 +7,7 @@ import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { deleteGratitude } from "@/lib/actions/dailydiary.action";
 import { useParams } from "next/navigation";
 import { toast } from "@/components/MyUi/Toast";
+import DeleteDialog from "../dialog/DeleteDialog";
 interface Props {
   graditutes: {
     message?: string | undefined;

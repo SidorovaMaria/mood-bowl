@@ -17,7 +17,7 @@ export function Toast(props: ToastProps) {
 
   return (
     <div
-      className={`flex rounded-lg shadow-lg ring-1 ring-black/5 w-full md:max-w-[364px] items-center p-4 py-2 bg-primary ${
+      className={`flex rounded-lg shadow-lg ring-1 ring-black/5 w-full md:max-w-[364px] items-center p-4 py-2 bg-primary capitalize ${
         type === "error" && "bg-gradient-to-r from-red-500 to-primary"
       }
         ${
