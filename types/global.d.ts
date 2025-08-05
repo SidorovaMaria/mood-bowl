@@ -29,3 +29,7 @@ interface ChartData {
   value: number;
   fill: string;
 }
+interface UserPreferences {
+  trackMood: boolean;
+  trackMeals: boolean;
+}

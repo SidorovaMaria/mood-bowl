@@ -42,7 +42,7 @@ export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
     setShowNewFoodForm(false);
   };
   return (
-    <Drawer>
+    <Drawer onOpenChange={closeAddFoodForm}>
       <DrawerTrigger asChild>
         <ButtonSlide
           type="button"

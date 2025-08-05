@@ -4,9 +4,8 @@ import User, { IUser, IUserDoc } from "@/database/user.model";
 import action from "../action";
 import { getUserSchema, updateUserSchema } from "../validation";
 import handleError from "../errors";
-import { Update } from "next/dist/build/swc/types";
 import { revalidatePath } from "next/cache";
-import { ValidationError } from "../http-errors";
+
 export async function getUser(params: { userId: string }): Promise<
   ActionResponse<{
     user: IUserDoc;
@@ -130,5 +129,31 @@ export async function EditUserInfo({
     }
 
     return handleError(error) as ErrorResponse;
+  }
+}
+export async function getUserPreferences(params: {
+  userId: string;
+}): Promise<ActionResponse<UserPreferences>> {
+  const validationResult = await action({
+    params,
+    schema: getUserSchema,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { userId } = params;
+  try {
+    const existingUser = await User.findById(userId, {
+      preferences: 1,
+    });
+
+    return {
+      success: true,
+      data: existingUser.preferences,
+    };
+  } catch (error) {
+    return handleError(validationResult) as ErrorResponse;
   }
 }

@@ -100,13 +100,13 @@ const NutritionChart = ({
   ) {
     return (
       <div className="flex items-center justify-center h-full w-full">
-        <div className=" h-3/4 aspect-square bg-gradient-to-br from-accent via-primary to-accent rounded-full text-center p-6">
+        <div className=" h-3/4 aspect-square border border-foreground/50 backdrop-blur-sm rounded-full text-center p-6">
           <div className="space-y-2">
             <div className="text-4xl">🥣</div>
-            <p className="text-lg font-bold text-background">
+            <p className="text-lg font-bold text-foreground">
               Nothing on your plate yet!
             </p>
-            <p className="text-sm text-background">
+            <p className="text-sm text-foreground/80">
               Log a meal to see your nutrition chart light up ✨
             </p>
           </div>

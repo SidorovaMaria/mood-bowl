@@ -1,7 +1,9 @@
-import React from "react";
+import { format } from "date-fns";
+import { redirect } from "next/navigation";
 
-const DashBoard = () => {
-  return <div></div>;
+const DashBoardInit = ({ params }: { params: { id: string } }) => {
+  const today = format(new Date(), "yyyy-MM-dd");
+  redirect(`/${params.id}/dashboard/${today}`);
 };
 
-export default DashBoard;
+export default DashBoardInit;

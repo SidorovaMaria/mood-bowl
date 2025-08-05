@@ -1,8 +1,9 @@
 import MealItemCard from "@/components/main-application/cards/MealItemCard";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
+import AddFood from "@/components/main-application/drawer/AddFood";
 
 import { AddFoodDrawer } from "@/components/main-application/drawer/AddFoodDrawer";
-import { MealTypeColors } from "@/constants";
+import { DailyNutritionInfo, MealTypeColors } from "@/constants";
 
 import { getFoodItems } from "@/lib/actions/fooitem.action";
 import {
@@ -24,6 +25,7 @@ import React from "react";
 
 const MealsPage = async ({ params, searchParams }: RouteParams) => {
   const { date, id } = await params;
+  const { query } = await searchParams;
   const {
     success: successUser,
     data,
@@ -31,15 +33,6 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
   } = await getUser({ userId: id });
   if (!successUser || !data) {
     throw new Error(errorUser?.message || "Failed to fetch user data");
-  }
-  const { query } = await searchParams;
-  const {
-    success,
-    data: foodsData,
-    error,
-  } = await getFoodItems({ query: query || "" });
-  if (!success) {
-    throw new Error(error?.message || "Failed to fetch food items");
   }
 
   const { prevDate, nextDate } = getPreviosandNextDates(date);
@@ -53,13 +46,7 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
       nutritionError?.message || "Failed to fetch nutrition data"
     );
   }
-  const DailyNutrition = [
-    { name: "Protein", key: "totalProtein", fill: "var(--color-protein)" },
-    { name: "Carbs", key: "totalCarbs", fill: "var(--color-carbs)" },
-    { name: "Fats", key: "totalFats", fill: "var(--color-fats)" },
-    { name: "Fiber", key: "totalFiber", fill: "var(--color-fiber)" },
-    { name: "Sugar", key: "totalSugar", fill: "var(--color-sugar)" },
-  ].map(({ name, key, fill }) => ({
+  const DailyNutrition = DailyNutritionInfo.map(({ name, key, fill }) => ({
     name,
     value: nutritionData?.nutrition[key] || 0,
     fill,
@@ -71,7 +58,7 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
         fill: MealTypeColors[item._id as keyof typeof MealTypeColors], // Assuming meal types are named as 'breakfast', 'lunch', 'dinner', 'snack'
       }))
     : [];
-  console.log("DailyCaloriesbyMealType", DailyCaloriesbyMealType);
+
   return (
     <main className="-mt-26">
       <div className="relative rounded-b-4xl pt-26">
@@ -99,8 +86,8 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
               <p className="px-1 text-foreground/80 mb-4">
                 {getWeekdayDate(new Date(date))}
               </p>
-              <AddFoodDrawer data={foodsData?.foodItems} />
-              {/* <AddFood data={foodsData?.foodItems} /> */}
+
+              <AddFood query={query} />
             </div>
 
             <div className=" w-[400px] h-[300px] ">

@@ -16,7 +16,14 @@ import { revalidatePath } from "next/cache";
 
 export interface MealItemWithFoodDetails
   extends Omit<IMealItemDoc, "foodItemId"> {
-  foodItemId: { _id: string; name: string; brand?: string; category?: string };
+  createdAt: string | number | Date;
+  foodItemId: {
+    _id: string;
+    name: string;
+    brand?: string;
+    category?: string;
+    createdAt: Date;
+  };
 }
 export async function getMealItems(
   params: getMealItemParams

@@ -364,3 +364,11 @@ export const moodResponses: Record<Mood, { responses: string[] }> = {
     ],
   },
 };
+
+export const DailyNutritionInfo = [
+  { name: "Protein", key: "totalProtein", fill: "var(--color-protein)" },
+  { name: "Carbs", key: "totalCarbs", fill: "var(--color-carbs)" },
+  { name: "Fats", key: "totalFats", fill: "var(--color-fats)" },
+  { name: "Fiber", key: "totalFiber", fill: "var(--color-fiber)" },
+  { name: "Sugar", key: "totalSugar", fill: "var(--color-sugar)" },
+];

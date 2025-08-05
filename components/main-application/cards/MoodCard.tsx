@@ -13,7 +13,7 @@ const MoodCard = ({ mood }: { mood: string }) => {
   }, [mood]);
   return (
     <>
-      <aside className="bg-gradient-to-br from-background/50 to-background-light/80 backdrop-blur-[2px] rounded-3xl shadow-2xl border border-white/10 w-full p-4 flex flex-col items-center justify-center">
+      <aside className="bg-gradient-to-br from-background/50 min-w-[300px] to-background-light/80 backdrop-blur-[2px] rounded-3xl shadow-2xl border border-white/10 w-full p-4 flex flex-col items-center justify-center">
         {" "}
         <h1 className="text-1xl font-bold mb-3 px-2 ">Today&apos;s Mood</h1>
         {mood ? (
