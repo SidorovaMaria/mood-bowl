@@ -46,6 +46,9 @@ const FoodPreview = async ({
   const { success, data, error } = await getMealItems({
     date: new Date(date),
   });
+  if (!success) {
+    throw new Error("No meal found");
+  }
   const { foodLogged } = data!;
   const recentLogs =
     [...foodLogged]

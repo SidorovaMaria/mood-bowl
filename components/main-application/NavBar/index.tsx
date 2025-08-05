@@ -22,12 +22,12 @@ const NavBar = () => {
           <ul className="flex items-center gap-4">
             {AppNavigationItems.map(({ href, label, icon }) => {
               const Icon = icon;
-              const isActive = pathname.includes(`/${data?.user?.id}${href}`);
+              const isActive = pathname.includes(`/${href}`);
 
               return (
                 <motion.li initial={false} key={label}>
                   <Link
-                    href={`/${data?.user?.id}/${href}`}
+                    href={`${href}`}
                     className={`group flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 relative ${
                       isActive && "font-bold! "
                     }`}

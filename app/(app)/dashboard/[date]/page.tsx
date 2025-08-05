@@ -16,15 +16,21 @@ import React from "react";
 import MoodPreview from "./MoodPreview";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
 import FoodPreview from "./FoodPreview";
+import DayPicker from "@/components/MyUi/DayPicker";
+import { auth } from "@/auth";
 
 const DashBoard = async ({ params, searchParams }: RouteParams) => {
-  const { date, id } = await params;
+  const { date } = await params;
   const { query } = await searchParams;
+  const session = await auth();
+  if (!session?.user?.id) {
+    throw new Error("User not authenticated");
+  }
   const {
     success: successUser,
     data,
     error: errorUser,
-  } = await getUser({ userId: id });
+  } = await getUser({ userId: session.user.id });
   if (!successUser || !data) {
     throw new Error(errorUser?.message || "Failed to fetch user data");
   }
@@ -36,7 +42,7 @@ const DashBoard = async ({ params, searchParams }: RouteParams) => {
     data: UserPreference,
     error,
   } = await getUserPreferences({
-    userId: id,
+    userId: session.user.id,
   });
   if (!success || !UserPreference) {
     throw new Error("Preferences were not etted up");
@@ -59,12 +65,15 @@ const DashBoard = async ({ params, searchParams }: RouteParams) => {
           <h1 className="text-[26px] font-bold capitalize">
             Good {dayTime}, {user.name}!
           </h1>
+
           <div className="flex items-center w-full justify-center gap-4">
-            <Link href={`/${id}/dashboard/${prevDate}`}>
+            <Link href={`/${session.user.id}/dashboard/${prevDate}`}>
               <ChevronLeftCircle className="w-5 h-5 text-foreground/80" />
             </Link>
-            <h1 className="text-2xl">{getRelativeDay(new Date(date))}</h1>
-            <Link href={`/${id}/dashboard/${nextDate}`}>
+            <h1 className="text-2xl">
+              <DayPicker>{getRelativeDay(new Date(date))}</DayPicker>
+            </h1>
+            <Link href={`/${session.user.id}/dashboard/${nextDate}`}>
               <ChevronRightCircle className="w-5 h-5 text-foreground/80" />
             </Link>
           </div>

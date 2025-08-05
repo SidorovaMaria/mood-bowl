@@ -3,5 +3,5 @@ import { format } from "date-fns";
 
 export default function MealsIndex({ params }: { params: { id: string } }) {
   const today = format(new Date(), "yyyy-MM-dd");
-  redirect(`/${params.id}/meals/${today}`);
+  redirect(`/meals/${today}`);
 }

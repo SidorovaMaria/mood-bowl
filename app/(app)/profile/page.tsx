@@ -19,7 +19,6 @@ const SettingsUser = async () => {
     console.error("Failed to fetch user data:", error);
     return <div>Error loading user settings.</div>;
   }
-
   const user = data.user;
 
   return (

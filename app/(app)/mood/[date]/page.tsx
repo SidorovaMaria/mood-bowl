@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import GradiudeCard from "@/components/main-application/cards/GradiudeCard";
 import JournalCard from "@/components/main-application/cards/JournalCard";
 import MeditationCard from "@/components/main-application/cards/MeditationCard";
@@ -18,12 +19,17 @@ import Image from "next/image";
 import React from "react";
 
 const MoodDahboard = async ({ params }: RouteParams) => {
-  const { date, id } = await params;
+  const { date } = await params;
+  const session = await auth();
+  if (!session?.user?.id) {
+    throw new Error("User not authenticated");
+  }
+
   const {
     success: successUser,
     data,
     error: errorUser,
-  } = await getUser({ userId: id });
+  } = await getUser({ userId: session.user.id });
   if (!successUser || !data) {
     throw new Error(errorUser?.message || "Failed to fetch user data");
   }

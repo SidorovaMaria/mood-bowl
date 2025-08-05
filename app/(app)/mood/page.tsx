@@ -5,7 +5,7 @@ import React from "react";
 
 const MoodDiary = ({ params }: { params: { id: string } }) => {
   const today = format(new Date(), "yyyy-MM-dd");
-  redirect(`/${params.id}/mood/${today}`);
+  redirect(`/mood/${today}`);
 };
 
 export default MoodDiary;

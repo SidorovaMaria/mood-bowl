@@ -18,7 +18,7 @@ const MobileNavBar = () => {
             return (
               <motion.li key={label}>
                 <Link
-                  href={`/${data?.user?.id}/${href}`}
+                  href={`${href}`}
                   className={`group flex flex-col items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 relative ${
                     isActive && "font-bold! text-background"
                   }`}

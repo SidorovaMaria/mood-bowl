@@ -1,8 +1,10 @@
+import { auth } from "@/auth";
 import MealItemCard from "@/components/main-application/cards/MealItemCard";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
 import AddFood from "@/components/main-application/drawer/AddFood";
 
 import { AddFoodDrawer } from "@/components/main-application/drawer/AddFoodDrawer";
+import DayPicker from "@/components/MyUi/DayPicker";
 import { DailyNutritionInfo, MealTypeColors } from "@/constants";
 
 import { getFoodItems } from "@/lib/actions/fooitem.action";
@@ -24,13 +26,17 @@ import Link from "next/link";
 import React from "react";
 
 const MealsPage = async ({ params, searchParams }: RouteParams) => {
-  const { date, id } = await params;
+  const { date } = await params;
   const { query } = await searchParams;
+  const session = await auth();
+  if (!session?.user?.id) {
+    throw new Error("User not authenticated");
+  }
   const {
     success: successUser,
     data,
     error: errorUser,
-  } = await getUser({ userId: id });
+  } = await getUser({ userId: session.user.id });
   if (!successUser || !data) {
     throw new Error(errorUser?.message || "Failed to fetch user data");
   }
@@ -75,11 +81,13 @@ const MealsPage = async ({ params, searchParams }: RouteParams) => {
           <div className="flex flex-col md:flex-row items-center justify-between max-sm:justify-center gap-2 md:gap-8">
             <div className="flex flex-col items-center max-sm:items-center gap-1">
               <div className="flex items-center w-full justify-between gap-2">
-                <Link href={`/${id}/meals/${prevDate}`}>
+                <Link href={`/${session.user.id}/meals/${prevDate}`}>
                   <ChevronLeft className="w-6 h-6 text-foreground/80" />
                 </Link>
-                <h1 className="text-2xl">{getRelativeDay(new Date(date))}</h1>
-                <Link href={`/${id}/meals/${nextDate}`}>
+                <DayPicker>
+                  <h1 className="text-2xl">{getRelativeDay(new Date(date))}</h1>
+                </DayPicker>
+                <Link href={`/${session.user.id}/meals/${nextDate}`}>
                   <ChevronRight className="w-6 h-6 text-foreground/80" />
                 </Link>
               </div>
