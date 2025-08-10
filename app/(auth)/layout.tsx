@@ -1,6 +1,5 @@
 import GoogleSignIn from "@/components/authentication/GoogleSignIn";
-import SlidignReviews from "@/components/authentication/SlidignReviews";
-
+import SlidingReviews from "@/components/authentication/SlidignReviews";
 import React, { ReactNode } from "react";
 
 const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
@@ -37,7 +36,7 @@ const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
             mindfulness with your meals — your future self will thank you!
           </p>
         </div>
-        <SlidignReviews />
+        <SlidingReviews />
         <h4 className="text-lg capitalize font-bold hidden lg:block">
           What our customers say
         </h4>

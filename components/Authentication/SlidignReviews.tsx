@@ -5,7 +5,7 @@ import { reviewQuotes } from "@/constants";
 import Lenis from "lenis";
 import { CircleUserRound, Star } from "lucide-react";
 
-const SlidignReviews = () => {
+const SlidingReviews = () => {
   const [width, setWidth] = useState(450);
   const carousel = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -68,4 +68,4 @@ const SlidignReviews = () => {
   );
 };
 
-export default SlidignReviews;
+export default SlidingReviews;
