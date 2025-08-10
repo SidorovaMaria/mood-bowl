@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import GoogleSignIn from "@/components/authentication/GoogleSignIn";
-import SlidingReviews from "@/components/authentication/SlidignReviews";
+import GoogleAuth from "@/components/authentication/GoogleAuth";
+import SlidingReviews from "@/components/authentication/SlidingReviews";
 
 const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
   return (
@@ -43,7 +43,7 @@ const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
       </div>
       <div className="min-w-md md:min-w-xl mx-auto lg:flex-1 rounded-4xl flex flex-col items-center justify-center bg-gradient-to-b from-primary/80 to-accent/80 lg:w-1/2 text-background  p-6 lg:p-12 gap-6 ">
         {children}
-        <GoogleSignIn />
+        <GoogleAuth />
       </div>
     </main>
   );
