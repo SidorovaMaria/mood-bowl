@@ -24,8 +24,8 @@ import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { CalendarIcon, FileCheck, Undo2 } from "lucide-react";
 import { PopoverContent } from "@radix-ui/react-popover";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
-import { toast } from "@/components/MyUi/Toast";
+import ButtonSlide from "@/components/myUi/ButtonSlide";
+import { toast } from "@/components/myUi/Toast";
 const UpdateMealForm = ({
   quantity,
   mealType,

@@ -17,12 +17,12 @@ import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import JournalTagCard from "../cards/JournalTagCard";
 import { BookHeart, Undo2 } from "lucide-react";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import ButtonSlide from "@/components/myUi/ButtonSlide";
 import {
   createJournalEntry,
   updateJournalEntry,
 } from "@/lib/actions/journalEntry.action";
-import { toast } from "@/components/MyUi/Toast";
+import { toast } from "@/components/myUi/Toast";
 import { IJournalEntryDoc } from "@/database/journalEntry.model";
 
 const journalEntrySchema = z.object({

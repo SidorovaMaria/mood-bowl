@@ -1,5 +1,5 @@
 "use client";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import ButtonSlide from "@/components/myUi/ButtonSlide";
 import {
   Dialog,
   DialogContent,

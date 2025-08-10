@@ -6,10 +6,10 @@ import { z } from "zod";
 import { useParams } from "next/navigation";
 import { Form } from "@/components/ui/form";
 import CustomInput from "./ui/CustomInput";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import ButtonSlide from "@/components/myUi/ButtonSlide";
 import { NotebookPen } from "lucide-react";
 import { addGratitude } from "@/lib/actions/dailydiary.action";
-import { toast } from "@/components/MyUi/Toast";
+import { toast } from "@/components/myUi/Toast";
 
 const GratitudesSchema = z.object({
   gratitude: z.string().min(1, "Gratitude cannot be empty"),

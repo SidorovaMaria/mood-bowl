@@ -24,7 +24,7 @@ import { CalendarIcon, SmileIcon, UtensilsCrossed } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
-import ButtonSlide from "../MyUi/ButtonSlide";
+import ButtonSlide from "../myUi/ButtonSlide";
 
 const StepOneSchema = z.object({
   preference: z

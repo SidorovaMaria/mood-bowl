@@ -15,7 +15,7 @@ import React from "react";
 import MoodPreview from "./MoodPreview";
 
 import FoodPreview from "./FoodPreview";
-import DayPicker from "@/components/MyUi/DayPicker";
+import DayPicker from "@/components/myUi/DayPicker";
 import { auth } from "@/auth";
 
 const DashBoard = async ({ params, searchParams }: RouteParams) => {

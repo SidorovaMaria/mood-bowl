@@ -1,5 +1,5 @@
 "use client";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import ButtonSlide from "@/components/myUi/ButtonSlide";
 import { getRandomMoodResponse } from "@/lib/utils";
 import { Frown, NotebookPen } from "lucide-react";
 import Image from "next/image";

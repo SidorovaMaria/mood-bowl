@@ -3,7 +3,7 @@ import MealItemCard from "@/components/main-application/cards/MealItemCard";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
 import AddFood from "@/components/main-application/drawer/AddFood";
 
-import DayPicker from "@/components/MyUi/DayPicker";
+import DayPicker from "@/components/myUi/DayPicker";
 import { DailyNutritionInfo, MealTypeColors } from "@/constants";
 import {
   getMealItems,

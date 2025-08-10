@@ -3,7 +3,7 @@ import JournalCard from "@/components/main-application/cards/JournalCard";
 import MeditationCard from "@/components/main-application/cards/MeditationCard";
 import MoodCard from "@/components/main-application/cards/MoodCard";
 import AddJournalModal from "@/components/main-application/modals/AddJournalModal";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import ButtonSlide from "@/components/myUi/ButtonSlide";
 import { IJournalEntryDoc } from "@/database/journalEntry.model";
 import { IUserDoc } from "@/database/user.model";
 import { getDailyDiariesByDate } from "@/lib/actions/dailydiary.action";
