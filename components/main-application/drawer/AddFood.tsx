@@ -1,8 +1,6 @@
 import { getFoodItems } from "@/lib/actions/fooitem.action";
-import React, { ReactNode } from "react";
+import React from "react";
 import { AddFoodDrawer } from "./AddFoodDrawer";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
-import { Plus } from "lucide-react";
 
 const AddFood = async ({ query }: { query: string }) => {
   const { success, data, error } = await getFoodItems({ query: query || "" });

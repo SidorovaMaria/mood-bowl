@@ -4,13 +4,9 @@ import { format } from "date-fns";
 import Image from "next/image";
 import React, { useState } from "react";
 import JournalTagCard from "./JournalTagCard";
-import ButtonSlide from "@/components/MyUi/ButtonSlide";
-import { NotebookPen, Trash, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { NotebookPen, Trash2 } from "lucide-react";
 import DeleteDialog from "../dialog/DeleteDialog";
-import { deleteJournalEntry } from "@/lib/actions/journalEntry.action";
-import { toast } from "@/components/MyUi/Toast";
-import AddJournalModal from "../modals/AddJournalModal";
+
 import JournalEntryForm from "../forms/JournalEntryForm";
 import { AnimatePresence, motion } from "motion/react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -82,6 +78,7 @@ const JournalCard = ({ journal }: { journal: IJournalEntryDoc }) => {
         )}
       </div>
       <AnimatePresence>
+        {/* TODO */}
         {openEdit && (
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
             <DialogContent className="bg-background  border-primary/50 shadow-md shadow-primary">

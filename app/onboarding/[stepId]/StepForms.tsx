@@ -5,7 +5,7 @@ import FormStepThree from "@/components/onboarding/FormStepThree";
 import FormStepTwo from "@/components/onboarding/FormStepTwo";
 import { IUserDoc } from "@/database/user.model";
 import { AnimatePresence, motion } from "motion/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const StepForms = ({ stepId, user }: { stepId: string; user: IUserDoc }) => {
   return (

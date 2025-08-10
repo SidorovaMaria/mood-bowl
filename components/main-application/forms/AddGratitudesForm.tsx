@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useParams } from "next/navigation";
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import CustomInput from "./ui/CustomInput";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { NotebookPen } from "lucide-react";

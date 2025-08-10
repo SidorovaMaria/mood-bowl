@@ -1,12 +1,12 @@
-import { auth } from "@/auth";
+// import { auth } from "@/auth";
 import Navigation from "@/components/onboarding/Navigation";
 import { OnboardingProvider } from "@/context/OnboardingContext";
 
 import React, { ReactNode } from "react";
 
 const OnboardingLayout = async ({ children }: { children: ReactNode }) => {
-  const session = await auth();
-  const user = session?.user;
+  // const session = await auth();
+  // const user = session?.user;
   return (
     <OnboardingProvider>
       <div className="min-h-screen min-w-screen flex flex-col lg:flex-row">

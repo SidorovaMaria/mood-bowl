@@ -1,7 +1,6 @@
 "use server";
 
 import action from "../action";
-import mongoose from "mongoose";
 import User from "@/database/user.model";
 import bcrypt from "bcryptjs";
 import { signIn } from "@/auth";

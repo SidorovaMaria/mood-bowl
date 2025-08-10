@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Comfortaa, Comic_Neue, Pacifico, Baloo_2 } from "next/font/google";
+import { Comfortaa, Comic_Neue, Baloo_2 } from "next/font/google";
 import "./globals.css";
-import LandingNavbar from "@/components/landingPage/LandingNavbar";
 
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";

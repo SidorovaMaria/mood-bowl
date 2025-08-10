@@ -5,13 +5,12 @@ import MeditationCard from "@/components/main-application/cards/MeditationCard";
 import MoodCard from "@/components/main-application/cards/MoodCard";
 import AddJournalModal from "@/components/main-application/modals/AddJournalModal";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
-import { IJournalEntry, IJournalEntryDoc } from "@/database/journalEntry.model";
+import { IJournalEntryDoc } from "@/database/journalEntry.model";
 import { IUserDoc } from "@/database/user.model";
 import { getDailyDiariesByDate } from "@/lib/actions/dailydiary.action";
 import { getJournalEntries } from "@/lib/actions/journalEntry.action";
 import { getUser } from "@/lib/actions/user.actions";
-import { getRelativeDay, getWeekdayDate } from "@/lib/utils";
-import { th } from "date-fns/locale";
+import { getWeekdayDate } from "@/lib/utils";
 import { BookHeart, Leaf } from "lucide-react";
 
 import Image from "next/image";

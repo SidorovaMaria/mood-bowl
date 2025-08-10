@@ -11,10 +11,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteGratitude } from "@/lib/actions/dailydiary.action";
 import { deleteJournalEntry } from "@/lib/actions/journalEntry.action";
 import { AlertCircle } from "lucide-react";
-import React, { ReactNode, use, useState } from "react";
+import React, { ReactNode } from "react";
 interface Props {
   children: ReactNode;
   title: string;

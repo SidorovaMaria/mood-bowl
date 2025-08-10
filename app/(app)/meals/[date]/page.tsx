@@ -3,11 +3,8 @@ import MealItemCard from "@/components/main-application/cards/MealItemCard";
 import NutritionChart from "@/components/main-application/charts/NutritionChart";
 import AddFood from "@/components/main-application/drawer/AddFood";
 
-import { AddFoodDrawer } from "@/components/main-application/drawer/AddFoodDrawer";
 import DayPicker from "@/components/MyUi/DayPicker";
 import { DailyNutritionInfo, MealTypeColors } from "@/constants";
-
-import { getFoodItems } from "@/lib/actions/fooitem.action";
 import {
   getMealItems,
   getNutritionByDate,

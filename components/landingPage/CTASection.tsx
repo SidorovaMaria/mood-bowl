@@ -3,17 +3,7 @@
 import { CTAitems } from "@/constants";
 
 import { motion } from "motion/react";
-import {
-  ArrowRightCircle,
-  BarChart,
-  BookMarked,
-  CalendarCheck,
-  ChartNoAxesCombined,
-  NotebookPen,
-  SmileIcon,
-  Soup,
-  UtensilsCrossed,
-} from "lucide-react";
+import { ArrowRightCircle, SmileIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 

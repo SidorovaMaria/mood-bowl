@@ -6,7 +6,6 @@ import {
   getTimeOfDay,
   getWeekdayDate,
 } from "@/lib/utils";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 import { ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
 import Image from "next/image";
@@ -14,7 +13,7 @@ import Link from "next/link";
 import React from "react";
 
 import MoodPreview from "./MoodPreview";
-import NutritionChart from "@/components/main-application/charts/NutritionChart";
+
 import FoodPreview from "./FoodPreview";
 import DayPicker from "@/components/MyUi/DayPicker";
 import { auth } from "@/auth";
@@ -45,7 +44,7 @@ const DashBoard = async ({ params, searchParams }: RouteParams) => {
     userId: session.user.id,
   });
   if (!success || !UserPreference) {
-    throw new Error("Preferences were not etted up");
+    throw new Error("Preferences were not setted up" + error);
   }
 
   return (

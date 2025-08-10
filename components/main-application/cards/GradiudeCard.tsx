@@ -1,5 +1,5 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 import AddGratitudesForm from "../forms/AddGratitudesForm";
 import { Sparkle, Trash2 } from "lucide-react";
 import ButtonSlide from "@/components/MyUi/ButtonSlide";
@@ -7,7 +7,7 @@ import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { deleteGratitude } from "@/lib/actions/dailydiary.action";
 import { useParams } from "next/navigation";
 import { toast } from "@/components/MyUi/Toast";
-import DeleteDialog from "../dialog/DeleteDialog";
+
 interface Props {
   graditutes: {
     message?: string | undefined;

@@ -1,17 +1,7 @@
 "use client";
 import { HeroFeatures } from "@/constants";
 import Lenis from "lenis";
-import {
-  ArrowRightCircle,
-  CalendarClock,
-  Clock1,
-  LucideMoveRight,
-  Medal,
-  NotebookPen,
-  Rocket,
-  SmilePlus,
-  UtensilsCrossed,
-} from "lucide-react";
+import { ArrowRightCircle, Rocket } from "lucide-react";
 import { motion, useScroll, useTransform, Variants } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";

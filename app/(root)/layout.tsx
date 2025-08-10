@@ -1,4 +1,3 @@
-import HeroSection from "@/components/landingPage/HeroSection";
 import LandingNavbar from "@/components/landingPage/LandingNavbar";
 import React, { ReactNode } from "react";
 

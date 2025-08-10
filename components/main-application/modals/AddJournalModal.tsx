@@ -3,7 +3,6 @@ import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,

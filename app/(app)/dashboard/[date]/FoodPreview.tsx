@@ -3,13 +3,12 @@ import NutritionChart from "@/components/main-application/charts/NutritionChart"
 import AddFood from "@/components/main-application/drawer/AddFood";
 
 import { DailyNutritionInfo, MealTypeColors } from "@/constants";
-import FoodItem from "@/database/foodItem.model";
 
 import {
   getMealItems,
   getNutritionByDate,
 } from "@/lib/actions/mealitem.action";
-import { AlertCircleIcon, Plus, UtensilsCrossed } from "lucide-react";
+import { AlertCircleIcon } from "lucide-react";
 import React from "react";
 
 const FoodPreview = async ({
@@ -47,7 +46,7 @@ const FoodPreview = async ({
     date: new Date(date),
   });
   if (!success) {
-    throw new Error("No meal found");
+    throw new Error("No meal found" + error);
   }
   const { foodLogged } = data!;
   const recentLogs =
