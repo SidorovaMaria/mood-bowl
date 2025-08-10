@@ -1,5 +1,5 @@
-import GoogleSignIn from "@/components/authentication/GoogleSignIn";
-import SlidingReviews from "@/components/authentication/SlidignReviews";
+import GoogleSignIn from "../../components/authentication/GoogleSignIn";
+import SlidingReviews from "../../components/authentication/SlidignReviews";
 import React, { ReactNode } from "react";
 
 const AuthenticationLayout = async ({ children }: { children: ReactNode }) => {
