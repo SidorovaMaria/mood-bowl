@@ -1,7 +1,7 @@
 import { auth, signOut } from "@/auth";
 import ProfileInfoDropdown from "@/components/main-application/settings/ProfileInfoDropdown";
 import ProfileInfoEdit from "@/components/main-application/settings/ProfileInfoEdit";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { IUserDoc } from "@/database/user.model";
 import { getUser } from "@/lib/actions/user.actions";
 import { getAgeFromBirthDate } from "@/lib/utils";

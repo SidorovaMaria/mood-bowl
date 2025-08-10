@@ -18,7 +18,7 @@ import { RadioGroupItem } from "@radix-ui/react-radio-group";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/context/OnboardingContext";
-import ButtonSlide from "../myUi/ButtonSlide";
+import ButtonSlide from "../MyUi/ButtonSlide";
 
 const stepThreeSchema = z.object({
   fitnessGoals: z.object({

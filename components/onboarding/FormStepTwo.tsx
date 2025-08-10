@@ -21,7 +21,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 import { ArrowLeft } from "lucide-react";
 
-import ButtonSlide from "../myUi/ButtonSlide";
+import ButtonSlide from "../MyUi/ButtonSlide";
 const StepTwoSchema = z.object({
   mentalHealthGoals: z.object({
     meditationMinutesPerDay: z

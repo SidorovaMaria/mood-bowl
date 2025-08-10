@@ -5,7 +5,7 @@ import React from "react";
 
 import { Button } from "../ui/button";
 import { ArrowRightCircle, LogIn } from "lucide-react";
-import Logo from "../myUi/Logo";
+import Logo from "../MyUi/Logo";
 import { signOut, useSession } from "next-auth/react";
 const LandingNavbar = () => {
   const { data } = useSession();

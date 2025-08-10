@@ -12,7 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FoodSearch from "../search/FoodSearch";
 import { IFoodItemDoc } from "@/database/foodItem.model";

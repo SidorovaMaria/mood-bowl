@@ -8,10 +8,10 @@ import { addFoodItem } from "@/lib/actions/fooitem.action";
 
 import { Form } from "@/components/ui/form";
 import CustomInput from "./ui/CustomInput";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import CustomSelect from "./ui/CustomSelect";
 import { availableUnits } from "./constants";
-import { toast } from "@/components/myUi/Toast";
+import { toast } from "@/components/MyUi/Toast";
 
 const AddFoodItemForm = ({ formId }: { formId: string }) => {
   const form = useForm<z.infer<typeof createFoodItemSchema>>({

@@ -1,5 +1,5 @@
 "use client";
-import { toast } from "@/components/myUi/Toast";
+import { toast } from "@/components/MyUi/Toast";
 import { Button } from "@/components/ui/button";
 import { IUserDoc } from "@/database/user.model";
 import { EditUserInfo } from "@/lib/actions/user.actions";

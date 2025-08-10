@@ -28,9 +28,9 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import SmallFoodChart from "../charts/SmallFoodChart";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { addMealItem } from "@/lib/actions/mealitem.action";
-import { toast } from "@/components/myUi/Toast";
+import { toast } from "@/components/MyUi/Toast";
 
 const mealItemSchema = z.object({
   mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]),

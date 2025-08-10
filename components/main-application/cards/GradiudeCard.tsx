@@ -2,11 +2,11 @@
 import React from "react";
 import AddGratitudesForm from "../forms/AddGratitudesForm";
 import { Sparkle, Trash2 } from "lucide-react";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 
 import { deleteGratitude } from "@/lib/actions/dailydiary.action";
 import { useParams } from "next/navigation";
-import { toast } from "@/components/myUi/Toast";
+import { toast } from "@/components/MyUi/Toast";
 
 interface Props {
   graditutes: {

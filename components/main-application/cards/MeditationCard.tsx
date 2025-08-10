@@ -1,6 +1,6 @@
 "use client";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
-import { toast } from "@/components/myUi/Toast";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { toast } from "@/components/MyUi/Toast";
 import {
   Select,
   SelectContent,

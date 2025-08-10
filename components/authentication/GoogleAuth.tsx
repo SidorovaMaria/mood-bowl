@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 
 import { signIn } from "next-auth/react";
-import { toast } from "../myUi/Toast";
+import { toast } from "../MyUi/Toast";
 
 const GoogleAuth = () => {
   const handleSignIn = async (provider: "github" | "google") => {

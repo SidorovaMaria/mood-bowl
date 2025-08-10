@@ -1,5 +1,5 @@
 "use client";
-import { toast } from "@/components/myUi/Toast";
+import { toast } from "@/components/MyUi/Toast";
 import {
   AlertDialog,
   AlertDialogAction,

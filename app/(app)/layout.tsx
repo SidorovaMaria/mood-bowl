@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import NavBar from "@/components/main-application/NavBar";
 import MobileNavBar from "@/components/main-application/NavBar/MobileNavBar";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import { Button } from "@/components/ui/button";
 import { Frown } from "lucide-react";
 import React, { ReactNode } from "react";

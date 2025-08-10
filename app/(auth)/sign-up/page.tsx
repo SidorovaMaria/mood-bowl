@@ -23,8 +23,8 @@ import { SignUpWithCredentials } from "@/lib/actions/auth.actions";
 
 import { useRouter } from "next/navigation";
 import { IUserDoc } from "@/database/user.model";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
-import { toast } from "@/components/myUi/Toast";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
+import { toast } from "@/components/MyUi/Toast";
 
 const SignUpPage = () => {
   const router = useRouter();

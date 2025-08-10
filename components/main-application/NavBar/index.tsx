@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import React from "react";
-import Logo from "@/components/myUi/Logo";
+import Logo from "@/components/MyUi/Logo";
 
 const NavBar = () => {
   const pathname = usePathname();

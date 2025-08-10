@@ -11,12 +11,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import SmallFoodChart from "../charts/SmallFoodChart";
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 
 import { useState } from "react";
 
 import UpdateMealForm from "../forms/UpdateMealForm";
-import { toast } from "@/components/myUi/Toast";
+import { toast } from "@/components/MyUi/Toast";
 
 const MealItemCard = ({ foodItem }: { foodItem: MealItemWithFoodDetails }) => {
   const [isEditing, setIsEditing] = useState(false);

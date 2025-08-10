@@ -16,9 +16,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { signInWithCredentials } from "@/lib/actions/auth.actions";
 
-import ButtonSlide from "@/components/myUi/ButtonSlide";
+import ButtonSlide from "@/components/MyUi/ButtonSlide";
 import Link from "next/link";
-import { toast } from "@/components/myUi/Toast";
+import { toast } from "@/components/MyUi/Toast";
 const SignIn = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof SignInSchema>>({
