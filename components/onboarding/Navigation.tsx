@@ -1,12 +1,11 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 
-import { useParams } from "next/navigation";
-import { ONBOARDING_STEPS } from "@/constants";
+// import { useParams } from "next/navigation";
 import { useOnboarding } from "@/context/OnboardingContext";
 
 const Navigation = () => {
-  const { stepId } = useParams();
+  // const { stepId } = useParams();
   const { data } = useOnboarding();
   console.log(data);
   return (

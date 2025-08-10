@@ -1,6 +1,7 @@
 import mongoose, { Mongoose } from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URL_OFFLINE;
+// const MONGODB_URI = process.env.MONGODB_URL_OFFLINE;
+const MONGODB_URI = process.env.MONGODB_URL;
 
 if (!MONGODB_URI) {
   throw new Error(

@@ -30,10 +30,7 @@ const LandingNavbar = () => {
                 variant="outline"
                 className="bg-gradient-to-r from-primary to-accent text-background-light px-4 py-2 rounded-2xl font-bold whitespace-nowrap cursor-pointer group hover:scale-105"
               >
-                <Link
-                  href={`${data.user.id}/dashboard`}
-                  className="flex items-center gap-2"
-                >
+                <Link href={`/dashboard`} className="flex items-center gap-2">
                   Back to Profile
                   <LogIn className=" size-4 group-hover:animate-bounce-right" />
                 </Link>
