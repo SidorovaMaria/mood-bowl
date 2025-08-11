@@ -22,7 +22,7 @@ const StepForm = async ({ params }: RouteParams) => {
   }
   const user: IUserDoc = data.user;
   if (user.isProfileComplete) {
-    redirect(`dashboard`);
+    redirect(`/dashboard`);
   }
 
   return <StepForms stepId={stepId} user={user} />;

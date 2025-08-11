@@ -11,7 +11,7 @@ const Navigation = () => {
   return (
     <div className="lg:min-h-screen w-full lg:w-1/3 bg-gradient-to-b from-primary to-accent text-background-light max-lg:rounded-b-4xl lg:rounded-r-4xl relative flex flex-col items-center justify-center p-8">
       <header className="">
-        <h1 className="text-[min(3vw,32px)] font-bold text-center leading-snug mb-4">
+        <h1 className="text-[min(5vw,36px)] font-bold text-center leading-snug mb-4">
           Hey There!
           <br /> Welcome to MooDBowl!
         </h1>

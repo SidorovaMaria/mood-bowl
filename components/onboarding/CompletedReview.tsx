@@ -42,7 +42,7 @@ const CompletedReview = ({ user }: { user: IUserDoc }) => {
           back and edit — otherwise, we’re ready to roll!
         </p>
       </div>
-      <div className="grid grid-cols md:grid-cols-2 gap-x-6 gap-y-3 w-full">
+      <div className="grid grid-cols grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 w-full">
         <section className="flex flex-col items-start w-full border  rounded-xl border-accent">
           <div className="w-full py-2 border-b relative items- overflow-hidden">
             <h3 className="text-left pl-3">About You & Preferences</h3>
@@ -158,7 +158,7 @@ const CompletedReview = ({ user }: { user: IUserDoc }) => {
           </section>
         )}
         {data?.preference?.trackMeals && (
-          <section className="flex flex-col items-start w-3/4 mx-auto border  rounded-xl border-accent col-span-2">
+          <section className="flex flex-col items-start w-full md:w-3/4 mx-auto border  rounded-xl border-accent md:col-span-2">
             <div className="w-full py-2 border-b relative overflow-hidden">
               <h3 className="text-left pl-3">
                 Your Diet & Daily Energy Needs{" "}
