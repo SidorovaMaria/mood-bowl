@@ -36,14 +36,14 @@ MoofBowl is a meal and mood tracking app with journaling features to help you st
 
 <!--- # "Verify icons availability here https://github.com/tandpfun/skill-icons" -->
 
-[![My Skills](https://skillicons.dev/icons?i=ts,nextjs,react,tailwind,nextjs)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=ts,nextjs,react,tailwind,mongodb,vscode)](https://skillicons.dev)
 
 ## Getting Started
 
 1. Clone the repo
    ```bash
-   git clone https://github.com/your-username/MoofBowl.git
-   cd MoofBowl
+   git clone https://github.com/SidorovaMaria/mood-bowl.git
+   cd mood-bowl
    ```
 2. Install Dependencies
 
