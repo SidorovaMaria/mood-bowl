@@ -78,6 +78,9 @@ body {
   .link:hover .slider::before {
     transform: scaleX(1);
   }
+  .input-text {
+    @apply fclassName="font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0! placeholder:text-xs placeholder:font-bold placeholder:text-background/50 focus:text-foreground/80";
+  }
   .radio-group-label {
     @apply cursor-pointer font-bold w-full peer-data-[state=checked]:bg-gradient-to-r from-primary to-accent peer-data-[state=checked]:text-background py-3 px-4 border rounded-xl peer-data-[state=checked]:border-0 hover:not-peer-data-[state=checked]:shadow-[2px_3px_0px] hover:not-peer-data-[state=checked]:shadow-white hover:not-peer-data-[state=checked]:-translate-y-0.5 transition-colors duration-300;
   }

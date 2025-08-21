@@ -38,6 +38,11 @@ const SignUpPage = () => {
       confirmPassword: "",
     },
   });
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting, errors },
+  } = form;
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
     const result = (await SignUpWithCredentials(
       values
@@ -61,114 +66,187 @@ const SignUpPage = () => {
     }
   }
   return (
-    <div className="flex flex-col gap-6 items-center justify-center w-full ">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-1">Create Your Account</h1>
+    <main
+      id="main-content"
+      role="main"
+      aria-labelledby="sign-up-heading"
+      className="flex flex-col gap-6 items-center justify-center w-full "
+    >
+      <header className="text-center">
+        <h1 id="sign-up-heading" className="text-2xl font-bold mb-1">
+          Create Your Account
+        </h1>
         <p className="font-semibold text-sm ">
           Start your wellness journey today
         </p>
-      </div>
+      </header>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          noValidate
+          aria-describedby={
+            errors.name ||
+            errors.username ||
+            errors.email ||
+            errors.password ||
+            errors.confirmPassword
+              ? "form-errors"
+              : undefined
+          }
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col items-center gap-4 w-full max-w-md"
         >
           <div className="flex items-center gap-5 justify-between w-full">
             <FormField
-              control={form.control}
+              control={control}
               name="name"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel htmlFor="name">Name</FormLabel>
                   <FormControl>
                     <Input
+                      id="name"
+                      type="text"
+                      autoComplete="name"
                       placeholder="What should we call you?"
                       {...field}
-                      className="no-focus font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0 placeholder:text-xs placeholder:font-bold placeholder:text-background/50"
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "name-error" : undefined}
+                      className="font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0! placeholder:text-xs placeholder:font-bold placeholder:text-background/50 focus:text-foreground/80"
                     />
                   </FormControl>
 
-                  <FormMessage />
+                  <FormMessage id="name-error" />
                 </FormItem>
               )}
             />
             <FormField
-              control={form.control}
+              control={control}
               name="username"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel htmlFor="username">Username</FormLabel>
                   <FormControl>
                     <Input
+                      id="username"
+                      type="text"
+                      autoComplete="username"
                       placeholder="Pick a fun one (no pressure!)"
                       {...field}
-                      className="no-focus font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0 placeholder:text-xs placeholder:text-background/50"
+                      aria-invalid={!!errors.username}
+                      aria-describedby={
+                        errors.username ? "error-username" : undefined
+                      }
+                      className="font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0! placeholder:text-xs placeholder:font-bold placeholder:text-background/50 focus:text-foreground/80"
                     />
                   </FormControl>
 
-                  <FormMessage />
+                  <FormMessage id="error-username" />
                 </FormItem>
               )}
             />
           </div>
           <FormField
-            control={form.control}
+            control={control}
             name="email"
             render={({ field }) => (
               <FormItem className="w-full ">
-                <FormLabel className="font-bold">Email</FormLabel>
+                <FormLabel className="font-bold" htmlFor="email">
+                  Email
+                </FormLabel>
                 <FormControl className="backdrop-blur-xl ">
                   <Input
+                    id="email"
+                    type="email"
+                    autoComplete="email"
                     placeholder="Where can we send the good vibes?"
                     {...field}
-                    className="no-focus font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0 placeholder:text-xs placeholder:text-background/50"
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? "error-email" : undefined}
+                    className="font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0! placeholder:text-xs placeholder:font-bold placeholder:text-background/50 focus:text-foreground/80"
                   />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage id="error-email" />
               </FormItem>
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="password"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel className="font-bold">Password</FormLabel>
+                <FormLabel className="font-bold" htmlFor="password">
+                  Password
+                </FormLabel>
                 <FormControl>
                   <Input
+                    id="password"
                     type="password"
+                    autoComplete="new-password"
                     placeholder="Shh... your secret ingredient"
                     {...field}
-                    className="no-focus font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0 placeholder:text-xs placeholder:text-background/50"
+                    aria-invalid={!!errors.password}
+                    aria-describedby={
+                      errors.password ? "error-password" : undefined
+                    }
+                    className="font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0! placeholder:text-xs placeholder:font-bold placeholder:text-background/50 focus:text-foreground/80"
                   />
                 </FormControl>
-                <FormMessage />
+                <p
+                  id="password-hint"
+                  className="text-xs text-muted-background font-semibold"
+                >
+                  Use at least 8 characters. Mix letters, numbers, and symbols.
+                </p>
+                <FormMessage id="error-password" />
               </FormItem>
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="confirmPassword"
             render={({ field }) => (
               <FormItem className="w-full ">
-                <FormLabel className="font-bold">Confirm Password</FormLabel>
+                <FormLabel className="font-bold" htmlFor="confirmPassword">
+                  Confirm Password
+                </FormLabel>
                 <FormControl className="backdrop-blur-xl ">
                   <Input
+                    id="confirmPassword"
                     type="password"
+                    autoComplete="new-password"
                     placeholder="Type it again, just to be sure!"
                     {...field}
-                    className="no-focus font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0 placeholder:text-xs placeholder:text-background/50"
+                    aria-invalid={!!errors.confirmPassword}
+                    aria-describedby={
+                      errors.confirmPassword
+                        ? "error-confirmPassword"
+                        : undefined
+                    }
+                    className="font-bold focus:bg-background-light/10 border-background focus:border-background! ring-0! placeholder:text-xs placeholder:font-bold placeholder:text-background/50 focus:text-foreground/80"
                   />
                 </FormControl>
-
-                <FormMessage />
+                <FormMessage id="error-confirmPassword" />
               </FormItem>
             )}
           />
+          {/* Reader  */}
+          <div id="form-errors" aria-live="polite" className="sr-only">
+            {errors.name ? "Name field has an error." : null}
+            {errors.username ? "Username field has an error." : null}
+            {errors.email ? "Email field has an error." : null}
+            {errors.password ? "Password field has an error." : null}
+            {errors.confirmPassword
+              ? "Confirm password field has an error."
+              : null}
+          </div>
           <ButtonSlide
+            className="border-foreground hover:border-transparent"
             type="submit"
-            text="Create an Account"
+            text={isSubmitting ? "Creating…" : "Create an Account"}
+            aria-busy={isSubmitting}
+            aria-disabled={isSubmitting}
+            disabled={isSubmitting}
             icon={UserRoundPlus}
           />
         </form>
@@ -183,7 +261,7 @@ const SignUpPage = () => {
           <span className="slider" />
         </Link>
       </p>
-    </div>
+    </main>
   );
 };
 

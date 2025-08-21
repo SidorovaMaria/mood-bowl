@@ -13,6 +13,7 @@ interface ButtonSlideProps {
   className?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form?: any;
+  disabled?: boolean;
 }
 const ButtonSlide = ({
   icon = ArrowRight,
@@ -23,10 +24,12 @@ const ButtonSlide = ({
   onClick,
   className = "",
   form,
+  disabled = false,
 }: ButtonSlideProps) => {
   const Icon = icon;
   return (
     <Button
+      disabled={disabled}
       asChild={!!link}
       type={type}
       form={form}
