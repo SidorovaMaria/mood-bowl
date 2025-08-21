@@ -9,10 +9,14 @@ import Link from "next/link";
 
 const CTASection = () => {
   return (
-    <section className="py-20 relative overflow-hidden ">
+    <section
+      className="py-20 relative overflow-hidden "
+      aria-labelledby="cta-heading"
+    >
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto flex flex-col justify-center gap-6">
           <h2
+            id="cta-heading"
             className={`text-4xl md:text-5xl font-bold  transition-all duration-1000 `}
           >
             Ready to Transform Your{" "}
@@ -29,15 +33,14 @@ const CTASection = () => {
             className={`bg-background-light rounded-2xl p-8 relative overflow-hidden transition-all duration-1000`}
             style={{ transitionDelay: "0.6s" }}
           >
-            {/* Animated border effect with health icons */}
-
             <div className="flex items-center justify-center space-x-3 mb-4">
               <h3 className="text-2xl font-semibold animate-text-reveal">
                 Sign up to unlock:
               </h3>
             </div>
 
-            <motion.div
+            <motion.ul
+              role="list"
               className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-2xl mx-auto"
               initial="hidden"
               whileInView="visible"
@@ -54,7 +57,7 @@ const CTASection = () => {
               {CTAitems.map((item, index) => {
                 const Icon = item.icon;
                 return (
-                  <motion.div
+                  <motion.li
                     key={index}
                     className="flex items-center space-x-3 group"
                     variants={{
@@ -63,16 +66,19 @@ const CTASection = () => {
                     }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                   >
-                    <div className="w-8 h-8 flex items-center justify-center p-2 border rounded-full group-hover:text-accent group-hover:translate-y-[-2px] transition-transform duration-150 group-hover:scale-110 ">
-                      <Icon />
+                    <div
+                      className="w-8 h-8 flex items-center justify-center p-2 border rounded-full group-hover:text-accent group-hover:translate-y-[-2px] transition-transform duration-150 group-hover:scale-110 "
+                      aria-hidden="true"
+                    >
+                      <Icon aria-hidden="true" />
                     </div>
                     <span className="hover:text-accent transition-colors cursor-pointer">
                       {item.text}
                     </span>
-                  </motion.div>
+                  </motion.li>
                 );
               })}
-            </motion.div>
+            </motion.ul>
           </div>{" "}
           <div
             className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 `}
@@ -82,14 +88,23 @@ const CTASection = () => {
               variant="ghost"
               className="bg-background-light pl-5! pr-10! py-6! text-base rounded-full font-bold text-foreground transition-all transform hover:scale-105 whitespace-nowrap cursor-pointer relative overflow-hidden group"
             >
-              <Link href="/sign-in">
+              <Link href="/sign-up">
                 <span className="relative z-10 group-hover:text-background-light transition-colors duration-300">
                   Create Free Account
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 "></div>
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 "
+                  aria-hidden="true"
+                ></div>
 
-                <SmileIcon className=" size-5 absolute right-4 top-1/2 -translate-y-1/2 group-hover:-translate-y-[250%] transition-transform duration-300 origin-center" />
-                <ArrowRightCircle className=" size-5 absolute right-4 top-full group-hover:-translate-y-[175%] transition-transform duration-300 origin-center text-background group-hover:animate-bounce-right" />
+                <SmileIcon
+                  className=" size-5 absolute right-4 top-1/2 -translate-y-1/2 group-hover:-translate-y-[250%] transition-transform duration-300 origin-center"
+                  aria-hidden="true"
+                />
+                <ArrowRightCircle
+                  className=" size-5 absolute right-4 top-full group-hover:-translate-y-[175%] transition-transform duration-300 origin-center text-background group-hover:animate-bounce-right"
+                  aria-hidden="true"
+                />
               </Link>
             </Button>
           </div>

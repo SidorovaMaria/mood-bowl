@@ -4,12 +4,22 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-background-light py-16">
+    <footer
+      className="bg-background-light py-16"
+      aria-labelledby="site-footer-heading"
+    >
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 mb-12">
+        <nav
+          aria-label="Footer"
+          className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 mb-12"
+        >
           <div className="flex flex-col gap-4">
             <div className="flex items-center">
-              <h4 className="font-comforta text-3xl text-center font-bold relative group cursor-pointer">
+              <Link
+                href="/"
+                aria-label="MoodBowl Home"
+                className="font-comforta text-3xl text-center font-bold relative group cursor-pointer"
+              >
                 M<span className="text-accent font-bold">oo</span>DB
                 <span className="text-accent font-bold">ow</span>l
                 <span className="absolute top-[58%] text-accent left-12 font-bold text-2xl rotate-90 group-hover:animate-swing">
@@ -18,9 +28,12 @@ const Footer = () => {
                 <span className="absolute bottom-[60%] text-accent right-7 font-bold text-2xl -rotate-90 group-hover:animate-swing">
                   )
                 </span>
-              </h4>
+              </Link>
             </div>
-            <p className="text-foreground max-w-sm text-sm">
+            <p
+              className="text-foreground max-w-sm text-sm"
+              itemProp="description"
+            >
               Mood Bowl helps you reflect, plan, and grow. Whether you&apos;re
               tracking your mood, meals, or both — we&apos;re here to support
               your wellness journey, one mindful choice at a time.
@@ -46,16 +59,18 @@ const Footer = () => {
               </div>
             );
           })}
-        </div>
+        </nav>
 
         <div className="border-t border-background pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p
-              className="text-foreground/60 mb-4 md:mb-0"
+            <small
+              className="text-foreground/60"
               style={{ fontFamily: "var(--font-comic-neue)" }}
             >
-              © 2025 Maria Sidorova
-            </p>
+              © <time dateTime="2025">2025</time>{" "}
+              <span itemProp="founder">Maria Sidorova</span>
+            </small>
+
             <div className="flex space-x-6">
               <Link
                 href="#"
