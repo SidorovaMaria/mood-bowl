@@ -103,7 +103,7 @@ const MoodCalendar: React.FC<MoodCalendarProps> = ({
   return (
     <div className="bg-background p-4 rounded-lg shadow-md max-w-[460px]">
       <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           <button
             type="button"
             aria-label="Previous month"
@@ -115,6 +115,7 @@ const MoodCalendar: React.FC<MoodCalendarProps> = ({
           <p className="text-base font-bold font-baloo">
             {monthLabel(viewDate)}
           </p>
+
           <button
             type="button"
             aria-label="Next month"
