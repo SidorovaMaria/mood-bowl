@@ -22,7 +22,7 @@ const MoodDiary = async () => {
         />
       </div>
       <main className="relative z-10 w-full p-6 text-foreground max-sm:px-4 container lg:max-w-6xl mx-auto">
-        <MoodCalendar moodDateData={moodDate} />
+        <MoodCalendar moodDateData={moodDate} firstDayofTheWeek={1} />
       </main>
     </div>
   );

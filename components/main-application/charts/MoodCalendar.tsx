@@ -6,152 +6,209 @@ import {
 } from "@/components/ui/tooltip";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { set } from "mongoose";
 import Image from "next/image";
-import React, { useState } from "react";
-const MoodCalendar = ({
-  moodDateData,
-}: {
-  moodDateData: { mood: string; date: string }[];
-}) => {
-  const today = new Date();
-  const [monthPicked, setMonthPicked] = useState(today.getMonth());
-  const [selectedDate, setSelectedDate] = useState<Date>(today);
-  const startOfTheMonth = new Date(today.getFullYear(), monthPicked, 1);
-  const weekdayOfFirstDay = startOfTheMonth.getDay(); // 0 (Sun) to 6 (Sat)
-  const daysOfTheWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const monthOfTheYear = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const currentDays = [];
-  const start = new Date(startOfTheMonth);
-  //   First visible day on the calendar grid - start with Sunday
-  const offset = weekdayOfFirstDay === 0 ? -7 : -weekdayOfFirstDay;
-  start.setDate(start.getDate() + offset);
-  for (let day = 0; day < 42; day++) {
-    const date = new Date(start);
-    date.setDate(start.getDate() + day);
-    const isoDate = date.toISOString().split("T")[0];
-    const moodEntry = moodDateData.find((entry) => entry.date === isoDate);
-    currentDays.push({
-      currentMonth: date.getMonth() === today.getMonth(),
-      date,
-      month: date.getMonth(),
-      number: date.getDate(),
-      weekDay: date.getDay(),
-      selected: date.toDateString() === selectedDate.toDateString(),
-      year: date.getFullYear(),
-      mood: moodEntry?.mood || null,
-    });
-  }
+import React from "react";
 
+type MoodCalendarProps = {
+  moodDateData: MoodDate[];
+  firstDayofTheWeek?: 0 | 1;
+};
+const formatYYYYMMDD = (d: Date) => {
+  //Local Time Format
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
+const formatDoWDMM = (d: Date) => {
+  return d.toLocaleDateString(undefined, {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+};
+const addSubstractMonths = (d: Date, delta: number) => {
+  const copy = new Date(d);
+  copy.setMonth(copy.getMonth() + delta, 1);
+  return copy;
+};
+const startOfCalendarGrid = (viewDate: Date, firstDoW: 0 | 1) => {
+  const start = new Date(viewDate);
+  start.setDate(1);
+  const offset = (start.getDay() - firstDoW + 7) % 7; // 0..6
+  start.setDate(start.getDate() - offset);
+  return start;
+};
+const weekdayLabels = (firstDow: 0 | 1, locale = undefined) => {
+  const base = Array.from({ length: 7 }, (_, i) => (i + firstDow) % 7);
+  const fmt = new Intl.DateTimeFormat(locale, { weekday: "short" });
+  const jan = new Date(2025, 0, 5); // a Sunday
+  return base.map((dow) => {
+    const d = new Date(jan);
+    d.setDate(jan.getDate() + dow);
+    return fmt.format(d);
+  });
+};
+const monthLabel = (d: Date, locale = undefined) =>
+  new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(d);
+
+const isSameDay = (a: Date, b: Date) =>
+  a.getFullYear() === b.getFullYear() &&
+  a.getMonth() === b.getMonth() &&
+  a.getDate() === b.getDate();
+
+const MoodCalendar: React.FC<MoodCalendarProps> = ({
+  moodDateData,
+  firstDayofTheWeek = 0,
+}) => {
+  const today = React.useMemo(() => new Date(), []);
+  const [viewDate, setViewDate] = React.useState(() => {
+    const d = new Date();
+    d.setDate(1);
+    return d;
+  });
+  const [selectedDate, setSelectedDate] = React.useState<Date>(today);
+
+  // Index moods by local yyyy-MM-dd for O(1) lookup
+  const moodMap = React.useMemo(() => {
+    const map = new Map<string, string>();
+    for (const { date, mood } of moodDateData) map.set(date, mood);
+    return map;
+  }, [moodDateData]);
+
+  const days = React.useMemo(() => {
+    const start = startOfCalendarGrid(viewDate, firstDayofTheWeek);
+    return Array.from({ length: 42 }, (_, i) => {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      const inViewMonth = date.getMonth() === viewDate.getMonth();
+      const key = formatYYYYMMDD(date);
+      const mood = moodMap.get(key) ?? null;
+      return {
+        date,
+        label: date.getDate(),
+        inViewMonth,
+        isToday: isSameDay(date, today),
+        isSelected: isSameDay(date, selectedDate),
+        mood,
+      };
+    });
+  }, [viewDate, firstDayofTheWeek, moodMap, selectedDate, today]);
+
+  const weekdayNames = React.useMemo(
+    () => weekdayLabels(firstDayofTheWeek),
+    [firstDayofTheWeek]
+  );
+  console.log(days);
   return (
-    <div className="bg-background-light p-4 rounded-lg shadow-md max-w-[460px] ">
-      <div>
-        <div className="text-base font-bold font-baloo flex justify-between">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                setMonthPicked(monthPicked - 1);
-                setSelectedDate(
-                  new Date(
-                    today.getFullYear(),
-                    monthPicked - 1,
-                    today.getDate()
-                  )
-                );
-              }}
-            >
-              <ChevronLeft className="size-4 align-middle" />
-            </button>
-            <p>
-              {today.toLocaleDateString(undefined, {
-                day: "numeric",
-              })}{" "}
-              {monthOfTheYear[monthPicked]}
-            </p>
-            <button
-              onClick={() => {
-                setMonthPicked(monthPicked + 1);
-                setSelectedDate(
-                  new Date(
-                    today.getFullYear(),
-                    monthPicked + 1,
-                    today.getDate()
-                  )
-                );
-              }}
-            >
-              <ChevronRight className="size-4 align-middle" />
-            </button>
-          </div>
-          <p>{today.getFullYear()}</p>{" "}
+    <div className="bg-background p-4 rounded-lg shadow-md max-w-[460px]">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Previous month"
+            onClick={() => setViewDate((d) => addSubstractMonths(d, -1))}
+            className="p-1 rounded-md hover:bg-accent"
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+          <p className="text-base font-bold font-baloo">
+            {monthLabel(viewDate)}
+          </p>
+          <button
+            type="button"
+            aria-label="Next month"
+            onClick={() => setViewDate((d) => addSubstractMonths(d, 1))}
+            className="p-1 rounded-md hover:bg-accent"
+          >
+            <ChevronRight className="size-4" />
+          </button>
         </div>
-      </div>
-      <div id="calendar-body " className=" font-baloo">
-        <div
-          id="calendar-header"
-          className="grid grid-cols-7 py-2 my-1 text-sm font-bold w-full bg-primary/50 rounded-md "
+
+        <button
+          type="button"
+          className="text-sm font-baloo font-semibold hover:scale-110 cursor-pointer"
+          onClick={() => {
+            const d = new Date();
+            d.setDate(1);
+            setViewDate(d);
+            setSelectedDate(new Date());
+          }}
         >
-          {daysOfTheWeek.map((day) => (
-            <div key={day} className="text-center font-bold">
+          Today
+        </button>
+      </div>
+
+      <div
+        role="grid"
+        aria-label={`Calendar for ${monthLabel(viewDate)}`}
+        className="font-baloo"
+      >
+        <div className="grid grid-cols-7 py-2 my-1 text-sm font-bold w-full bg-primary/50 rounded-md">
+          {weekdayNames.map((day) => (
+            <div key={day} role="columnheader" className="text-center">
               {day}
             </div>
           ))}
         </div>
-        <div
-          id="calendar-table"
-          className="grid grid-cols-7 text-sm font-bold w-full"
-        >
-          {currentDays.map((day, index) => {
+
+        <div className="grid grid-cols-7 text-sm font-bold w-full gap-y-1">
+          {days.map((day) => {
+            const base =
+              "relative text-base md:text-lg font-bold flex items-center justify-center overflow-hidden w-[54px] h-[54px] rounded-full focus:outline-none  ring-0! cursor-pointer";
+            const inOtherMonth = !day.inViewMonth
+              ? "text-muted-foreground/50"
+              : "";
+            const selected = day.isSelected ? "bg-primary " : "";
+
             return (
               <div
-                key={day.date.toDateString()}
-                className={` text-base md:text-lg font-bold flex items-center justify-center overflow-hidden w-[54px] h-[54px] hover:bg-primary/80 rounded-full cursor-pointer
-                    ${day.selected ? "bg-primary" : ""}
-                `}
+                key={day.date.getTime()}
+                className="flex items-center justify-center"
               >
                 {day.mood ? (
-                  <>
-                    <Tooltip>
-                      <TooltipTrigger className="">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        role="gridcell"
+                        aria-selected={day.isSelected}
+                        className={`${base} ${selected} `}
+                        onClick={() => setSelectedDate(day.date)}
+                        title={`${day.mood} – ${formatYYYYMMDD(day.date)}`}
+                      >
                         <Image
                           src={`/images/moods/${day.mood}.png`}
                           alt={day.mood}
                           width={40}
                           height={40}
-                          className="cursor-pointer object-fit mx-auto w-auto! h-auto!"
+                          className="mx-auto object-contain"
                         />
-                        <TooltipContent
-                          className="text-background text-center w-full"
-                          style={{
-                            backgroundColor: `var(--color-${day.mood})`,
-                          }}
-                        >
-                          <p className="capitalize text-[12px] mb-0.5 font-bold ">
-                            {day.mood}
-                          </p>
-                          <p className="text-[10px]">
-                            {daysOfTheWeek[day.weekDay]} {day.number}{" "}
-                            {monthOfTheYear[monthPicked]}
-                          </p>
-                        </TooltipContent>
-                      </TooltipTrigger>
-                    </Tooltip>
-                  </>
+                        <span className="sr-only">
+                          {day.mood} on {formatYYYYMMDD(day.date)}
+                        </span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      className="text-background text-center w-full"
+                      style={{ backgroundColor: `var(--color-${day.mood})` }}
+                    >
+                      <p className="capitalize text-[12px] mb-0.5 font-bold">
+                        {day.mood}
+                      </p>
+                      <p className="text-[10px]">{formatDoWDMM(day.date)}</p>
+                    </TooltipContent>
+                  </Tooltip>
                 ) : (
-                  <p>{day.number}</p>
+                  <button
+                    type="button"
+                    role="gridcell"
+                    aria-selected={day.isSelected}
+                    onClick={() => setSelectedDate(day.date)}
+                    className={`${base} ${inOtherMonth} ${selected}  hover:bg-primary/80`}
+                  >
+                    {day.label}
+                  </button>
                 )}
               </div>
             );
@@ -161,5 +218,4 @@ const MoodCalendar = ({
     </div>
   );
 };
-
 export default MoodCalendar;

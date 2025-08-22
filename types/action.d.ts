@@ -92,3 +92,7 @@ interface newJournalEntryParams {
 interface updateJournalEntryParams extends newJournalEntryParams {
   journalId: string;
 }
+interface MoodDate {
+  mood: string;
+  date: string;
+}

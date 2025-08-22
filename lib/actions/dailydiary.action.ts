@@ -247,7 +247,7 @@ export async function updateMeditation(params: {
 }
 
 export async function getAllMoodEntries(): Promise<
-  ActionResponse<{ moodDate: { mood: string; date: string } }>
+  ActionResponse<{ moodDate: MoodDate[] }>
 > {
   const validationResult = await action({
     schema: z.object({}),

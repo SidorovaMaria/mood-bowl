@@ -46,7 +46,7 @@ const MoodPreview = async ({
   const journals = journalsData?.journalEntries || [];
   return (
     <>
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+      <section className="grid grid-flow-col-dense gap-10 w-full justify-center">
         <MoodCard mood={diary.moodEntries.mood} />
 
         {user.mentalHealthGoals?.gratitudeEntriesPerDay !== 0 && (
