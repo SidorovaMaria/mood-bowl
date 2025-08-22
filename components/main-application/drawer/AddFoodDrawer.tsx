@@ -46,7 +46,7 @@ export function AddFoodDrawer({ data }: { data?: IFoodItemDoc[] }) {
       <DrawerTrigger asChild>
         <ButtonSlide
           type="button"
-          className="rounded-lg"
+          className="w-fit mx-auto text-base font-baloo py-2 rounded-md"
           text="Add Food"
           icon={Plus}
         />

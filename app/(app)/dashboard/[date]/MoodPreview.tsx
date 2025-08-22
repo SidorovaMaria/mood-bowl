@@ -73,7 +73,7 @@ const MoodPreview = async ({
         <AddJournalModal>
           <ButtonSlide
             text="New Note for You"
-            className="w-fit mx-auto text-sm border-primary hover:border-transparent"
+            className="w-fit mx-auto text-base font-baloo py-2 rounded-md"
             icon={BookHeart}
           />
         </AddJournalModal>

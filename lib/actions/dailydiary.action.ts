@@ -3,7 +3,7 @@
 import DailyDiary, { IDailyDiaryDoc } from "@/database/dailydiary.model";
 import action from "../action";
 import handleError from "../errors";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import {
   getDailyDiaryByDateSchema,
   UpdateMeditationSchema,
@@ -240,6 +240,54 @@ export async function updateMeditation(params: {
     return {
       success: true,
       status: 200,
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function getAllMoodEntries(): Promise<
+  ActionResponse<{ moodDate: { mood: string; date: string } }>
+> {
+  const validationResult = await action({
+    schema: z.object({}),
+    authorize: true,
+  });
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+  const { user } = validationResult.session!;
+  if (!user) {
+    throw new UnauthorizedError("User not authenticated");
+  }
+  try {
+    const diaries = await DailyDiary.find({ userId: user.id }).select(
+      "moodEntries date"
+    );
+    const moodEntries = await DailyDiary.aggregate<{
+      date: string;
+      mood: string | number | null;
+    }>([
+      { $match: { userId: new Types.ObjectId(user.id) } },
+      {
+        $project: {
+          id: "$_id",
+          date: { $dateToString: { date: "$date", format: "%Y-%m-%d" } },
+          mood: {
+            $ifNull: [
+              "$moodEntries.mood",
+              { $ifNull: ["$moodEntries.score", null] },
+            ],
+          },
+        },
+      },
+      { $match: { mood: { $ne: null } } },
+    ]);
+    return {
+      data: {
+        moodDate: JSON.parse(JSON.stringify(moodEntries)),
+      },
+      success: true,
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;

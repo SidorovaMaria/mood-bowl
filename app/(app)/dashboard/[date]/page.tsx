@@ -66,13 +66,13 @@ const DashBoard = async ({ params, searchParams }: RouteParams) => {
           </h1>
 
           <div className="flex items-center w-full justify-center gap-4">
-            <Link href={`/${session.user.id}/dashboard/${prevDate}`}>
+            <Link href={`/dashboard/${prevDate}`}>
               <ChevronLeftCircle className="w-5 h-5 text-foreground/80" />
             </Link>
             <h1 className="text-2xl">
               <DayPicker>{getRelativeDay(new Date(date))}</DayPicker>
             </h1>
-            <Link href={`/${session.user.id}/dashboard/${nextDate}`}>
+            <Link href={`/dashboard/${nextDate}`}>
               <ChevronRightCircle className="w-5 h-5 text-foreground/80" />
             </Link>
           </div>
